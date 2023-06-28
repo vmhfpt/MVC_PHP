@@ -67,7 +67,7 @@
                         <span class="text"><?= $value['name'] ?></span>
                         <small class="badge <?= $key == 0 ? 'badge-danger' : 'badge-success' ?>"><i class="far fa-clock"></i> <?= $value['createdAt'] ?></small>
                         <div class="tools">
-                            <a href="edit?id=<?= $value['id'] ?>" class=""><i class="fas fa-edit"></i></a>
+                            <a href="edit/<?= $value['id'] ?>" class=""><i class="fas fa-edit"></i></a>
                             <i class="fas fa-trash-o"></i>
                         </div>
                     </li>

@@ -38,7 +38,7 @@
                 </div>
 
 
-                <form action="/todo-list/edit?id=<?=$data['id']?>" method="POST">
+                <form action="/todo-list/edit/<?=$data['id']?>" method="POST">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -60,7 +60,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary m-2">Update</button>
-                        <a href="/todo-list/edit?id=<?=$data['id']?>" class=""><button type="button" class="btn btn-danger m-2">Refresh</button> </a>
+                        <a href="/todo-list/edit/<?=$data['id']?>" class=""><button type="button" class="btn btn-danger m-2">Refresh</button> </a>
                         <a href="/todo-list/list" class=""><button type="button" class="btn btn-success m-2">Lish</button></a>
                     </div>
                 </form>

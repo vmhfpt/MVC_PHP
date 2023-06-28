@@ -1,79 +1,92 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Jun 25, 2023 at 06:20 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+/*Lấy tất cả sản phẩm thuộc nền tảng kinh doanh*/
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+SELECT `products`.`name` AS `product_name`, `categories`.`name` AS `category_name` FROM `products` JOIN `categories` WHERE `products`.`category_id` IN(SELECT `categories`.`id` FROM `categories` WHERE `categories`.`parent_id` = 1 ) AND `products`.`category_id` = `categories`.`id`;
+/*---------------------------------------------------------*/
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*Lấy tất cả sản phẩm thuộc danh mục*/
 
---
--- Database: `lab6`
---
+SELECT `products`.`name` AS `product_name`, `categories`.`name` AS `category_name` FROM `products` JOIN `categories` WHERE  `products`.`category_id` = `categories`.`id` AND `categories`.`id` = 2;
+/*---------------------------------------------------------*/
 
--- --------------------------------------------------------
+/**/
 
---
--- Table structure for table `task`
---
 
-CREATE TABLE `task` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `active` int(11) NOT NULL,
-  `createdAt` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*Lấy sản phẩm kèm tất cả các biến thể*/
+SELECT `attribute_product`.`id`, `types`.`description`, `values`.`value`, `products`.`name` FROM `attribute_product` 
+JOIN `products` 
+JOIN `values` 
+JOIN `types`
+WHERE `attribute_product`.`product_id` = 1
+AND `attribute_product`.`type_id` = `types`.`id`
+AND `attribute_product`.`value_id` = `values`.`id`
+AND `products`.`id` = `attribute_product`.`product_id`
+/*---------------------------------------------------------*/
 
---
--- Dumping data for table `task`
---
 
-INSERT INTO `task` (`id`, `name`, `active`, `createdAt`) VALUES
-(19, 'fasdf asdfa sdf', 0, '2023-06-25'),
-(20, 'Hung Vu', 1, '2023-06-25'),
-(21, 'Cà phê Trung  Nguyên 123 123', 1, '2023-06-25'),
-(22, 'Cà phê Trung  Nguyên 123 hahah', 1, '2023-06-25'),
-(25, '1231123', 0, '2023-06-25'),
-(26, '1231123 edit', 0, '2023-06-25'),
-(27, 'dffffffdf', 0, '2023-06-25'),
-(28, 'fasdfasdf', 0, '2023-06-25'),
-(29, '1234123123', 0, '2023-06-25'),
-(30, 'Cà phê Trung  Nguyên3fsadf', 0, '2023-06-25'),
-(31, 'sdfasdf333', 0, '2023-06-25'),
-(32, 'fasdfasdf1231', 0, '2023-06-25'),
-(33, 'fasdfsadf3432', 0, '2023-06-25');
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `task`
---
-ALTER TABLE `task`
-  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
+/*Lấy sản phẩm kèm theo tất cả màu sắc*/
+SELECT  `types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
+FROM `attribute_product` 
+JOIN `products` 
+JOIN `values` 
+JOIN `types` 
+JOIN `product_color` 
+WHERE `attribute_product`.`product_id` = 1 
+AND `attribute_product`.`type_id` = 3 
+AND `attribute_product`.`id` = `product_color`.`attribute_product_id`
+AND `attribute_product`.`type_id` = `types`.`id` 
+AND `attribute_product`.`value_id` = `values`.`id` 
+AND `products`.`id` = `attribute_product`.`product_id`;
+/*---------------------------------------------------------*/
 
---
--- AUTO_INCREMENT for table `task`
---
-ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-COMMIT;
+/*Lấy giá rom thông qua sản phẩm chỉ định*/
+SELECT  `types`.`description`, `values`.`value`, `products`.`name`, `rom_product`.`price`
+FROM `attribute_product` 
+JOIN `products` 
+JOIN `values` 
+JOIN `types`
+JOIN `rom_product`
+WHERE `attribute_product`.`product_id` = 1 
+AND `attribute_product`.`id` = `rom_product`.`attribute_product_id`
+AND `attribute_product`.`type_id` = 1 
+AND `attribute_product`.`type_id` = `types`.`id` 
+AND `attribute_product`.`value_id` = `values`.`id` 
+AND `products`.`id` = `attribute_product`.`product_id`;
+/*---------------------------------------------------------*/
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+/*Lấy màu sắc chỉ định thông qua sản phẩm*/
+SELECT `types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
+FROM `attribute_product` 
+JOIN `products` 
+JOIN `values` 
+JOIN `types` 
+JOIN `product_color` 
+WHERE `attribute_product`.`id` = 1 
+AND `attribute_product`.`type_id` = 3 
+AND `attribute_product`.`id` = `product_color`.`attribute_product_id` 
+AND `attribute_product`.`type_id` = `types`.`id` 
+AND `attribute_product`.`value_id` = `values`.`id` 
+AND `products`.`id` = `attribute_product`.`product_id`;
+
+
+/*----------------------------------------------------------------*/
+
+
+
+/*Lấy giá rom thông qua mauf sac sản phẩm chỉ định */
+SELECT `rom_product`.`price`, `types`.`description`, `values`.`value`, `products`.`name` 
+FROM `rom_product` 
+JOIN `attribute_product`
+JOIN `types`
+JOIN `values`
+JOIN `products`
+WHERE `product_color_id` = 1
+AND `rom_product`.`attribute_product_id` = `attribute_product`.`id`
+AND `attribute_product`.`type_id` = `types`.`id`
+AND `attribute_product`.`value_id` = `values`.`id`
+AND `attribute_product`.`product_id` = `products`.`id`
+/*----------------------------------------------------------------*/

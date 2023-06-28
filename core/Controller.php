@@ -20,5 +20,6 @@ class controller {
         extract($data);
         require('views/'.$viewName.'.php');
     }
+   
 }
 ?>

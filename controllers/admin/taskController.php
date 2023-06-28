@@ -12,8 +12,8 @@ class taskController extends controller{
       $this->loadView('Todo/add');
    }
    public function index($request, $response){
+ 
      $item['date_now'] = Carbon::now();
-
 
      $item['page'] = 1;
      if(isset($request['page'])){
@@ -52,10 +52,11 @@ class taskController extends controller{
    return $this->loadView('Todo/add', $error);
    }
    public function edit($request, $response){
-      $data = $this->task->findById($request['id']);
+      $data = $this->task->findById($request[0]['id']);
       return ( $this->loadView('Todo/edit', $data));
    }
    public function update($request, $response){
+  
     $active = 0;
     if(isset($request['active'])){
       $active = 1;
@@ -74,8 +75,8 @@ class taskController extends controller{
       return $this->loadView('Todo/edit', $data);
     }
     if(!isset($data["error_name"])){
-      $this->task->Update($request['name'], $active, $request['id']);
-      header("Location: list");
+      $this->task->Update($request['name'], $active, $request[0]['id']);
+      header("Location: /todo-list/list");
       die();
       
     }
