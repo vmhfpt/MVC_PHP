@@ -10,12 +10,15 @@ $ADMIN_URL = "$ROOT_URL/admin";
 //$SITE_URL_ADMIN = "$ROOT_URL/public/admin";
 //$SITE_URL = "$ROOT_URL/";
 
-$UPLOAD_URL_USER = __DIR__ . "/uploaded/user/";
-$UPLOAD_URL_PRODUCT = __DIR__ . "/uploaded/product/";
-$IMAGE_DIR_USER = $ROOT_URL."/uploaded/user/" ;
-$IMAGE_DIR_PRODUCT = $ROOT_URL."/uploaded/product/" ;
-  
-  
+//$UPLOAD_URL_USER = __DIR__ . "/uploaded/user/";
+//$UPLOAD_URL_PRODUCT = __DIR__ . "/uploaded/product/";
+//$IMAGE_DIR_USER = $ROOT_URL."/uploaded/user/" ;
+//$IMAGE_DIR_PRODUCT = $ROOT_URL."/uploaded/product/" ;
+define('ITEM_PER_PAGE', 2);
+define('UPLOAD_URL_PRODUCT', __DIR__ . "/public/image/product/");
+define('IMAGE_DIR_USER', $ROOT_URL . "/public/image/user/");
+define('IMAGE_DIR_PRODUCT', $ROOT_URL . "/public/image/product/");
+define('UPLOAD_URL_USER', __DIR__ . "/public/image/user/");
 define('SITE_URL', "$ROOT_URL/");
 define('SITE_URL_ADMIN', "$ROOT_URL/public/admin");
 define('ROOT_PATH', dirname(__DIR__) . '/htdocs/');

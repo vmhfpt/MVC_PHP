@@ -5,7 +5,7 @@ $config = [
      'host' => 'localhost',
      'user' => 'root',
      'pass' => '',
-     'name' => 'lab6',
+     'name' => 'duanmot',
      'driver' => 'mysql'
   ]
 ];
