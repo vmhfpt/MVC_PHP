@@ -41,7 +41,7 @@ class Database
          try{
             $stmt = $this->connection->prepare($sql);
             $stmt->execute($sql_args);
-            $rows = $stmt->fetchAll();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return ($rows);
          }
          catch(PDOException $e) {
@@ -71,7 +71,7 @@ class Database
         try{
             $stmt = $this->connection->prepare($sql);
             $stmt->execute($sql_args);
-            $stmt->fetchAll();
+            $stmt->fetchAll(PDO::FETCH_ASSOC);
             $count = $stmt->rowCount();
             return ($count);
         }
@@ -82,6 +82,20 @@ class Database
           unset($conn);
         }
        }
+       public  function pdo_query_get_lastId($sql){
+         $sql_args = array_slice(func_get_args(), 1);
+         try{
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute($sql_args);
+            return ($this->connection->lastInsertId());
+         }
+         catch(PDOException $e) {
+            throw $e;
+         }
+         finally{
+           unset($conn);
+         }
+      }
 
       
 }

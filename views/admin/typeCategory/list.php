@@ -1,6 +1,5 @@
 <?php $this->loadView('admin/Layout/header') ?>
 <?php $this->loadView('admin/Layout/nav') ?>
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -35,16 +34,17 @@
     </div>
 </div>
 
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Danh sách hàng hóa</h1>
+                <h1>Danh sách biến thể nền tảng</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Danh sách hàng hóa</li>
+                    <li class="breadcrumb-item active">Danh sách biến thể</li>
                 </ol>
             </div>
         </div>
@@ -59,9 +59,11 @@
     </div>
 
     <?php }?>
+  
+
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">Tổng số <?=count($dataItem)?> sản phẩm</h3>
+                <h3 class="card-title">Tổng số  <?=count($dataItem)?> biến thể nền tảng</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -77,85 +79,72 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Sửa, xóa danh sách hàng hóa</h3>
+                                <h3 class="card-title">Sửa, xóa danh sách biến thể nền tảng</h3>
                                 <div class="card-tools">
-                                    <form class="input-group input-group-sm" style="width: 150px;">
-                                        <input name="btn_list" type="hidden" class="">
-                                        <input value="<?=isset($_GET['key']) ? $_GET['key'] : ''?>" type="text" name="key" class="form-control float-right" placeholder="Search">
+                                    
+                                        <form action="" method="GET" class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="hidden" name="btn_list" value="true">
+                                        <input value="<?=isset($_GET['key']) ? $_GET['key'] : '' ?>" type="text" name="key" class="form-control float-right" placeholder="Search">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
                                             </button>
                                         </div>
-                                    </form>
+                                        </form>
+                                    
                                 </div>
                             </div>
-
+                            <div class="px-4 col-3">
+                            <div class=" form-group">
+                                    <label>Lọc theo</label>
+                                    <select name="category_id" class="category-id form-control">
+                                                <?php foreach($list as $key => $value){?>
+                                                    <option value="<?=$value['id']?>"><?=$value['name']?></option>
+                                                <?php }?>
+                                            </select>
+                            </div>
+                            </div>
                             <div class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th style="width: 10px"></th>
-                                            <th>MÃ HH</th>
-                                            <th>TÊN HÀNG HÓA</th>
-                                            <th>DANH MỤC</th>
-                                            <th>ĐƠN GIÁ</th>
-                                            <th style="width : 90px">GIẢM GIÁ</th>
-                                            <th>LƯỢT XEM</th>
-                                            <th style="width: 280px"> </th>
+                                            <th>MÃ BT</th>
+                                            <th>NỀN TẢNG</th>
+                                            <th>TÊN BIẾN THỂ</th>
+                                            <th style="width: 140px"> </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="result">
                                       <?php foreach($dataItem as $key => $value){?>
-                                        <tr id="<?=$value['id']?>" >
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input name="check[]" value="<?=$value['id']?>" class="custom-control-input custom-control-input-danger get-check" type="checkbox" id="customCheckbox<?=$key?>">
-                                                    <label for="customCheckbox<?=$key?>" class="custom-control-label"></label>
-                                                </div>
-                                            </td>
-                                            <td><?=$value['id']?></td>
-                                            <td class="ten_loai" ><?=$value['name']?></td>
-                                            <td><?=$value['category']?></td>
-                                            <td><?=currency_format($value['price'])?></td>
-                                            <td><img src="<?=IMAGE_DIR_PRODUCT.$value['thumb']?>" style="width : 80px; height : 80px"  /></td>
-                                            <td><?=$value['view_total']?></td>
-                                            <td class="project-actions text-right">
-                                                <a class="btn btn-success btn-sm" href="/admin/attribute-product/<?=$value['slug']?>">
-                                                    <i class="fas fa-pencil-alt">
-                                                    </i>
-                                                    Thiết lập biến thể
-                                                </a>
-                                                <a class="btn btn-info btn-sm" href="/admin/product/edit/<?=$value['slug']?>">
-                                                    <i class="fas fa-pencil-alt">
-                                                    </i>
-                                                    Sửa
-                                                </a>
-                                                <a data-delete="<?=$value['id']?>" class="btn btn-danger btn-sm delete-single" href="javascript:;">
-                                                    <i class="fas fa-trash">
-                                                    </i>
-                                                    Xóa
-                                                </a>
-                                            </td>
+
+                                        <tr id="<?=$value['id']?>">
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input value="<?=$value['id']?>" name="danh_dau[]" class="get-check custom-control-input custom-control-input-danger" type="checkbox" id="customCheckbox<?=$key?>">
+                                                        <label for="customCheckbox<?=$key?>" class="custom-control-label"></label>
+                                                    </div>
+                                                </td>
+                                                <td><?=$key + 1?></td>
+                                                <td class=" text-danger"><?=$value['name']?></td>
+                                                <td class="ten_loai"><?=$value['description']?></td>
+                                                <td class="project-actions text-right">
+
+    
+                                                    <a class="btn btn-danger btn-sm delete-single" data-delete="<?=$value['id']?>" href="javascript:;">
+                                                        <i class="fas fa-trash">
+                                                        </i>
+                                                        Xóa
+                                                    </a>
+                                                </td>
                                         </tr>
-                                      <?php }?>
+                                      <?php } ?>
 
                                     </tbody>
                                 </table>
                             </div>
 
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-sm m-0 float-right">
-                                   <?=$page > 1 ? ' <li class="page-item"><a class="page-link" href="/admin/product/list/'.($page -1).'">«</a></li>' : ''?>
-                                    <?php for($i = 1; $i <= ceil($totalItem / $limitShow); $i ++) {?>
-
-                                        <li  class="page-item  <?=$page == $i ? 'active' : '' ?>"><a class="page-link" href="/admin/product/list/<?=$i?>"><?=$i?></a></li>
-                                    <?php }?>
-                                   
-                                    <?= $page >= ceil($totalItem / $limitShow) ? '' :  '<li class="page-item"><a class="page-link" href="/admin/product/list/'.($page + 1).'">»</a></li>' ?>
-                                </ul>
-                            </div>
-
+                           
                         </div>
 
                     </div>
@@ -168,10 +157,10 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-warning m-2 check-all">Chọn tất cả</button>
-                <button type="submit" class="btn btn-primary m-2 cancel-all">Bỏ chọn tất cả</button>
-                <button type="submit" class="btn btn-danger m-2 delete-all">Xóa các mục đã chọn</button>
-                <a href="/admin/product/add" class=""> <button type="button" class="btn btn-success m-2">Nhập thêm</button></a>
+                <button type="button" class="btn btn-warning m-2 check-all">Chọn tất cả</button>
+                <button type="button" class="btn btn-primary m-2 cancel-all">Bỏ chọn tất cả</button>
+                <button type="button" class="btn btn-danger m-2 delete-all">Xóa các mục đã chọn</button>
+                <a href="/admin/value-category/add" class=""><button type="button" class="btn btn-success m-2">Nhập thêm</button></a>
             </div>
 
 
@@ -183,7 +172,7 @@
     function deleteAjax(dataPayload) {
         $.ajax({
                 method: "POST",
-                url: "/admin/product/delete",
+                url: "/admin/value-category/delete",
                 data: {
                     arr: dataPayload,
                 }
@@ -200,7 +189,7 @@
                 }
             });
     }
-    $('.delete-single').click(function() {
+    $(document).on("click", ".delete-single", function() {
         idDelete = $(this).attr("data-delete");
         $('.confirm-delete').attr('type-delete', 'single');
         var index = Number($('.delete-single').index(this));
@@ -243,5 +232,41 @@
             $(this).prop('checked', false);
         })
     });
+    $('.category-id').change(function() {
+        $.ajax({
+                method: "POST",
+                url: "/admin/value-category/get-list/ajax",
+                data: {
+                    id: Number($(this).val()),
+                }
+            })
+            .done(function(msg) {
+                msg = JSON.parse(msg);
+                $('#result').empty();
+                msg.map((value, key) => {
+                    $('#result').append(` <tr id="${value.id}">
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input value="${value.id}" name="danh_dau[]" class="get-check custom-control-input custom-control-input-danger" type="checkbox" id="customCheckbox${key}">
+                                                        <label for="customCheckbox${key}" class="custom-control-label"></label>
+                                                    </div>
+                                                </td>
+                                                <td>${key + 1}</td>
+                                                <td class="text-danger">${value.name}</td>
+                                                <td class="ten_loai">${value.description}</td>
+                                                <td class="project-actions text-right">
+
+    
+                                                    <a class="btn btn-danger btn-sm delete-single" data-delete="${value.id}" href="javascript:;">
+                                                        <i class="fas fa-trash">
+                                                        </i>
+                                                        Xóa
+                                                    </a>
+                                                </td>
+                                        </tr>`);
+                 })
+                
+            });
+    })
 </script>
 <?php $this->loadView('admin/Layout/footer') ?>

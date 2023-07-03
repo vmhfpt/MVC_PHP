@@ -1,16 +1,6 @@
 <?php
  Router::handle('GET',  '', 'admin/testController', 'test');
- /*
-  
-  Router::handle('GET',  'todo-list/add',       'admin/taskController', 'add');
-  Router::handle('POST', 'todo-list/add',       'admin/taskController', 'insert');
-  Router::handle('GET',  'todo-list/list',      'admin/taskController', 'index');
-  Router::handle('GET',  'todo-list/edit/{id}', 'admin/taskController', 'edit');
-  Router::handle('POST', 'todo-list/edit/{id}', 'admin/taskController', 'update');
-  Router::handle('POST', 'todo-list/delete',    'admin/taskController', 'destroy');
  
-  
- */
  /*************************************************************************************** */
  Router::handle('POST',  'admin/platform/edit/{slug}','admin/platformController', 'update');
  Router::handle('GET',  'admin/platform/edit/{slug}','admin/platformController', 'edit');
@@ -44,7 +34,34 @@
  Router::handle('POST',  'admin/brand/edit/{id}','admin/brandController', 'update');
  Router::handle('POST',  'admin/brand/delete',     'admin/brandController', 'destroy');
    /*************************************************************************************** */
-
+ Router::handle('POST',  'admin/attribute/get-list/ajax', 'admin/attributeController', 'getList');
+ Router::handle('GET',  'admin/attribute/add',        'admin/attributeController', 'add');
+ Router::handle('POST',  'admin/attribute/add',        'admin/attributeController', 'create');
+ Router::handle('GET',  'admin/attribute/list',       'admin/attributeController', 'index');
+ Router::handle('GET',  'admin/attribute/edit/{id}','admin/attributeController', 'edit');
+ Router::handle('POST',  'admin/attribute/edit/{id}','admin/attributeController', 'update');
+ Router::handle('POST',  'admin/attribute/delete',     'admin/attributeController', 'destroy');
+   /*************************************************************************************** */
+ Router::handle('GET',  'admin/value/add',        'admin/valueController', 'add');
+ Router::handle('POST',  'admin/value/add',        'admin/valueController', 'create');
+ Router::handle('GET',  'admin/value/list',       'admin/valueController', 'index');
+ Router::handle('GET',  'admin/value/edit/{id}','admin/valueController', 'edit');
+ Router::handle('POST',  'admin/value/edit/{id}','admin/valueController', 'update');
+ Router::handle('POST',  'admin/value/delete',     'admin/valueController', 'destroy');
+   /*************************************************************************************** */
+ Router::handle('GET',  'admin/value-category/add',        'admin/valueCategoryController', 'add');
+ Router::handle('POST',  'admin/value-category/add',        'admin/valueCategoryController', 'create');
+ Router::handle('GET',  'admin/value-category/list',       'admin/valueCategoryController', 'index');
+ Router::handle('POST',  'admin/value-category/delete',     'admin/valueCategoryController', 'destroy');
+ Router::handle('POST',  'admin/value-category/get-list/ajax', 'admin/valueCategoryController', 'getList');
+  /*************************************************************************************** */
+ Router::handle('POST',  'admin/attribute-product/delete',       'admin/attributeProductController', 'destroy');
+ Router::handle('GET',  'admin/attribute-product/{slug}',       'admin/attributeProductController', 'index');
+ Router::handle('POST',  'admin/attribute-product/get-value/ajax',       'admin/attributeProductController', 'getValue');
+ Router::handle('POST',  'admin/attribute-product/{slug}',       'admin/attributeProductController', 'create');
+  /*************************************************************************************** */
+  Router::handle('GET',  'admin/color-product/{attribute_id}',       'admin/colorProductController', 'index');
+  Router::handle('POST',  'admin/color-product/{attribute_id}',       'admin/colorProductController', 'create');
 
  
  http_response_code(404);

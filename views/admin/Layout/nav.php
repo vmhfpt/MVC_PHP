@@ -263,6 +263,81 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Biến thể 
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/attribute/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm Biến thể</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/attribute/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách biến thể</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Giá trị biến thể
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/value/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm giá trị biến thể</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/value/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách giá trị biến thể</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Biến thể nền tảng
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/value-category/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm Biến thể </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/value-category/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách biến thể </p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
                             <a href="/don-hang" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>

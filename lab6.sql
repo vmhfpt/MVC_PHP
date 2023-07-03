@@ -90,3 +90,40 @@ AND `attribute_product`.`type_id` = `types`.`id`
 AND `attribute_product`.`value_id` = `values`.`id`
 AND `attribute_product`.`product_id` = `products`.`id`
 /*----------------------------------------------------------------*/
+
+
+/*-------------------------------------------------------------------*/
+SELECT `products`.`name`,`types`.`description`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` 
+FROM `attribute_price`
+JOIN `product_color`
+JOIN `attribute_product`
+JOIN `types`
+JOIN `values`
+JOIN `products`
+ON `attribute_price`.`product_color_id` = `product_color`.`id`
+AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id`
+AND `attribute_product`.`type_id` = `types`.`id`
+AND `attribute_product`.`value_id` = `values`.`id`
+AND `attribute_product`.`product_id` = `products`.`id`
+/************************************************************************8 */
+
+SELECT `products`.`name`,`types`.`description`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` FROM `attribute_price` 
+JOIN `product_color` 
+JOIN `attribute_product` 
+JOIN `types` 
+JOIN `values` 
+JOIN `products` 
+ON `attribute_price`.`product_color_id` = `product_color`.`id` 
+AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id` 
+AND `attribute_product`.`type_id` = `types`.`id` 
+AND `attribute_product`.`value_id` = `values`.`id` 
+AND `attribute_product`.`product_id` = `products`.`id` 
+AND `attribute_price`.`product_color_id` = 1;
+
+/******************************************************************************************/
+SELECT `products`.`id` ,`products`.`name`, c1.name, c2.name AS `platform`, c2.id AS `platform_id` FROM `products` 
+JOIN `categories` c1
+JOIN `categories` c2
+ON `products`.`category_id` = c1.id
+AND c1.parent_id = c2.id
+AND `products`.`id` = 1

@@ -48,7 +48,7 @@ class request {
                 if(isset($dataField[$key]) || isset($_FILES[$key])){
                     if(count($filterRule) == 1){
                         if($eachTypeRule == 'phone_number'){ 
-                            $regexRequire = '/^[0-9]{10}+$/';
+                            $regexRequire = "/^((\+84)|0)(3|5|7|8|9|1[2|6|8|9])+([0-9]{8})\b/";
                             if(!preg_match($regexRequire, $dataField[$key])){
                                $error[$key] = $validate[$key . '.'. $eachTypeRule];
                             }  
