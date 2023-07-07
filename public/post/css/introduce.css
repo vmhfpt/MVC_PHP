@@ -1,0 +1,64 @@
+.app-about-content__top-title span {
+    font-size: 23px;
+}
+.app-about-content__top-title p {
+    margin : 10px 0px;
+    font-size: 25px;
+}
+.app-about-content__title span {
+    font-size: 14px;
+    font-weight: 700;
+    
+}
+.app-about-content__title-text {
+    font-size: 15px;
+    display : block;
+    margin : 12px 0px;
+}
+.app-about-content {
+    line-height: 20px;
+}
+.app-about-content__title-list i {
+  font-weight: 600;
+  font-size: 15.4px;
+}
+.app-about-content__title-list li {
+    font-size: 14.4px;
+}
+.app-about-content__title-list ul {
+    margin-top : 12px;
+    margin-left : 35px;
+}
+.app-about-content__title-list {
+    margin: 20px 0px;
+}
+
+/*********************************/
+.app-shop-title span {
+   
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.app-shop-title {
+    padding : 15px 0px;
+    border-top: 1px solid rgb(192, 191, 191);
+    text-align: center;
+    margin : 20px 0px;
+}
+.app-shop__item h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.app-shop__item {
+    margin : 15px 0px;
+}
+.app-shop__item ul {
+    font-size: 15px;
+    
+    margin : 10px 0px 10px 20px;
+}
+.app-shop__item img {
+    border-radius: 8px;
+    width : 100%;
+    object-fit: cover;
+}

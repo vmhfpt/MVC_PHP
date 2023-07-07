@@ -338,6 +338,80 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Màu sản phẩm
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                               
+                                <li class="nav-item">
+                                    <a href="/admin/color-product/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách màu sản phẩm</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Quản lý giá theo biến thể
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                               
+                                <li class="nav-item">
+                                    <a href="/admin/attribute-price/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách màu sản phẩm</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Quản lý Mã giảm giá
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/coupon/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm mã giảm giá</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/coupon/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách mã giảm giá</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/conversation" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Hỗ trợ trực tuyến
+                                    <span class="right badge badge-danger">5</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/don-hang" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>

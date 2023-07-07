@@ -152,7 +152,7 @@ class request {
         if ($file['size'] > 15 * 1024 * 1024) { // 2Mb = 2 * 1024kb * 1024 bite 
             return ("* File vượt quá 15Mb");
         }
-        $validTypes = array('jpg', 'jpeg', 'png', 'bmp');
+        $validTypes = array('jpg', 'jpeg', 'png', 'bmp', 'webp');
         $fileType = substr($file['name'], strrpos($file['name'], ".") + 1) ;
         if (!in_array($fileType, $validTypes)) {
            return ('* File chỉ hỗ trợ định dạng jpg, jpeg, png, bmp') ;

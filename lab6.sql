@@ -127,3 +127,42 @@ JOIN `categories` c2
 ON `products`.`category_id` = c1.id
 AND c1.parent_id = c2.id
 AND `products`.`id` = 1
+
+
+/*lấy tổng màu sắc trong list sản phẩm*/
+SELECT `products`.`name`, COUNT(`attribute_product`.`product_id`) AS `total_color` FROM `products` 
+JOIN `attribute_product` 
+ON `products`.`id` = `attribute_product`.`product_id`
+AND `attribute_product`.`type_id` = 3
+GROUP BY `attribute_product`.`product_id`, `products`.`name`
+
+/*******Lấy tất cả sản phẩm có biến thể màu sắc********/
+SELECT `product_color`.`id` AS `product_color_id`,`values`.`value`,`product_color`.`thumb`,`products`.`slug`,`products`.`thumb`,`products`.`name`, `products`.`id` AS `product_id`, `attribute_product`.`id` AS `attribute_product_id`
+FROM `products`
+JOIN `product_color`
+JOIN `values`
+JOIN `attribute_product`
+ON `products`.`id` = `attribute_product`.`product_id`
+AND `product_color`.`attribute_product_id` = `attribute_product`.`id`
+AND `attribute_product`.`value_id` = `values`.`id`
+AND `attribute_product`.`type_id` = 3 
+
+/*********************Lấy hết giá biến thể thông qua màu sắc sản phẩm**********************************/
+SELECT `attribute_price`.`price`, `attribute_price`.`id`, t1.`description`, v1.`value`,  v2.`value` AS `color`, `products`.`name` AS `name_product`
+FROM `attribute_price` 
+JOIN `attribute_product` a1
+JOIN `attribute_product` a2
+JOIN `product_color`
+JOIN `values` v1
+JOIN `types` t1
+JOIN `values` v2
+JOIN `types` t2
+JOIN `products`
+ON `attribute_price`.`attribute_product_id` = a1.`id`
+AND `attribute_price`.`product_color_id` = `product_color`.`id`
+AND `product_color`.`attribute_product_id` = a2.`id`
+AND a1.product_id = `products`.`id`
+AND a1.`type_id` = t1.`id`
+AND a1.`value_id` = v1.`id`
+AND a2.`type_id` = t2.`id`
+AND a2.`value_id` = v2.`id`

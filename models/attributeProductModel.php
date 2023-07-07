@@ -4,7 +4,17 @@
  
 class AttributeProduct extends Database{
     
-   
+    public function getAttributeExceptColorByProductId($product_id){
+        $sql = "SELECT `attribute_product`.`id`, `types`.`description`, `values`.`value`
+        FROM `attribute_product`  
+        JOIN `types`
+        JOIN `values`
+        ON `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        AND `attribute_product`.`type_id` != 3
+        AND `attribute_product`.`product_id` = ?";
+        return $this->pdo_query($sql, $product_id);
+    }
     public function getProduct($slug){
         $sql = "SELECT `products`.`id` AS `product_id` ,`products`.`name` AS `product_name`, c1.name, c2.name AS `platform`, c2.id AS `platform_id` FROM `products` 
         JOIN `categories` c1

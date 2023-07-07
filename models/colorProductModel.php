@@ -36,16 +36,44 @@ class ColorProduct extends Database{
         $sql = "INSERT INTO `library_color` ( `product_color_id`, `thumb`) VALUES (?, ?)";
         return $this->pdo_execute($sql, $product_color_id, $thumb);
     }
-
-
-    public function update($name, $id){
-         $sql = "UPDATE `brands` SET `name` = ?, `updatedAt` =  current_timestamp() WHERE `brands`.`id` = ?";
-         return $this->pdo_execute($sql, $name, $id);
-    }
-    public function delete($id){
-        $sql = "DELETE FROM `brands` WHERE `id` = ?";
+    public function deleteLibraryProductByID($id){
+        $sql = "DELETE FROM `library_color` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
-   }
+    }
+    public function getLibraryProductByID($id){
+        $sql = "SELECT * FROM `library_color` WHERE `id` = ?";
+        return  $this->pdo_query_one($sql, $id);
+    }
+
+    public function update($price, $price_sale, $active, $thumb, $quantity, $attribute_product_id){
+         $sql = "UPDATE `product_color` SET  `price` = ?, `price_sale` = ?, `active` = ?, `thumb` = ?, `quantity` = ?, `updatedAt` = current_timestamp() WHERE `product_color`.`attribute_product_id` = ?";
+         return $this->pdo_execute($sql, $price, $price_sale, $active, $thumb, $quantity, $attribute_product_id);
+    }
+    
+    public function getAllByProduct(){
+        $sql = "SELECT `products`.`slug`,`products`.`thumb`,`products`.`name`, `products`.`id` AS `product_id`, `attribute_product`.`id` AS `attribute_product_id`, COUNT(`attribute_product`.`product_id`) AS `total_color` 
+        FROM `products` 
+        LEFT JOIN `attribute_product` 
+        ON `products`.`id` = `attribute_product`.`product_id` 
+        AND `attribute_product`.`type_id` = 3 
+        GROUP BY `attribute_product`.`product_id`, `products`.`name`";
+        return  $this->pdo_query($sql);
+    }
+    public function getAllColorByProduct($product_id){
+        $sql = "SELECT  `attribute_product`.`id` AS `attribute_product_id`,`types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
+        FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types` 
+        JOIN `product_color` 
+        WHERE `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = 3 
+        AND `attribute_product`.`id` = `product_color`.`attribute_product_id`
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `products`.`id` = `attribute_product`.`product_id`";
+        return  $this->pdo_query($sql, $product_id);
+    }
 
 }
 ?>

@@ -23,6 +23,7 @@ define('IMAGE_DIR_LIBRARY', $ROOT_URL . "/public/image/library/");
 define('UPLOAD_URL_USER', __DIR__ . "/public/image/user/");
 define('SITE_URL', "$ROOT_URL/");
 define('SITE_URL_ADMIN', "$ROOT_URL/public/admin");
+define('SITE_URL_POST', "$ROOT_URL/public/post");
 define('ROOT_PATH', dirname(__DIR__) . '/htdocs/');
 define('ENV', 'development');
 

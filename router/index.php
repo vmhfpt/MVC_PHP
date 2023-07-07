@@ -60,10 +60,34 @@
  Router::handle('POST',  'admin/attribute-product/get-value/ajax',       'admin/attributeProductController', 'getValue');
  Router::handle('POST',  'admin/attribute-product/{slug}',       'admin/attributeProductController', 'create');
   /*************************************************************************************** */
+  Router::handle('GET',  'admin/color-product/list/detail/{id}',       'admin/colorProductController', 'show');
+  Router::handle('GET',  'admin/color-product/list',       'admin/colorProductController', 'list');
+  Router::handle('POST',  'admin/library-product/delete/ajax',       'admin/colorProductController', 'deleteLibrary');
   Router::handle('GET',  'admin/color-product/{attribute_id}',       'admin/colorProductController', 'index');
   Router::handle('POST',  'admin/color-product/{attribute_id}',       'admin/colorProductController', 'create');
+  Router::handle('POST',  'admin/color-product-update/{attribute_id}',       'admin/colorProductController', 'update');
+  /*************************************************************************************** */
+  Router::handle('POST',  'admin/attribute-price/delete', 'admin/attributePriceController', 'destroy');
+  Router::handle('GET',  'admin/attribute-price/add/{product_id}/{attribute_product_id}/{product_color_id}',  'admin/attributePriceController', 'add');
+  Router::handle('GET',  'admin/attribute-price/list', 'admin/attributePriceController', 'index');
+  Router::handle('POST',  'admin/attribute-price/add/{product_id}/{attribute_product_id}/{product_color_id}',  'admin/attributePriceController', 'insert');
+  Router::handle('GET',  'admin/attribute-price/edit/{attribute_price_id}',  'admin/attributePriceController', 'edit');
+  Router::handle('POST',  'admin/attribute-price/edit/{attribute_price_id}',  'admin/attributePriceController', 'update');
+  /*************************************************************************************** */
+  Router::handle('GET',  'admin/conversation', 'admin/conversationController', 'index');
+    /*************************************************************************************** */
+
+ Router::handle('GET',  'admin/coupon/add',        'admin/couponController', 'add');
 
  
+ Router::handle('POST',  'admin/brand/add',        'admin/brandController', 'create');
+ Router::handle('GET',  'admin/brand/list',       'admin/brandController', 'index');
+ Router::handle('GET',  'admin/brand/edit/{id}','admin/brandController', 'edit');
+ Router::handle('POST',  'admin/brand/edit/{id}','admin/brandController', 'update');
+ Router::handle('POST',  'admin/brand/delete',     'admin/brandController', 'destroy');
+
+
+
  http_response_code(404);
  echo '404 not found';
 ?>

@@ -177,7 +177,7 @@
            
             $(".render-library").append(`
                 <div class="filtr-item col-sm-3" >
-                    <img style="width : 160px; height : 190px;" id="#imgSrc" src="${URL.createObjectURL(event.target.files[i])}" class=" mb-2" alt="white sample" />
+                    <img style="width : 180px; height: 220px;object-fit: cover;" id="#imgSrc" src="${URL.createObjectURL(event.target.files[i])}" class=" mb-2" alt="white sample" />
                 </div>
             `);
         }
