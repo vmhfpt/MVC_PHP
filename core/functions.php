@@ -89,4 +89,17 @@
             return number_format($number, 0, ',', '.') . "{$suffix}";
         }
    }
+   function randomCoupon(){
+    $length = 10;
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $coupon_code = '';
+    
+    for ($i = 0; $i < $length; $i++) {
+        $coupon_code .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    
+    $coupon_code = strtoupper($coupon_code);
+    
+    return($coupon_code);
+   }
 ?>

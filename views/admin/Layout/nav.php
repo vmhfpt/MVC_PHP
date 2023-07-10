@@ -9,7 +9,7 @@
                     <a href="" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Logout</a>
+                    <a href="/admin/logout" class="nav-link">Logout</a>
                 </li>
             </ul>
 
@@ -166,7 +166,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Danh mục
+                                    Danh mục sản phẩm
                                     <i class="fas fa-angle-left right"></i>
                                     <span class="badge badge-info right">6</span>
                                 </p>
@@ -175,13 +175,38 @@
                                 <li class="nav-item">
                                     <a href="/admin/category/add" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Thêm danh mục</p>
+                                        <p>Thêm danh mục sản phẩm</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/admin/category/list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Danh sách danh mục</p>
+                                        <p>Danh sách danh mục sản phẩm</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Danh mục bài đăng
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/category-post/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm danh mục bài đăng</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/category-post/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách danh mục bài đăng</p>
                                     </a>
                                 </li>
                                
@@ -232,6 +257,37 @@
                                     <a href="/admin/product/list/" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách sản phẩm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/product-coupon/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách mã giảm giá đính kèm</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Bài đăng
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/post/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm  bài đăng</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/post/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách bài đăng</p>
                                     </a>
                                 </li>
                                
@@ -402,11 +458,21 @@
                                
                             </ul>
                         </li>
+                        
                         <li class="nav-item">
                             <a href="/admin/conversation" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Hỗ trợ trực tuyến
+                                    <span class="right badge badge-danger">5</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/transport-fee/list" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Phí vận chuyển
                                     <span class="right badge badge-danger">5</span>
                                 </p>
                             </a>

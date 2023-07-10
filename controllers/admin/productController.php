@@ -2,7 +2,9 @@
 require_once("models/brandModel.php");
 require_once("models/categoryModel.php");
 require_once("models/productModel.php");
+require_once("models/couponModel.php");
 class productController extends controller{
+    private $coupon;
     private $category;
     private $brand;
     private $validate;
@@ -12,6 +14,77 @@ class productController extends controller{
       $this->category  = new Category();
       $this->brand = new Brand();
       $this->product = new Product();
+      $this->coupon = new Coupon();
+   }
+   public function couponDetail($request, $response){
+      $id = ($request[0]['id']);
+      $item = $this->product->getById($id);
+      $dataItem = $this->coupon->getDetailListCouponByProduct($id);
+      $listCoupon = $this->coupon->getAll();
+      return ($this->loadView('admin/couponProduct/detail',
+      [
+         'dataItem' => $dataItem,
+         'item' => $item,
+         'listCoupon' => $listCoupon
+      ]));
+   }
+   public function getListCouponByProduct(){
+      $dataItem = $this->coupon->getAllCouponByProduct();
+      return ($this->loadView('admin/couponProduct/list',
+      [
+         'dataItem' => $dataItem,
+      ]
+   ));
+   }
+   public function addCouponProduct($request, $response){
+      $id = ($request[0]['id']);
+      $item = $this->product->getById($id);
+      $dataItem = $this->coupon->getDetailListCouponByProduct($id);
+      $listCoupon = $this->coupon->getAll();
+      $this->validate->rule([
+         'coupon_id' => 'require'
+       ]);
+       $this->validate->validate([
+          'coupon_id.require' => '* Giảm giá không được để trống',
+       ]);
+       $errors = ($this->validate->message());
+       if($this->coupon->checkUnique($id, $request['coupon_id'])){
+         $errors['coupon_id'] = "* Mã giảm giá đã tồn tại trong sản phẩm";
+       }
+       if($errors){
+         return ($this->loadView('admin/couponProduct/detail', [
+            'errors' => $errors,
+            'old_field' => $request,
+            'dataItem' => $dataItem,
+            'item' => $item,
+            'listCoupon' => $listCoupon
+         ]));
+       }else {
+          $this->coupon->insertCouponProduct($request['coupon_id'],$id);
+          $item = $this->product->getById($id);
+          $dataItem = $this->coupon->getDetailListCouponByProduct($id);
+          $listCoupon = $this->coupon->getAll();
+          return ($this->loadView('admin/couponProduct/detail',
+          [
+             'dataItem' => $dataItem,
+             'item' => $item,
+             'listCoupon' => $listCoupon,
+             'status' => 'Thêm mã giảm giá mới thành công'
+          ]));
+       }
+   }
+   public function destroyCouponProduct($request, $response){
+      try{
+         foreach($request['arr'] as $key => $value){
+            $this->coupon->deleteCouponProduct($value);
+         }
+         echo json_encode(['status' => 'success']);
+        }catch(Exception $exc){
+          echo json_encode([
+           'status' => 'error',
+           'detal' => $exc
+         ]);
+        }
    }
     public function add(){
         $listCategory = $this->category->getCategory();
@@ -170,6 +243,10 @@ class productController extends controller{
            'detal' => $exc
          ]);
         }
+     }
+     public function getListAPI(){
+        $dataItem  = $this->product->getALl();
+        echo json_encode($dataItem);
      }
 }
 ?>

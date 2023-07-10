@@ -1,7 +1,11 @@
 <?php
 
+if(!session_id()){
+    session_start();
+    
+}
 
-
+//var_dump($_SESSION['user']); die();
 
 $ROOT_URL = "";
 $CONTENT_URL = "$ROOT_URL/content";
@@ -15,6 +19,9 @@ $ADMIN_URL = "$ROOT_URL/admin";
 //$IMAGE_DIR_USER = $ROOT_URL."/uploaded/user/" ;
 //$IMAGE_DIR_PRODUCT = $ROOT_URL."/uploaded/product/" ;
 define('ITEM_PER_PAGE', 5);
+
+define('UPLOAD_URL_POST', __DIR__ . "/public/image/post/");
+define('IMAGE_DIR_POST', $ROOT_URL . "/public/image/post/");
 define('UPLOAD_URL_LIBRARY', __DIR__ . "/public/image/library/");
 define('UPLOAD_URL_PRODUCT', __DIR__ . "/public/image/product/");
 define('IMAGE_DIR_USER', $ROOT_URL . "/public/image/user/");
@@ -44,7 +51,8 @@ if(file_exists('vendor/autoload.php')){
 $autoloads = [
   'Controller',
   'Request',
-  'Router'
+  'Router',
+  'Middleware'
 ];
 foreach($autoloads as $file){
     require('core/'.$file).'.php';

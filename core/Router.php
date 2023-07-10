@@ -2,8 +2,8 @@
 
  
  class Router {
-    
-
+  
+    public static $kaka;
     public static function handleParamter($firstString, $secondString){
       $arrNewRequest = [];
       $str_arr = explode('/', $firstString);
@@ -24,7 +24,8 @@
       }
       return($arrNewRequest);
     }
-    public static function handle($method = 'GET', $path = '/', $controllorName = '', $controllerMethod = ''){
+    public static function handle($method = 'GET', $path = '/', $controllorName = '', $controllerMethod = '', $middleware = false){
+       $a = 3;
        $currenMethod = $_SERVER['REQUEST_METHOD'];
        
        $currentUri = $_SERVER['REQUEST_URI'];
@@ -46,34 +47,41 @@
        $root = '';
        $pattern = '#^'.$root.$path.'$#siD';
        if(preg_match( $pattern,  $currentUri)){
-         $request = new request();
-         $request->setRequest($controllorName, $controllerMethod);
-        
-        $controllerName = $request->controller ;
-        $methodName = $request->method;
-         
-        
-        if(!file_exists('./controllers/'.$controllerName.'.php')){
-           show404Error();
-        }
-        require('controllers/'.$controllerName.'.php');
+        $request = new request();
+            $request->setRequest($controllorName, $controllerMethod);
+            
+            $controllerName = $request->controller ;
+            $methodName = $request->method;
+            
+            
+            if(!file_exists('./controllers/'.$controllerName.'.php')){
+              show404Error();
+            }
+            require('controllers/'.$controllerName.'.php');
+    
+            $controllerName =  substr($controllerName , strrpos($controllerName,"/") + 1);
+            
+            $controller = new $controllerName();
+            
+            if(!method_exists($controller, $methodName)){
+                show404Error();
+            }
+            
+            
+            if($middleware){
+              Middleware::auth( function($controller, $methodName){
+                  $controller->{$methodName}($_REQUEST, $_SERVER);
+              },$controller, $methodName );  
+            }else {
+              $controller->{$methodName}($_REQUEST, $_SERVER);
+            }
 
-        $controllerName =  substr($controllerName , strrpos($controllerName,"/") + 1);
-        
-        $controller = new $controllerName();
-        
-        if(!method_exists($controller, $methodName)){
-            show404Error();
-        }
-  
-      
-
-        $controller->{$methodName}($_REQUEST, $_SERVER);
-        
-         exit();
+        exit();
        }
        return false;
     }
+
+   
 
 }
 ?>

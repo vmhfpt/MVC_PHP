@@ -101,7 +101,7 @@
                                             <th>ĐỊA CHỈ EMAIL</th>
                                             <th style="width : 90px">HÌNH ẢNH</th>
                                             <th>VAI TRÒ?</th>
-                                            <th style="width: 140px"> </th>
+                                            <th style="width: 280px"> </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -124,7 +124,11 @@
                                                 
                                             </td>
                                             <td class="project-actions text-right">
-
+                                            <a class="btn btn-warning btn-sm" href="privilege/<?=$value['id']?>">
+                                                    <i class="fas fa-pencil-alt">
+                                                    </i>
+                                                    Phân quyền
+                                                </a>
                                                 <a class="btn btn-info btn-sm" href="edit/<?=$value['id']?>">
                                                     <i class="fas fa-pencil-alt">
                                                     </i>

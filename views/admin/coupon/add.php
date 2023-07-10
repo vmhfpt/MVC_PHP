@@ -35,13 +35,13 @@
                     </button>
                 </div>
             </div>
-            <form id="submit-form" action="/admin/brand/add" method="POST">
+            <form id="submit-form" action="/admin/coupon/add" method="POST">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="code">CODE (Ngẫu nhiên)</label>
-                                <input type="text" class="form-control" id="code" placeholder="Hdedf234nd" >
+                                <input  value="<?=randomCoupon()?>" name="code" type="text" class="form-control" id="code" readonly >
                             </div>
 
                             <div class="form-group">
@@ -61,12 +61,25 @@
                                    <option value="1">Giá tùy chọn</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+
+                        </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
                                 <label for="name-category">GIÁ ƯU ĐÃI</label>
-                                <input value="<?=isset($old_field['discount_amount']) ? $old_field['discount_amount'] : ''?>" name="discount_amount" type="number" class="form-control " id="name-category" placeholder="Nhập giá ưu đãi">
+                                <input value="<?=isset($old_field['discount_amount']) ? $old_field['discount_amount'] : ''?>" name="discount_amount" type="text" class="form-control " id="name-category" placeholder="Nhập giá ưu đãi">
                                 <?= isset($errors['discount_amount']) ? '<span id="error-name" class="text-danger">'.$errors['discount_amount'].'</span>' : '<span id="error-name" class="text-danger">* Bắt buộc nhập</span>'?>
                             </div>
-
+                            
+                            <div class="form-group">
+                                <label>NGÀY BẮT ĐẦU</label>
+                                <input value="<?=isset($old_field['start_date']) ? $old_field['start_date'] : ''?>" placeholder="mm/dd/yyyy" name="start_date" type="date" class="form-control" id="date" />
+                                <?= isset($errors['start_date']) ? '<span id="error-name" class="text-danger">'.$errors['start_date'].'</span>' : '<span id="error-name" class="text-danger">* Bắt buộc nhập</span>'?>
+                            </div>
+                            <div class="form-group">
+                                <label>NGÀY KẾT THÚC</label>
+                                <input value="<?=isset($old_field['end_date']) ? $old_field['end_date'] : ''?>" placeholder="mm/dd/yyyy" name="end_date" type="date" class="form-control" id="date" />
+                                <?= isset($errors['end_date']) ? '<span id="error-name" class="text-danger">'.$errors['end_date'].'</span>' : '<span id="error-name" class="text-danger">* Bắt buộc nhập</span>'?>
+                            </div>
                         </div>
                     </div>
 
@@ -76,8 +89,8 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary m-2">Thêm mới</button>
-                    <a href="/admin/brand/add" class=""> <button type="button" class="btn btn-danger m-2">Nhập lại</button></a>
-                    <a href="/admin/brand/list" class=""><button type="button" class="btn btn-success m-2">Danh sách</button></a>
+                    <a href="/admin/coupon/add" class=""> <button type="button" class="btn btn-danger m-2">Nhập lại</button></a>
+                    <a href="/admin/coupon/list" class=""><button type="button" class="btn btn-success m-2">Danh sách</button></a>
                 </div>
             </form>
 

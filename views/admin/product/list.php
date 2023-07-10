@@ -100,7 +100,7 @@
                                             <th>TÊN HÀNG HÓA</th>
                                             <th>DANH MỤC</th>
                                             <th>ĐƠN GIÁ</th>
-                                            <th style="width : 90px">GIẢM GIÁ</th>
+                                            <th style="width : 90px">HÌNH</th>
                                             <th>LƯỢT XEM</th>
                                             <th style="width: 280px"> </th>
                                         </tr>

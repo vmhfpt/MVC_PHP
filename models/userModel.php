@@ -30,6 +30,10 @@ class User extends Database{
         $sql = "DELETE FROM `users` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
    }
+   public function login($email, $password){
+     $sql = "SELECT * FROM `users` WHERE `email` = ? AND `password` = ?";
+     return  $this->pdo_query_one($sql, $email, $password);
+   }
 
 }
 ?>

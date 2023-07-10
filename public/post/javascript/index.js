@@ -1,3 +1,159 @@
+$(document).on("click", ".show-more-detail", function() {
+  $('.app-detail-bottom__item-content').css('height', 'auto');
+  $(this).addClass('close-more-detail');
+  $(this).removeClass('show-more-detail');
+  $(this).text('Thu gọn');
+})
+
+
+
+$(document).on("click", ".close-more-detail", function() {
+  $(this).removeClass('close-more-detail');
+  $(this).addClass('show-more-detail');
+  $('.app-detail-bottom__item-content').css('height', '700px');
+  $(this).text('Xem thêm');
+});
+ 
+ 
+var owls = $(".app-detail-top__content-carousel-bottom-detail");
+var owl = $(".app-detail-top__content-carousel-top-detail");
+
+owl.owlCarousel({
+    //onDragged: callback,
+    onChanged: callback,
+    items: 1,
+    margin: 11,
+    autoplay: false,
+    center: true,
+    loop: true,
+    dots: false,
+    nav: true,
+    autoplayTimeout: 5000,
+
+});
+
+
+
+owls.owlCarousel({
+    items: 1,
+    margin: 11,
+    autoplay: false,
+
+    loop: false,
+    dots: false,
+    nav: false,
+    autoplayTimeout: 5000,
+
+    responsive: {
+        0: {
+            items: 6,
+        },
+        600: {
+            items: 6,
+        },
+
+        800: {
+            items: 6,
+        },
+        1000: {
+            items: 6,
+        },
+        1200: {
+            items: 6,
+        },
+    },
+});
+
+
+
+
+
+$(".click-show-slide").click(function() {
+    $(
+        ".app-detail-top__content-carousel-bottom-detail .owl-item"
+    ).removeClass("carousel-active-border");
+    $(this).addClass("carousel-active-border");
+
+    let point = $(this).attr("data-slide");
+
+    owl.trigger("to.owl.carousel", Number(point) - 1, [300]);
+});
+
+
+
+function callback(event) {
+    // var item     = event.item.index;
+    let current =
+        event.item.index + 1 - event.relatedTarget._clones.length / 2;
+    let itemsCount = event.item.count;
+
+    if (current > itemsCount) {
+        current = 1;
+    }
+
+    if (current === 0) {
+        current = event.item.count;
+    }
+
+
+
+    owls.trigger("to.owl.carousel", current - 1, [300]);
+    $('.app-detail-top__content-carousel-bottom-detail .owl-item').removeClass('carousel-active-border');
+    var selectors = $('.click-show-slide');
+    selectors.eq(current - 1).addClass('carousel-active-border');
+}
+$(window).on('popstate', function(event) {
+    if (location.href.search('slide=true') >= 0) {
+
+        $('.app-click-show__library').addClass('position-carousel');
+        owl.trigger("refresh.owl.carousel", [300]);
+        owls.trigger("refresh.owl.carousel", [300]);
+    } else {
+        $('.app-click-show__library').removeClass('position-carousel');
+        owl.trigger("refresh.owl.carousel", [300]);
+        owls.trigger("refresh.owl.carousel", [300]);
+    }
+});
+
+$(".app-detail-promotion__content-flex").owlCarousel({
+    items: 1,
+    margin: 22,
+    autoplay: false,
+
+    loop: false,
+    dots: false,
+    nav: true,
+    autoplayTimeout: 5000,
+
+
+    responsive: {
+        0: {
+            items: 2,
+            center: true,
+            autoplay: false,
+        },
+        600: {
+            items: 3,
+        },
+
+        800: {
+            items: 3,
+        },
+        1000: {
+            items: 4,
+        },
+        1200: {
+            items: 4,
+        },
+    },
+});
+
+
+
+
+
+
+
  function getTotalCart(arr){
  	  	$('.app-header__top-item-icon-cart-quantity').empty();
  	  if(arr == null){
