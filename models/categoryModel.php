@@ -39,6 +39,10 @@ class Category extends Database{
         $sql = "DELETE FROM `categories` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
    }
+   public function getCategoryByPlatformID($platform_id){
+      $sql = "SELECT * FROM `categories` WHERE `parent_id` = ?";
+      return $this->pdo_query($sql, $platform_id);
+   }
 
 }
 ?>

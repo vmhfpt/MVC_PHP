@@ -15,7 +15,7 @@ class Coupon extends Database{
         return $this->pdo_query($sql);
     }
     public function getDetailListCouponByProduct($product_id){
-        $sql = "SELECT `coupon_product`.`id`, `products`.`name` AS `product_name`, `coupons`.`name` AS `coupon_name`, `coupons`.`code` FROM `coupon_product` 
+        $sql = "SELECT `coupon_product`.`id`, `products`.`name` AS `product_name`, `coupons`.`name` AS `coupon_name` FROM `coupon_product` 
         JOIN `coupons`
         JOIN `products`
         ON `coupon_product`.`coupon_id` = `coupons`.`id`

@@ -1,23 +1,48 @@
 <nav class="app-nav container-fluid app-nav__active">
     <div class="container">
         <div class="app-header__flex">
-            <div class="app-header__flex-item">
-                <ul>
-                    <?php
-                    foreach ([] as $key => $value) {
-                    ?>
-                        <a href="<?= $SITE_URL ?>/hang-hoa/liet-ke.php?ma-loai=<?= $value['ma_loai'] ?>" class="">
-                        <li>
-                            <img class="icon-desktop" src="https://didongthongminh.vn/images/menus/icon-dien-thoai.svg" alt="" />
-                            <img class="icon-mobile" src="https://didongthongminh.vn/images/menus/dien-thoai.webp" alt="" />
-                            <?=$value['ten_loai']?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <div class="app-header__flex-item">
+            <ul>
+                <?php foreach($this->category->getAllPlatform() as $key => $value){?>
+                    <li>
+                <img
+                  class="icon-desktop"
+                  src="https://didongthongminh.vn/images/menus/icon-dien-thoai.svg"
+                  alt=""
+                />
+                <img
+                  class="icon-mobile"
+                  src="https://didongthongminh.vn/images/menus/dien-thoai.webp"
+                  alt=""
+                />
+                <?=$value['name']?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <?php if($this->category->getCategoryByPlatformID($value['id'])){?>
+                    <div class="app-header__flex-item-nav-child">
+                  <div class="app-header__flex-item-nav-child-list">
+                    <div class="app-header__flex-item-nav-child-item">
+                      <ul class="">
+                        <li class="app-header__flex-item-nav-child-list-active">
+                          Chọn theo hãng
                         </li>
-                        </a>
-                    <?php
-                    }
-                    ?>
-                </ul>
-            </div>
+
+                        <?php foreach($this->category->getCategoryByPlatformID($value['id']) as $key1 => $child){?>
+                            <li><a href=""><?=$child['name']?> </a></li>
+
+                        <?php }?>
+                        
+                      </ul>
+                    </div>
+                  
+                  </div>
+                </div>
+
+                <?php }?>
+              
+              </li>
+                <?php }?>
+             
+            </ul>
+          </div>
             <div class="app-header__flex-item remove-item">
 
 

@@ -146,6 +146,8 @@
   Router::handle('GET',  'product/{platform_slug}/{product_slug}', 'post/handleController', 'detailProduct');
   Router::handle('GET',  'introduce/agent', 'post/handleController', 'detailAgent');
   Router::handle('GET',  'introduce/{slug}', 'post/handleController', 'detailIntroduce');
+  Router::handle('POST',  'api/get-color-product', 'post/productController', 'getColorProductByAttributeProductIDAjax');
+  Router::handle('POST',  'api/get-attribute-price-product', 'post/productController', 'getAttributePriceProductCartAjax');
  
 
  http_response_code(404);

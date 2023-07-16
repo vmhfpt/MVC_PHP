@@ -1,6 +1,12 @@
 /*Lấy tất cả sản phẩm thuộc nền tảng kinh doanh*/
 
-SELECT `products`.`name` AS `product_name`, `categories`.`name` AS `category_name` FROM `products` JOIN `categories` WHERE `products`.`category_id` IN(SELECT `categories`.`id` FROM `categories` WHERE `categories`.`parent_id` = 1 ) AND `products`.`category_id` = `categories`.`id`;
+SELECT `products`.`name` AS `product_name`, `categories`.`name` AS `category_name`, platform.name AS `platform_name` FROM `products` 
+JOIN `categories`
+ON `products`.`category_id` 
+IN(SELECT `categories`.`id` FROM `categories` WHERE `categories`.`parent_id` = 1 ) 
+AND `products`.`category_id` = `categories`.`id`
+JOIN `categories` platform
+ON `categories`.`parent_id` = platform.id
 /*---------------------------------------------------------*/
 
 
@@ -166,3 +172,63 @@ AND a1.`type_id` = t1.`id`
 AND a1.`value_id` = v1.`id`
 AND a2.`type_id` = t2.`id`
 AND a2.`value_id` = v2.`id`
+
+/*lấy biến thể màu sản phẩm thông qua chi tiết đơn hàng chỉ định*/
+SELECT `products`.`name`,`types`.`description`, `values`.`value`, `product_color`.`price`, `product_color`.`price_sale`, `product_color`.`thumb`, `order_detail`.`total`, `order_detail`.`quantity`
+
+FROM `order_detail`
+INNER JOIN `order`
+INNER JOIN `product_color`
+ON `order_detail`.`order_id` = `order`.`id`
+AND `order_detail`.`product_id` = `product_color`.`id`
+INNER JOIN `attribute_product` 
+ON `product_color`.`attribute_product_id` = `attribute_product`.`id`
+INNER JOIN `products`
+ON `attribute_product`.`product_id` = `products`.`id`
+INNER JOIN `values`
+INNER JOIN `types`
+ON `attribute_product`.`type_id` = `types`.`id`
+AND `attribute_product`.`value_id` = `values`.`id`
+AND `order_detail`.`order_id` = 11
+
+/*********************Lấy biến thể giá thông qua bảng chi tiết đơn hàng ID*****************/
+SELECT `products`.name AS `product_name`, v1.value AS `product_color`, `types`.`description`, `values`.`value`, `attribute_price`.`price`,`attribute_price`.`price_sale`
+FROM `order_attribute_product` 
+INNER JOIN `order_detail`
+ON `order_attribute_product`.`order_detail_id` = `order_detail`.`id`
+INNER JOIN `product_color` 
+ON `order_detail`.`product_id` = `product_color`.`id`
+INNER JOIN `attribute_product` p1
+ON `product_color`.`attribute_product_id` = p1.id
+INNER JOIN `types` t1
+INNER JOIN `values` v1
+ON p1.type_id = t1.id
+AND p1.value_id = v1.id
+INNER JOIN `attribute_price`
+ON `order_attribute_product`.`attribute_price_id` = `attribute_price`.`id`
+INNER JOIN `attribute_product`
+ON `attribute_price`.`attribute_product_id` = `attribute_product`.`id`
+INNER JOIN `values`
+INNER JOIN `types`
+ON `attribute_product`.`type_id` = `types`.`id`
+AND `attribute_product`.`value_id` = `values`.`id`
+INNER JOIN `products` 
+ON `attribute_product`.`product_id` = `products`.`id`
+
+
+/*******************************/
+SELECT `types`.`id`,`products`.`name`,`types`.`name` AS `type_name`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` , `attribute_price`.`id` AS `attribute_price_id`
+        FROM `attribute_price` 
+        JOIN `product_color` 
+        JOIN `attribute_product` 
+        JOIN `types` 
+        JOIN `values` 
+        JOIN `products` 
+        ON `attribute_price`.`product_color_id` = `product_color`.`id` 
+        AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id` 
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `attribute_product`.`product_id` = `products`.`id` 
+        AND `product_color`.attribute_product_id = 138
+        AND `values`.`value` IN ('256 Gb', '8Gb')
+        ORDER BY `types`.`id` ASC;

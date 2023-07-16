@@ -38,6 +38,14 @@ class Post extends Database{
         $sql = "DELETE FROM `posts` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
    }
+   public function getFirstItem(){
+      $sql = "SELECT * FROM `posts` ORDER BY `posts`.`id` ASC LIMIT 0,1";
+      return  $this->pdo_query_one($sql);
+   }
+   public function getFivePostsSuggest(){
+      $sql = "SELECT * FROM `posts` ORDER BY `posts`.`id` DESC LIMIT 5 OFFSET 1"; 
+      return $this->pdo_query($sql);
+   }
 
 }
 ?>

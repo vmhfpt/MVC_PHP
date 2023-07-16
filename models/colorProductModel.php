@@ -60,7 +60,7 @@ class ColorProduct extends Database{
         return  $this->pdo_query($sql);
     }
     public function getAllColorByProduct($product_id){
-        $sql = "SELECT  `attribute_product`.`id` AS `attribute_product_id`,`types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
+        $sql = "SELECT  `attribute_product`.`id` AS `attribute_prd_id`,`types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
         FROM `attribute_product` 
         JOIN `products` 
         JOIN `values` 

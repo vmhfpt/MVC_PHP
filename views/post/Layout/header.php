@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="<?= SITE_URL_POST ?>/carousel/dist/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="<?= SITE_URL_POST ?>/carousel/dist/assets/owl.theme.default.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="<?= SITE_URL_POST ?>/carousel/dist/owl.carousel.min.js"></script>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
 </head>
 

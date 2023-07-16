@@ -56,6 +56,102 @@ class Product extends Database{
         AND `attribute_product`.`type_id` = 3";
         return $this->pdo_query($sql);
     }
+    public function getProductByPlatformID($platform_id){
+        $sql = "SELECT `products`.`price_sale`,`products`.`price`,`products`.`thumb`,`products`.`name` AS `product_name`, `categories`.`slug` AS `category_slug`, platform.slug AS `platform_slug`, `products`.`slug` AS `product_slug` FROM `products` JOIN `categories` ON `products`.`category_id` IN(SELECT `categories`.`id` FROM `categories` WHERE `categories`.`parent_id` = ? ) AND `products`.`category_id` = `categories`.`id` JOIN `categories` platform ON `categories`.`parent_id` = platform.id ORDER BY `products`.`id` DESC LIMIT 0,10";
+        return $this->pdo_query($sql, $platform_id);
+    }
+    public function getProductByBrandSuggest($brand_id){
+       $sql = "SELECT `products`.`price_sale`,`products`.`price`,`products`.`name`,`products`.`thumb`,`products`.`slug` AS `product_slug`,`products`.`name` AS `product_name`, category.slug AS `cateogory_slug`,platform.slug AS `platform_slug` FROM `products`
+       INNER JOIN `categories` category
+       ON `products`.`category_id` = category.id
+       AND `products`.`brand_id` = ?
+       INNER JOIN `categories` platform
+       ON platform.id = category.parent_id
+       ORDER BY `products`.`id` 
+       DESC LIMIT 0,20";
+       return $this->pdo_query($sql, $brand_id);
+    }
+    public function getAttributeByProduct($product_id){
+        $sql = "SELECT `attribute_product`.`id`, `types`.`description`, `values`.`value`, `products`.`name` FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types`
+        WHERE `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        AND `products`.`id` = `attribute_product`.`product_id`
+        AND `types`.`id` != 3
+        GROUP BY `types`.`id` ";
+        return $this->pdo_query($sql, $product_id);
+    }
+    public function getFirstColorByProductID($product_id){
+        $sql = "SELECT `attribute_product`.`id` AS `attribute_product_id`, `products`.`name` AS `product_name` , `types`.`name` AS `attribute`, `values`.`value` , `product_color`.`thumb`, `product_color`.`price`, `product_color`.`price_sale`, `product_color`.`quantity`, `product_color`.`id` AS `product_color_id`
+        FROM `attribute_product` 
+        INNER JOIN `products`
+        INNER JOIN `types`
+        INNER JOIN `values`
+        INNER JOIN `product_color`
+        ON `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`id` = `product_color`.`attribute_product_id`
+        AND `attribute_product`.`product_id` = `products`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        AND `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = 3 LIMIT 0,1";
+        return $this->pdo_query_one($sql, $product_id);
+    }
+
+    public function getPriceAttributeByProductColorID($product_color_id){
+        $sql = "SELECT `types`.`id`,`products`.`name`,`types`.`name` AS `type_name`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` , `attribute_price`.`id` AS `attribute_price_id`
+        FROM `attribute_price` 
+        JOIN `product_color` 
+        JOIN `attribute_product` 
+        JOIN `types` 
+        JOIN `values` 
+        JOIN `products` 
+        ON `attribute_price`.`product_color_id` = `product_color`.`id` 
+        AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id` 
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `attribute_product`.`product_id` = `products`.`id` 
+        AND `attribute_price`.`product_color_id` = ?
+        ORDER BY `types`.`id` ASC;";
+        return $this->pdo_query($sql, $product_color_id);
+    }
+    public function countPriceAttributeByProductColorID($product_color_id){
+        $sql="SELECT `types`.`name` 
+        FROM `attribute_price` 
+        JOIN `product_color` 
+        JOIN `attribute_product` 
+        JOIN `types` 
+        JOIN `values` 
+        JOIN `products` 
+        ON `attribute_price`.`product_color_id` = `product_color`.`id` 
+        AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id` 
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `attribute_product`.`product_id` = `products`.`id` 
+        AND `attribute_price`.`product_color_id` = ? 
+        GROUP BY `types`.`name` ORDER BY `types`.`id` ASC;";
+        return $this->pdo_query($sql, $product_color_id);
+    }
+    
+    public function getAttributePriceProductCart($attribute_product_id){
+        $sql = "SELECT `types`.`id`,`products`.`name`,`types`.`name` AS `type_name`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` , `attribute_price`.`id` AS `attribute_price_id`
+        FROM `attribute_price` 
+        JOIN `product_color` 
+        JOIN `attribute_product` 
+        JOIN `types` 
+        JOIN `values` 
+        JOIN `products` 
+        ON `attribute_price`.`product_color_id` = `product_color`.`id` 
+        AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id` 
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `attribute_product`.`product_id` = `products`.`id` 
+        AND `product_color`.attribute_product_id = ?
+        ORDER BY `types`.`id` ASC";
+        return $this->pdo_query($sql, $attribute_product_id);
+    }
 
 }
 ?>

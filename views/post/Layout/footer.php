@@ -91,6 +91,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="show-app__chat">
+        <div class="app-chat__content action-check">
+          
+        </div>
+    </div>
+
+    <div class="chat-now">
+        <a href="javascript:;" class="show-chat-click"> <img src="https://vuminhhung.netlify.app/static/media/200w.002949c9c69a8105b467.gif" alt=""></a>
+    </div>
     </footer>
     <div class="app-copyright container-fluid">
         <span class="">@ Bản quyền thuộc về Công Ty Cổ Phần Viễn Thông Di Động Thông
@@ -99,6 +109,7 @@
     <script src="<?= SITE_URL_POST ?>/carousel/dist/owl.carousel.min.js"></script>
     <script src="<?= SITE_URL_POST ?>/javascript/index.js"> </script>
     
+
 </body>
 
 </html>

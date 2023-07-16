@@ -5,7 +5,7 @@
         <div class="container">
           <ul class="">
             <li class=""><a href="" class="">Trang chủ</a> /</li>
-            <li class=""><a href="" class="">Điện thoại</a></li>
+            <li data-dir-product="<?=IMAGE_DIR_PRODUCT?>" data-dir-library="<?=IMAGE_DIR_LIBRARY?>" class="get-dir"><a href="" class="">Điện thoại</a></li>
           </ul>
         </div>
       </section>
@@ -13,8 +13,8 @@
       <section class="app-detail-title container-fluid">
         <div class="container">
           <div class="app-detail-title__content">
-            <div class="app-detail-title__content-item">
-              <h2 class="">iPhone 11 Pro Max Đẹp 64Gb</h2>
+            <div class="app-detail-title__content-item price-price-init" data-price="<?=$item['price'] - ($item['price'] * $item['price_sale'])?>" >
+              <h2 class="data-name-product"><?=$item['name']?></h2>
             </div>
             <div class="app-detail-title__content-item">
               <span class="">Cam kết Zin 100%, Đẹp Như Mới</span>
@@ -54,133 +54,43 @@
             <div class="col-lg-4 col-md-6 col-sm-12  app-click-show__library">
               <div class="app-detail-top__content">
                 <div class="app-detail-top__content-carousel-top">
-                  <div
-                    class="app-detail-top__content-carousel-top-detail owl-carousel owl-theme owl-loaded"
-                  >
+                <div class="app-detail-top__content-carousel-top-detail owl-carousel owl-theme owl-loaded">
                     <div class="owl-stage-outer">
                       <div class="owl-stage">
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/2022/12/23/large/gold.webp"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/anhphu/large/36957-apple-iphone-11-pro-256gb-1-5.webp?v=1635413638000"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-mat-lung-3-3b5e2b75-7b24-48ff-bd24-61b4d11b6566.webp?v=1635413647000"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-camera-1.webp?v=1635413675000"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-canh-duoi-37a31bb3-9bb1-468d-ba67-82417951e867.webp?v=1635413647000"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-mat-lung-3-ca67e48a-8d9c-46d2-ba18-7e0b5d40ddc4.webp?v=1635413675000"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
-                        <div class="owl-item">
-                          <a href="#slide=true"
-                            ><img
-                              src="https://didongthongminh.vn/images/products/2022/11/09/resized/green_1668007267.webp"
-                              alt=""
-                              class=""
-                          /></a>
-                        </div>
+                         <?php foreach($firstLibraryColor as $key => $value){?>
+                            <div class="owl-item">
+                              <a href="#slide=true"
+                                ><img
+                                  src="<?=IMAGE_DIR_LIBRARY.$value['thumb']?>"
+                                  alt=""
+                                  class=""
+                              /></a>
+                            </div>
+                         <?php }?>
+                        
                       </div>
                     </div>
-                  </div>
+  </div>
                 </div>
                 <div class="app-detail-top__content-carousel-bottom">
-                  <div
-                    class="app-detail-top__content-carousel-bottom-detail owl-carousel owl-theme owl-loaded"
-                  >
-                    <div class="owl-stage-outer">
-                      <div class="owl-stage">
-                        <div
-                          data-slide="1"
-                          class="carousel-active-border click-show-slide owl-item"
-                        >
-                          <img
-                            src="https://didongthongminh.vn/images/products/2022/12/23/large/gold.webp"
-                            alt=""
-                            class=""
-                          />
-                        </div>
-                        <div data-slide="2" class="click-show-slide owl-item">
-                          <img
-                            src="https://didongthongminh.vn/images/products/anhphu/large/36957-apple-iphone-11-pro-256gb-1-5.webp?v=1635413638000"
-                            alt=""
-                            class=""
-                          />
-                        </div>
-                        <div data-slide="3" class="click-show-slide owl-item">
-                          <img
-                            src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-mat-lung-3-3b5e2b75-7b24-48ff-bd24-61b4d11b6566.webp?v=1635413647000"
-                            alt=""
-                            class=""
-                          />
-                        </div>
-                        <div data-slide="4" class="click-show-slide owl-item">
-                          <img
-                            src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-camera-1.webp?v=1635413675000"
-                            alt=""
-                            class=""
-                          />
-                        </div>
-                        <div data-slide="5" class="click-show-slide owl-item">
-                          <img
-                            src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-canh-duoi-37a31bb3-9bb1-468d-ba67-82417951e867.webp?v=1635413647000"
-                            alt=""
-                            class=""
-                          />
-                        </div>
-                        <div data-slide="6" class="click-show-slide owl-item">
-                          <img
-                            src="https://didongthongminh.vn/images/products/anhphu/large/iphone-11-pro-max-cu-mat-lung-3-ca67e48a-8d9c-46d2-ba18-7e0b5d40ddc4.webp?v=1635413675000"
-                            alt=""
-                            class=""
-                          />
-                        </div>
-                        <div data-slide="7" class="click-show-slide owl-item">
-                          <img
-                              src="https://didongthongminh.vn/images/products/2022/11/09/resized/green_1668007267.webp"
+                <div class="app-detail-top__content-carousel-bottom-detail owl-carousel owl-theme owl-loaded">
+                      <div class="owl-stage-outer">
+                        <div class="owl-stage">
+                         
+                          <?php foreach($firstLibraryColor as $key => $value){?>
+                            <div data-slide="<?=$key + 1?>" class="click-show-slide owl-item">
+                            <img
+                              src="<?=IMAGE_DIR_LIBRARY.$value['thumb']?>"
                               alt=""
                               class=""
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                            />
+                          </div>
+                          <?php }?>
+      </div>
+    </div>
+  </div>
                 </div>
+           
               </div>
             </div>
             <div class="col-lg-5 col-md-6 col-sm-12">
@@ -196,102 +106,84 @@
                         </select>
                      </div>
                      <div class="">
-                        <b class="app-detail-top__center-cost-sale">11.190.000đ</b>
-                        <span class="app-detail-top__center-cost-promotion">18.590.000đ</span>
+                        <b class="app-detail-top__center-cost-sale" id="show-price-product"><?= currency_format(($item['price'] - ($item['price'] * (float)$item['price_sale'])) + ( $firstColor['price'] - ($firstColor['price'] * $firstColor['price_sale'] ))) ?></b>
+                        <span class="app-detail-top__center-cost-promotion" data-price-sale="<?=$item['price'] - ($item['price'] * $item['price_sale'])?>" data-price="<?=$item['price']?>" ><?= currency_format($item['price']) ?></span>
                      </div>
                      
                 </div>
-
-                <div class="app-detail-top__center-filter">
-                    <div class="app-detail-top__center-filter-attribute">
-                         <div class="app-detail-top__center-filter-attribute-item">
-                            <b class="">64GB</b>
-                            <span class="">11.190.000đ</span>
+               
+                <div class="app-detail-top__center-filter"  >
+                    <div class="app-detail-top__center-filter-attribute get-data-attribute-product" id="show-attribute-price-product" data-array='<?=json_encode($listPriceAttributeProduct)?>' data-total='<?=json_encode($totalArrayAttribute)?>'>
+                      
+                       <?php foreach($listPriceAttributeProduct as $key => $value){?>
+                        <div data-attribute-product="<?=$value['attribute_price_id']?>"  data-value="<?=$value['value']?>" data-price="<?=($value['price'] - ($value['price'] * $value['price_sale']))?>" data-name="<?=$value['type_name']?>" class="<?=$value['type_name']?> app-detail-top__center-filter-attribute-item ">
+                            <span class="app-detail-top__center-filter-attribute-item-tab"><?=$value['type_name']?></span>
+                            <b class=""><?=$value['value']?></b>
+                            <span class="price-change"> + <?= currency_format(($value['price'] - ($value['price'] * $value['price_sale']))) ?></span>
                         </div>
-                        <div class="app-detail-top__center-filter-attribute-item">
-                            <b class="">256GB</b>
-                            <span class="">12.690.000đ</span>
-                        </div>
-                        <div class="app-detail-top__center-filter-attribute-item">
-                            <b class="">512GB</b>
-                            <span class="">19.390.000đ</span>
-                        </div>
+                        
+                       <?php }?>
+                      
                     </div>
-                    <div class="app-detail-top__center-filter-color">
-                         <div class="app-detail-top__center-filter-color-item item_same-active">
+                   
+                    <div class="app-detail-top__center-filter-color" data-color='<?= json_encode($listColorProduct)?>' >
+                      <?php foreach($listColorProduct as $key => $value) {?>
+                        <div data-name="<?=$value['value']?>" data-thumb="<?=IMAGE_DIR_PRODUCT.$value['thumb']?>"  data-price="<?=($item['price'] - ($item['price'] * (float)$item['price_sale'])) + ($value['price'] - ($value['price'] * $value['price_sale']))?>" data-color="<?=$value["attribute_prd_id"]?>" class="app-detail-top__center-filter-color-item <?=$value['attribute_prd_id'] == $firstColor['attribute_product_id'] ? "item_same-active": "" ?>">
                             <div class="">
-                                <img src="https://didongthongminh.vn/images/products/2022/11/09/resized/green_1668007267.webp" alt="" class="">
+                                <img src="<?=IMAGE_DIR_PRODUCT.$value['thumb']?>" alt="" class="">
                             </div>
                             <div class="app-detail-top__center-filter-color-item-detail">
-                                <span class="">Xám</span>
-                                <span class="">11.190.000đ</span>
+                                <span class=""><?=$value['value']?></span>
+                                <span class=""><?= currency_format(($item['price'] - ($item['price'] * (float)$item['price_sale'])) + ($value['price'] - ($value['price'] * $value['price_sale']))) ?></span>
                             </div>
                          </div>
-                         <div class="app-detail-top__center-filter-color-item">
-                            <div class="">
-                                <img src="https://didongthongminh.vn/images/products/2022/11/09/resized/green_1668007267.webp" alt="" class="">
-                            </div>
-                            <div class="app-detail-top__center-filter-color-item-detail">
-                                <span class="">Xám</span>
-                                <span class="">11.190.000đ</span>
-                            </div>
-                         </div>
-                         <div class="app-detail-top__center-filter-color-item">
-                            <div class="">
-                                <img src="https://didongthongminh.vn/images/products/2022/11/09/resized/green_1668007267.webp" alt="" class="">
-                            </div>
-                            <div class="app-detail-top__center-filter-color-item-detail">
-                                <span class="">Xám</span>
-                                <span class="">11.190.000đ</span>
-                            </div>
-                         </div>
-                         <div class="app-detail-top__center-filter-color-item">
-                            <div class="">
-                                <img src="https://didongthongminh.vn/images/products/2022/11/09/resized/green_1668007267.webp" alt="" class="">
-                            </div>
-                            <div class="app-detail-top__center-filter-color-item-detail">
-                                <span class="">Xám</span>
-                                <span class="">11.190.000đ</span>
-                            </div>
-                         </div>
-                         
+                      <?php }?>        
                     </div>
                 </div>
-
-                <div class="app-detail-top__center-promotion">
+              
+                <?php if(!empty($listCoupon)){?>
+                  <div class="app-detail-top__center-promotion app-detail-top__center-promotion-get" data-coupon='<?=json_encode($listCoupon)?>'>
                     <div class="app-detail-top__center-promotion-title-tab">
-                        <span class="">Khuyến mãi</span>
+                        <span class="">Quà tặng mã giảm giá</span>
                     </div>
                     <div class="app-detail-top__center-promotion-detail">
                         <ul class="">
-                            <li class=""><i class="fa fa-check-circle" aria-hidden="true"></i> Tặng bảo hành toàn diện 6 tháng <a href="" class="link-to-detail">chi tiết</a></li>
-                            <li class=""><i class="fa fa-check-circle" aria-hidden="true"></i> Tặng que chọc sim từ thép không gỉ</li>
-                            <li class=""><i class="fa fa-check-circle" aria-hidden="true"></i>  Tặng ốp lưng thời trang trị giá 150.000vnđ</li>
+                            <?php foreach($listCoupon as $key => $value){?>
+                              <li class=""><i class="fa fa-check-circle" aria-hidden="true"></i> <?=$value['coupon_name']?></li>
+                            <?php }?>
                         </ul>
                     </div>
                 </div>
+                <?php }?>
+               
 
-                <div class="app-detail-top__center-promotion">
+                
+                <?php if(!empty($giftProduct)){?>
+
+                  <div class="app-detail-top__center-promotion app-detail-top__center-promotion-total" data-total="<?=count($giftProduct)?>">
                     <div class="app-detail-top__center-promotion-title-tab">
                         <span class="">Quà tặng kèm</span>
                     </div>
                     <div class="app-detail-top__center-promotion-detail">
-                        <div class="app-detail-top__center-promotion-product-detail">
+                        <?php foreach($giftProduct as $key => $value){?>
+                          <div class="app-detail-top__center-promotion-product-detail">
                             <div class="app-detail-top__center-promotion-product-detail-img">
-                                <img src="https://didongthongminh.vn/images/products/anhphu/resized/sa-c-bwoo-mofit.jpg?v=1625122025000" alt="" class="">
+                                <img src="<?=IMAGE_DIR_PRODUCT.$value['thumb']?>" alt="" class="">
                             </div>
                             <div class="app-detail-top__center-promotion-product-detail-title">
                                 
-                                    <a href="" class=""><b class="">Cáp Sạc Nhanh 1M veger VP-312T Type C to Lighting</b></a>
+                                    <a href="/product/<?=$value['platform_slug']?>/<?=$value['product_slug']?>" class=""><b class=""><?=$value['product_name_gift']?></b></a>
 
-                                    <a href="" class=""><span class="">Giá : <b class="">150.000đ</b></span>
+                                    <a href="" class=""><span class="">Giá : <b class=""><?=currency_format($value['price'] - ($value['price'] * $value['price_sale']))?></b></span>
 
                                     </a>
                                
                             </div>
                         </div>
+                        <?php }?>
                     </div>
                 </div>
+                <?php }?>
 
 
               
@@ -312,7 +204,7 @@
                 <div class="app-detail-top__center-payload">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-orange">
+                            <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-orange add-to-cart">
                                 <span class="">mua ngay</span>
                                 <span class="">Giao tận nơi hoặc nhận tại cửa hàng</span>
                             </div>
@@ -332,6 +224,121 @@
                         
                     </div>
                 </div>
+                <script>
+                  function addCart(item){
+                    var shopCart = JSON.parse(localStorage.getItem("carts"));
+                    if(shopCart == null){
+                        localStorage.setItem("carts", JSON.stringify([item]));
+                    }else {
+                      function checkArray(arr, id){
+                          for(var i = 0; i < arr.length; i ++){
+                            if(arr[i].id == id){
+                              return(true);
+                            }
+                          }
+                          return (false);
+                        }
+                      function isEqual(object) {
+                          shopCart = JSON.parse(localStorage.getItem("carts"));
+                          for(var i = 0; i < shopCart.length; i ++){
+                             if((object.id === shopCart[i].id) && (shopCart[i].stringPriceAttribute === object.stringPriceAttribute)){
+                               return true;
+                             }
+                          }
+                          return false;
+                      
+                        }
+                    
+                       // isEqual(item);
+                        if(checkArray(shopCart, item.id) == true && isEqual(item) == true){
+                        var newArr = shopCart.map((value, key) => {
+                              if(value.id == item.id){
+                                return {
+                                  ...value,
+                                  quantity : (Number((value.quantity)) + 1)
+                                }
+                              }else {
+                                  return (value);
+                              }
+                        });
+                           localStorage.setItem("carts", JSON.stringify(newArr));
+                        }else {
+                            localStorage.setItem("carts", JSON.stringify([...shopCart, item]));
+                        }
+
+                    }
+                    //console.log(JSON.parse(localStorage.getItem("carts")));
+                    window.location.replace("/cart");
+                  }
+
+
+                  var attributeArrCart = [];
+                  var dataListCouponProduct = false;
+                  var giftProductTotal = false;
+                
+                $(document).on("click", ".add-to-cart", function() {
+                  attributeArrCart = [];
+                    var thumb = $('.item_same-active').attr('data-thumb');
+                    if($('.app-detail-top__center-promotion-total')){
+                      giftProductTotal = $('.app-detail-top__center-promotion-total').attr('data-total');
+                    }
+                    
+                    $('.item_same-active-attribute').map((index,value) => {
+                       let objectArr = {
+                        name : $(value).attr('data-name'),
+                        value :  $(value).attr('data-value'),
+                          price_attribute_product :  $(value).attr("data-attribute-product"),
+                       }
+                       attributeArrCart.push(objectArr);
+                    });
+                    
+                   var dataListAttributeProductPrice = ( JSON.parse($('.get-data-attribute-product').attr("data-array")));
+                   var dataListColorProduct = JSON.parse($('.app-detail-top__center-filter-color').attr('data-color'));
+                   
+                   if($(".app-detail-top__center-promotion-get").length != 0){
+                     var dataListCouponProduct = JSON.parse($(".app-detail-top__center-promotion").attr('data-coupon'));
+                   }
+                   
+                   
+                   var nameProduct = $('.data-name-product').text();
+                   var priceCurrent = $('#show-price-product').text();
+                   priceCurrent = (priceCurrent.replaceAll('.', '').slice(0, -1));
+                   var colorCurrent = {
+                      name : $('.item_same-active').attr('data-name'),
+                      id : $('.item_same-active').attr('data-color'),
+                      price : Number($('.item_same-active').attr('data-price'))
+                   }
+                  
+                   let objectCart = {
+                      name : nameProduct,
+                      priceCurrent : Number(priceCurrent),
+                      quantity : 1,
+                      thumb : thumb,
+                      attributePriceCurrent : attributeArrCart,
+                      dataListAttributeProductPrice : dataListAttributeProductPrice,
+                      dataListColorProduct : dataListColorProduct,
+                      colorCurrent : colorCurrent,
+                      dataListCouponProduct  : dataListCouponProduct,
+                      giftProduct : Number(giftProductTotal),
+                      priceInitProduct : Number($('.price-price-init').attr('data-price')),
+                      urlProduct : window.location.pathname,
+                      id : Number(colorCurrent.id),
+                      stringPriceAttribute : String(JSON.stringify(attributeArrCart)),
+                      priceInitProduct : Number($('.app-detail-top__center-cost-promotion').attr('data-price')),
+                      priceSaleInitProduct : Number($('.app-detail-top__center-cost-promotion').attr('data-price-sale'))
+                   }
+                 
+                   //console.log(objectCart);
+                   if(attributeArrCart.length == (JSON.parse($('.get-data-attribute-product').attr("data-total"))).length){
+                     $('#alert-add-cart').remove();
+                     addCart(objectCart);
+                   }else {
+                     $('#alert-add-cart').remove();
+                     $('#show-attribute-price-product').before(`<span id="alert-add-cart" style="color : red" >* Vui lòng lựa chọn phiên bản phù hợp </span>`);
+                   }
+                });
+
+                </script>
 
                 <div class="app-detail-top__center-last">
                     <div class="row">
@@ -712,142 +719,9 @@
         </div>
       </section>
 
-      <section class="app-detail-promotion container-fluid">
-        <div class="container">
-          <div class="app-detail-promotion__tab">
-          
-              <img data-src="https://didongthongminh.vn/modules/products/assets/images/icon_pk.svg" alt="icon" class="img-responsive icon_cat lazy-loaded" width="42" height="36" src="https://didongthongminh.vn/modules/products/assets/images/icon_pk.svg">
-              <span>Ưu đãi khi mua phụ kiện</span>
-          
-          </div>
-          <div class="app-detail-promotion__content">
-            <div class="row">
-              <div class="col-lg-9 ">
-                  <div class="app-detail-promotion__content-flex owl-carousel owl-theme owl-loaded">
-
-                    <div class="owl-stage-outer">
-                      <div class="owl-stage">
-                    <div class="app-detail-promotion__content-flex-item owl-item">
-                        <div class="app-detail-promotion__content-flex-item-top">
-                           <input type="checkbox" class="" />
-                        </div>
-                        <div class="app-detail-promotion__content-flex-center">
-                          <img src="https://didongthongminh.vn/images/products/2022/12/17/resized/3_1650730116.webp" alt="" class="" />
-                        </div>
-                        <div class="app-detail-promotion__content-flex-bottom">
-                            <a href="" class="">Tai nghe chống ồn BWOO DPOD MAX (BW45)</a>
-                            <a href="" class=""><b class="">450.000 đ</b> <span class="">900.000 đ</span></a>
-                        </div>
-                        <div class="app-detail-promotion__content-flex-add"> + </div>
-                    </div>
-                    <div class="app-detail-promotion__content-flex-item owl-item">
-                      <div class="app-detail-promotion__content-flex-item-top">
-                         <input type="checkbox" class="" />
-                      </div>
-                      <div class="app-detail-promotion__content-flex-center">
-                        <img src="https://didongthongminh.vn/images/products/2022/05/05/resized/a5_1651719947.webp" alt="" class="" />
-                      </div>
-                      <div class="app-detail-promotion__content-flex-bottom">
-                          <a href="" class="">Tai nghe chống ồn BWOO DPOD MAX (BW45)</a>
-                          <a href="" class=""><b class="">450.000 đ</b> <span class="">900.000 đ</span></a>
-                      </div>
-
-                      <div class="app-detail-promotion__content-flex-add"> + </div>
-                  </div>
-                  <div class="app-detail-promotion__content-flex-item owl-item">
-                    <div class="app-detail-promotion__content-flex-item-top">
-                       <input type="checkbox" class="" />
-                    </div>
-                    <div class="app-detail-promotion__content-flex-center">
-                      <img src="https://didongthongminh.vn/images/products/2022/12/30/resized/dTime-Gold.webp" alt="" class="" />
-                    </div>
-                    <div class="app-detail-promotion__content-flex-bottom">
-                        <a href="" class="">Tai nghe chống ồn BWOO DPOD MAX (BW45)</a>
-                        <a href="" class=""><b class="">450.000 đ</b> <span class="">900.000 đ</span></a>
-                    </div>
-                    <div class="app-detail-promotion__content-flex-add"> + </div>
-                </div>
-                <div class="app-detail-promotion__content-flex-item owl-item">
-                  <div class="app-detail-promotion__content-flex-item-top">
-                     <input type="checkbox" class="" />
-                  </div>
-                  <div class="app-detail-promotion__content-flex-center">
-                    <img src="https://didongthongminh.vn/images/products/2022/07/16/resized/2_1650877525.webp" alt="" class="" />
-                  </div>
-                  <div class="app-detail-promotion__content-flex-bottom">
-                      <a href="" class="">Tai nghe chống ồn BWOO DPOD MAX (BW45)</a>
-                      <a href="" class=""><b class="">450.000 đ</b> <span class="">900.000 đ</span></a>
-                  </div>
-                  <div class="app-detail-promotion__content-flex-add"> + </div>
-              </div>
-                <div class="app-detail-promotion__content-flex-item owl-item">
-                  <div class="app-detail-promotion__content-flex-item-top">
-                     <input type="checkbox" class="" />
-                  </div>
-                  <div class="app-detail-promotion__content-flex-center">
-                    <img src="https://didongthongminh.vn/images/products/anhphu/resized/quy-chua-n-to-ng-quan-ve-ca-c-die-m-ma-nh-cu-a-sa-n-pha-m.webp?v=1624490682000" alt="" class="" />
-                  </div>
-                  <div class="app-detail-promotion__content-flex-bottom">
-                      <a href="" class="">Tai nghe chống ồn BWOO DPOD MAX (BW45)</a>
-                      <a href="" class=""><b class="">450.000 đ</b> <span class="">900.000 đ</span></a>
-                  </div>
-              </div>
-            </div>
-          </div>
+    
 
 
-                  </div>
-              </div>
-              <div class="col-lg-3 ">
-                  <div class="app-detail-promotion__content-right">
-                      <div class="app-detail-promotion__content-right-item">
-                        <span class="">Thành tiền</span>
-                      </div>
-                      <div class="app-detail-promotion__content-right-item">
-                        <span class="">10.720.000đ</span>
-                        <span class="">19.700.000đ</span>
-                      </div>
-                      <div class="app-detail-promotion__content-right-item">
-                         <button class=""> Thêm vào giỏ hàng</button>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="app-detail-promotion container-fluid">
-        <div class="container">
-          <div class="app-detail-promotion__tab">
-          
-              <img data-src="https://didongthongminh.vn/modules/products/assets/images/icon_wan.svg" alt="icon" class="img-responsive icon_cat lazy-loaded" width="42" height="36" src="https://didongthongminh.vn/modules/products/assets/images/icon_pk.svg">
-              <span>An tâm hơn khi chọn gói bảo hành</span>
-          
-          </div>
-          <div class="app-detail-promotion__content">
-            <div class="row">
-              <div class="col-lg-9 ">
-                
-              </div>
-              <div class="col-lg-3 ">
-                  <div class="app-detail-promotion__content-right">
-                      <div class="app-detail-promotion__content-right-item">
-                        <span class="">Tổng tiền</span>
-                      </div>
-                      <div class="app-detail-promotion__content-right-item">
-                        <span class="">7.490.000đ</span>
-                        <span ></span>
-                       
-                      </div>
-                      <div class="app-detail-promotion__content-right-item">
-                         <button class=""> Mua gói bảo hành này
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section class="app-detail-bottom container-fluid">
         <div class="container">
@@ -861,33 +735,7 @@
             </div>
 
              <div class="app-detail-bottom__item-content">
-                  <p class="">iPad thế hệ thứ 10 chính thức ra mắt với nhiều cải tiến cả về thiết kế và hiệu năng. Sở hữu ngoại hình mới mẻ, hoạt động dựa trên chipset A14 đi kèm cổng USB-C, iPad Gen 10 256GB xứng đáng là đối thủ đáng gờm trong dòng máy tính bảng cùng phân khúc. Hãy cùng Di Động Thông Minh tìm hiểu trong bài viết dưới đây.</p>
-                  <img src="https://didongthongminh.vn/upload_images/images/2022/10/19/ipad-gen-10-256gb-4g-chinh-hang-apple-viet-nam.jpg" alt="" class="">
-                  <h2 class="">Thiết kế iPad Gen 10 256GB mỏng nhẹ, trẻ trung với nhiều tùy chọn màu sắc</h2>
-
-                  <p class="">Nhìn chung, iPad Gen 10 256GB có thể coi là phiên bản của iPad Air (2022) nhưng không trang bị bộ xử lý M1. iPad Gen 10 256GB sở hữu thiết kế mỏng, nhẹ hơn so với thế hệ trước. Bề dày khoảng 7mm cùng cân nặng 477 g giúp người dùng cầm nắm dễ dàng, sử dụng thuận tiện.</p>
-
-                  <p class="">Các chi tiết máy được gia công một cách cẩn thận và tỉ mỉ cho thấy kỹ thuật tinh xảo số một của Apple.Tạm biệt với thiết kế dạng bo cong, iFan năm nay được Apple chiêu đãi siêu phẩm iPad Gen 10 256GB với bộ khung vuông vức, ngoại hình sang trọng, trẻ trung. Thiết kế vuông đã và đang là xu thế của những chiếc flagship hàng đầu, điển hình như iPhone 13, iPhone 14.</p>
-
-                  <img src="https://didongthongminh.vn/upload_images/images/2022/10/19/ipad-gen-10-256gb-4g-chinh-hang-apple-viet-nam-1.jpg" alt="" class="">
-
-                  <p class="">iPad Gen 10 256GB sử dụng tấm nền Liquid Retina IPS LCD có kích thước 10,9 inch với độ phân giải  2360 x 1640 px đi kèm độ sáng màn hình lên tới 500 nits. Thiết bị mang đến cho người dùng trải nghiệm màn hình lớn, chất lượng hình ảnh cao màu sắc chân thực.</p>
-
-                  <p class="">iPad Gen 10 nói chung không còn nút Home truyền thống, thay vào đó máy tính bảng sẽ có công nghệ Touch ID tích hợp cùng cảm biến vân tay tại nút nguồn nằm phía cạnh.</p>
-                  <p class="">Camera sau được cải thiện từ một chấm nhỏ thành ống kính rõ nét. Ngoài ra, đây cũng là lần đầu tiên Apple đặt camera selfie theo chiều ngang tương tự webcam trên laptop.</p>
-
-                  <img src="https://didongthongminh.vn/upload_images/images/2022/10/19/ipad-gen-10-256gb-4g-chinh-hang-apple-viet-nam-2.jpg" alt="" class="">
-
-
-                  <p class="">iPad Gen 10 256Gb 2022 có sẵn bốn tùy chọn màu: Bạc, Xanh lam, Hồng và Vàng.</p>
-
-                  <h2 class="">iPad Gen 10 256GB ghi điểm với hiệu năng đến từ A14 Bionic</h2>
-
-                  <p class="">iPad thế hệ thứ 10 256GB hoạt động dựa trên bộ vi xử lý chip A14 Bionic với CPU 6 lõi, GPU 4 lõi và Neural Engine 16 lõi.</p>
-
-                  <img src="https://didongthongminh.vn/upload_images/images/2022/10/19/ipad-gen-10-256gb-4g-chinh-hang-apple-viet-nam-3.jpg" alt="" class="">
-
-                  <p class="">Máy tính bảng sở hữu dung lượng bộ nhớ 256GB giúp người dùng thỏa sức lưu trữ dữ liệu và các thông tin cần thiết. A14 Bionic mang đến hiệu năng tăng 20% CPU, đồ họa cải thiện 10% so với thế hệ tiền nhiệm. Tốc độ xử lý khả năng cao hơn gấp 5 lần so với máy tính bảng Android hàng đầu hiện nay.</p>
+                  <?=$item['content']?>
              </div>
 
              <div class="app-detail-bottom__item-content-btn"><button class="show-more-detail">Xem thêm </button></div>
@@ -902,53 +750,15 @@
             </div>
                <div class="app-detail-bottom__item-product-right">
                 <table>
-                 
-                  <tr>
-                    <td>Độ phân giải</td>
-                    <td>2360 x 1640 Pixels</td>
+                  <?php foreach($attributeProduct as $key => $value){?>
+                    <tr>
+                    <td><?=$value['description']?></td>
+                    <td><?=$value['value']?></td>
                   
                   </tr>
-                  <tr>
-                    <td>Màn hình rộng</td>
-                    <td>10,9 inch</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>Hệ điều hành</td>
-                    <td>iPadOS 16</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>Chip xử lý</td>
-                    <td>A14 Bionic với CPU 6 lõi, GPU 4 lõi và Neural Engine 16 lõi</td>
-                   
-                  </tr>
-                  <tr>
-                    <td>Độ phân giải camera sau</td>
-                    <td>12MP</td>
-                   
-                  </tr>
-                  <tr>
-                    <td>Độ phân giải camera trước</td>
-                    <td>12MP</td>
-                    
-                  </tr>
-
-                  <tr>
-                    <td>Thực hiện cuộc gọi</td>
-                    <td>Facetime</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>Dung lượng pin</td>
-                    <td>28.6 Wh</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>Loại pin</td>
-                    <td>Li-lon</td>
-                    
-                  </tr>
+                  <?php }?>
+                  
+                 
                 </table>
                  
                 <div class="app-detail-bottom__item-product-right-btn">
@@ -968,91 +778,26 @@
 
                   <div class="">
                     <div class="app-new-suggest__center">
-                      <div class="app-new-suggest__center-item">
+                      
+                      <?php foreach($postSuggest as $key => $value){?>
+                        <div class="app-new-suggest__center-item">
                         <div class="app-new-suggest__center-item-img">
-                          <img src="https://didongthongminh.vn/upload_images/images/2022/12/03/ro-ri-them-thong-so-ky-thuat-cua-xiaomi-13-series.jpg" alt="">
+                          <img src="<?=IMAGE_DIR_POST.$value['thumb']?>" alt="">
                         </div>
                         <div class="app-new-suggest__center-item-detail">
                           <div class="app-new-suggest__center-item-detail-title">
-                            <a href=""><span>iPhone 12 Pro max có mấy màu? Màu nào đẹp nhất?
+                            <a href="/new/<?=$value['slug']?>"><span><?=$value['title']?>
                               </span></a>
                           </div>
       
                           <div class="app-new-suggest__center-item-detail-time">
                             <span><i class="fa fa-calendar" aria-hidden="true"></i>
-                              20/11/2022</span>
+                            <?=$value['createdAt']?></span>
                             <span><i class="fa fa-eye" aria-hidden="true"></i> 520</span>
                           </div>
                         </div>
                       </div>
-                      <div class="app-new-suggest__center-item">
-                        <div class="app-new-suggest__center-item-img">
-                          <img src="https://didongthongminh.vn/upload_images/images/2022/12/22/gia%CC%81ng_sinh_ro%CC%A3%CC%82n_ra%CC%80ng.png" alt="">
-                        </div>
-                        <div class="app-new-suggest__center-item-detail">
-                          <div class="app-new-suggest__center-item-detail-title">
-                            <a href=""><span>iPhone 12 Pro max có mấy màu? Màu nào đẹp nhất? Chọn
-                                màu theo phong thuỷ</span></a>
-                          </div>
-      
-                          <div class="app-new-suggest__center-item-detail-time">
-                            <span><i class="fa fa-calendar" aria-hidden="true"></i>
-                              20/11/2022</span>
-                            <span><i class="fa fa-eye" aria-hidden="true"></i> 520</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="app-new-suggest__center-item">
-                        <div class="app-new-suggest__center-item-img">
-                          <img src="https://didongthongminh.vn/upload_images/images/2022/11/28/dem-nguoc-ngay-xiaomi-13-series-ra-mat.jpg" alt="">
-                        </div>
-                        <div class="app-new-suggest__center-item-detail">
-                          <div class="app-new-suggest__center-item-detail-title">
-                            <a href=""><span>iPhone 12 Pro max có mấy màu? Màu nào đẹp nhất? Chọn
-                                màu theo phong thuỷ</span></a>
-                          </div>
-      
-                          <div class="app-new-suggest__center-item-detail-time">
-                            <span><i class="fa fa-calendar" aria-hidden="true"></i>
-                              20/11/2022</span>
-                            <span><i class="fa fa-eye" aria-hidden="true"></i> 520</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="app-new-suggest__center-item">
-                        <div class="app-new-suggest__center-item-img">
-                          <img src="https://didongthongminh.vn/upload_images/images/2022/12/03/Ba%CC%89n_sao_cu%CC%89a_CT_2010_(1280_%C3%97_720_px).png" alt="">
-                        </div>
-                        <div class="app-new-suggest__center-item-detail">
-                          <div class="app-new-suggest__center-item-detail-title">
-                            <a href=""><span>iPhone 12 Pro max có mấy màu? Màu nào đẹp nhất? Chọn
-                                màu theo phong thuỷ</span></a>
-                          </div>
-      
-                          <div class="app-new-suggest__center-item-detail-time">
-                            <span><i class="fa fa-calendar" aria-hidden="true"></i>
-                              20/11/2022</span>
-                            <span><i class="fa fa-eye" aria-hidden="true"></i> 520</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="app-new-suggest__center-item">
-                        <div class="app-new-suggest__center-item-img">
-                          <img src="https://didongthongminh.vn/upload_images/images/2022/12/28/iphone-12-pro-max-co-may-mau.jpg" alt="">
-                        </div>
-                        <div class="app-new-suggest__center-item-detail">
-                          <div class="app-new-suggest__center-item-detail-title">
-                            <a href=""><span>iPhone 12 Pro max có mấy màu? Màu nào đẹp nhất? Chọn
-                                màu theo phong thuỷ</span></a>
-                          </div>
-      
-                          <div class="app-new-suggest__center-item-detail-time">
-                            <span><i class="fa fa-calendar" aria-hidden="true"></i>
-                              20/11/2022</span>
-                            <span><i class="fa fa-eye" aria-hidden="true"></i> 520</span>
-                          </div>
-                        </div>
-                      </div>
+                      <?php }?>
                     </div>
                   </div>
                 </div>
@@ -2221,6 +1966,6 @@
          </div>
          
       </section>
-
+      <script src="<?= SITE_URL_POST ?>/javascript/detail.js"> </>
 <?php $this->loadView('post/Layout/top') ?>
 <?php $this->loadView('post/Layout/footer') ?>
