@@ -4,7 +4,9 @@ require_once("models/categoryModel.php");
 require_once("models/productModel.php");
 require_once("models/postModel.php");
 require_once("models/colorProductModel.php");
+require_once("models/addressModel.php");
 class productController extends controller{
+    private $address;
     private $introduce;
     public $category;
     public $product;
@@ -16,6 +18,7 @@ class productController extends controller{
         $this->category = new Category();
         $this->product = new Product();
         $this->post = new Post();
+        $this->address = new Address();
      }
 
      public function getColorProductByAttributeProductIDAjax($request, $response){
@@ -36,6 +39,42 @@ class productController extends controller{
         echo json_encode(
            $dataItem 
         );
+     }
+     public function getDistrict($request, $response){
+       $dataItem = $this->address->getAllDistrictByCityId($request['id']);
+       echo json_encode(
+         $dataItem 
+      );
+     }
+     public function getWard($request, $response){
+       $dataItem = $this->address->getAllWardByDistrictID($request['id']);
+       echo json_encode(
+         $dataItem 
+      );
+     }
+     public function getTransportFee($request, $response){
+      $dataItem = $this->address->getTransportFee($request['city'], $request['district'], $request['ward']);
+      echo json_encode(
+        $dataItem 
+     );
+     }
+     public function checkCoupon($request, $response){
+        $dataItem = $this->address->checkCoupon($request['code'], $request['date']);
+        if($dataItem){
+         echo json_encode(
+            [
+               'status' => 'success',
+               'data' => $dataItem
+            ] 
+         );
+        }else {
+         echo json_encode(
+            ['status' => 'error',
+             'message' => '* Mã giảm giá không tồn tại'
+            ]
+
+         );
+        }
      }
 
 }

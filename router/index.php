@@ -148,6 +148,11 @@
   Router::handle('GET',  'introduce/{slug}', 'post/handleController', 'detailIntroduce');
   Router::handle('POST',  'api/get-color-product', 'post/productController', 'getColorProductByAttributeProductIDAjax');
   Router::handle('POST',  'api/get-attribute-price-product', 'post/productController', 'getAttributePriceProductCartAjax');
+  Router::handle('POST',  'api/address/get-district', 'post/productController', 'getDistrict');
+  Router::handle('POST',  'api/address/get-ward', 'post/productController', 'getWard');
+  Router::handle('POST',  'api/address/get-transport-fee', 'post/productController', 'getTransportFee');
+  Router::handle('POST',  'api/check-coupon', 'post/productController', 'checkCoupon');
+  Router::handle('POST',  'api/purchase', 'post/cartController', 'purchaseCart');
  
 
  http_response_code(404);

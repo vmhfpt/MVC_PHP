@@ -26,6 +26,10 @@ class Product extends Database{
         $sql = "SELECT * FROM `products` WHERE `id`=?";
         return  $this->pdo_query_one($sql, $id);
     }
+    public function getByName($name) {
+        $sql = "SELECT * FROM `products` WHERE `name`=?";
+        return  $this->pdo_query_one($sql, $name);
+    }
    
 
     public function update($name, $category_id, $price, $price_sale, $content, $newSlug, $active, $thumb, $view_model, $brand_id, $slug){

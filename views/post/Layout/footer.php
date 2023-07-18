@@ -109,7 +109,481 @@
     <script src="<?= SITE_URL_POST ?>/carousel/dist/owl.carousel.min.js"></script>
     <script src="<?= SITE_URL_POST ?>/javascript/index.js"> </script>
     
+    <script>
+       /* var errorInputEmail = true;
+        var errorInputName = true;
+        var errorInputPhone = true;
+        var chatUser = JSON.parse(localStorage.getItem("user"));
+        $(document).on("input keyup paste", ".input-name-chat", function() {
+            text = $(this).val();
+            if (text.length <= 5 || text.length > 20) {
+                errorInputName = true;
+                $('.error-name-chat').text('* Tên không hợp lệ');
 
+            } else {
+                errorInputName = false;
+                $('.error-name-chat').text('');
+            }
+        });
+        $(document).on("input keyup paste", ".input-email-chat", function() {
+            text = $(this).val();
+
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
+                $('.error-email-chat').text('');
+                errorInputEmail = false;
+            } else {
+                $('.error-email-chat').text('* Email không hợp lệ');
+                errorInputEmail = true;
+
+            }
+        });
+        $(document).on("input keyup paste", ".input-phone-chat", function() {
+            text = $(this).val();
+            if (/(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(text)) {
+                $('.error-phone-number-chat').text('');
+                errorInputPhone = false;
+            } else {
+                errorInputPhone = true;
+                $('.error-phone-number-chat').text('* Số điện thoại không hợp lệ');
+
+            }
+        });
+        $(document).on("click", ".app-chat__tab-button-register", function() {
+            if (errorInputEmail == false && errorInputName == false && errorInputPhone == false) {
+                var object = {
+                    id: null,
+                    name: $(".input-name-chat").val(),
+                    email: $(".input-email-chat").val(),
+                    phone_number: $(".input-phone-chat").val(),
+                    conversation_id: false
+                }
+                localStorage.setItem("user", JSON.stringify(object));
+                chatUser = JSON.parse(localStorage.getItem("user"));
+                $('.action-check').html(`<div class="app-chat__container">
+                <div class="app-chat__tab">
+                    <div class="app-chat__tab-image ">
+                        <div class="app-chat__tab-image-name">
+                        <div class="">${chatUser.name[(chatUser.name).lastIndexOf(" ") + 1]}</div>
+                            <div class="app-chat__tab-image-point"></div>
+                        </div>
+                    </div>
+                    <div class="app-chat__tab-name ">
+                      <div class="app-chat__tab-name-title"><span>${chatUser.name} (Bạn)</span></div>
+                        <div class="app-chat__tab-name-status"><span>Đang hoạt động</span></div>
+                    </div>
+                    <div class="app-chat__tab-close ">
+                        <div>×</div>
+                    </div>
+                </div>
+                <div class="app-chat__detail" id="chat">
+                    <div class="app-chat__detail-item ">
+                            <div class="app-chat__detail-someone">
+                                <div class="app-chat__detail-someone-name">
+                                    <div class="app-chat__detail-someone-name-char border-admin">
+                                        <div>S</div>
+                                        <div class="app-chat__supper-admin"> AD </div>
+                                        <div class="2"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="app-chat__detail-someone-name"><span>Hệ thống</span></div>
+                                    <div class="app-chat__detail-someone-content"><span> Bạn cần hỗ trợ điều gì ?</span></div>
+                                </div>
+                            </div>
+                            <div class="app-chat__detail-someone-date-someone">
+                                <div><span class="time-current" >Ngay lúc này</span></div>
+                            </div>
+                        </div>
+                </div>
+
+
+                <div class="app-chat__post-comment">
+                    <div class="app-chat__post-comment-input "><input id="input-post" type="text" placeholder="Aa" value=""></div>
+                    <div class="app-chat__post-comment-button ">
+                        <div><i class="fa fa-paper-plane" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+            </div>`);
+            }
+        });
+
+        function checkLogin() {
+
+            if (chatUser == null) {
+                $('.action-check').html(` <div class="app-chat__container">
+    <div class="app-chat__tab">
+        <div class="app-chat__tab-image ">
+            <div class="app-chat__tab-image-name">
+                <div><i class="fa fa-bolt" aria-hidden="true"></i></div>
+            </div>
+        </div>
+        <div class="app-chat__tab-quick-start"><span>Trò chuyện nhanh</span></div>
+        <div class="app-chat__tab-close ">
+            <div>×</div>
+        </div>
+    </div>
+    <div class="app-chat__tab-register">
+        <form>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group "><label>Tên *</label>
+                    <input class="input-name-chat" type="text" placeholder="Nhập tên" value="">
+                    <span class="error-name-chat" style="color : red">* Bắt buộc</span>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group "><label>Email *</label>
+                    <input class="input-email-chat" type="email" placeholder="Nhập email" value="">
+                    <span class="error-email-chat" style="color : red">* Bắt buộc</span>
+                </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group ">
+                        <label>Số điện thoại *</label>
+                        <input class="input-phone-chat" type="number" placeholder="Nhập số điện thoại" value="">
+                        <span class="error-phone-number-chat" style="color : red">* Bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                   
+                    <div class="col-sm-6 col-6"><a href="javascript:;"><button type="button" class="app-chat__tab-button-register">Đăng nhập nhanh</button></a></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>`);
+            } else {
+                $('.action-check').html(`<div class="app-chat__container">
+    <div class="app-chat__tab">
+        <div class="app-chat__tab-image ">
+            <div class="app-chat__tab-image-name">
+                <div class="">${chatUser.name[(chatUser.name).lastIndexOf(" ") + 1]}</div>
+                <div class="app-chat__tab-image-point"></div>
+            </div>
+        </div>
+        <div class="app-chat__tab-name ">
+            <div class="app-chat__tab-name-title"><span>${chatUser.name} (Bạn)</span></div>
+            <div class="app-chat__tab-name-status"><span>Đang hoạt động</span></div>
+        </div>
+        <div class="app-chat__tab-close ">
+            <div>×</div>
+        </div>
+    </div>
+    <div class="app-chat__detail" id="chat">
+       
+    </div>
+
+
+    <div class="app-chat__post-comment">
+        <div class="app-chat__post-comment-input "><input id="input-post" type="text" placeholder="Aa" value=""></div>
+        <div class="app-chat__post-comment-button ">
+            <div><i class="fa fa-paper-plane" aria-hidden="true"></i></div>
+        </div>
+    </div>
+</div>`);
+            }
+        }
+        checkLogin(); */
+    </script>
+
+
+
+
+
+
+
+
+
+    <script>
+        /*
+         var listOnline = [];
+        // var idUser = 12 ;
+        // var nameUser = 'hun vu minh';
+        function checkOnline(id)  {
+            
+            let exists = Object.values(listOnline).includes((id));
+            
+            if(exists){
+                return "app-chat__is-online";
+            }
+            return "app-chat__is-offline" ;
+      }
+        let host = "http://localhost:3000/";
+        let socket = io.connect(host);
+        $(document).ready(function() {
+            if(chatUser && chatUser.id != null){
+                socket.emit('login',{userId: chatUser.id});
+            }
+
+            $('.show-chat-click').click(function() {
+                $('.show-app__chat').toggle();
+                $("#chat").scrollTop($("#chat")[0].scrollHeight);
+            });
+            $('.app-chat__tab-close ').click(function() {
+                $('.show-app__chat').toggle();
+            });
+
+            $(document).on("keyup paste", "#input-post", function(e) {
+                var text = $(this).val();
+                if (text !== '') {
+                    // socket.emit("sendDataClientTyping", idUser);
+                } else {
+                    // socket.emit("sendDataClientTyping", null);
+                }
+
+                if (e.keyCode === 13 && e.shiftKey === false) {
+                    postComment(text);
+                }
+
+            });
+
+            $(document).on("click", ".app-chat__post-comment-button", function(e) {
+                postComment($('#input-post').val());
+            });
+
+            function postComment(value) {
+                if (value !== "" && value[0] !== " ") {
+                    $('#input-post').val("");
+                    //socket.emit("sendDataClientPrivate", msg);
+                    chatUser = JSON.parse(localStorage.getItem("user"));
+                    if (chatUser.id == null) {
+                        $.ajax({
+                                method: "POST",
+                                url: `${host}register`,
+                                data: {
+                                    name: chatUser.name,
+                                    email: chatUser.email,
+                                    password: '123456789',
+                                    phone_number: chatUser.phone_number
+                                }
+
+                            })
+                            .done(function(msg) {
+                                var newObject = {
+                                    ...chatUser,
+                                    id: msg.data._id
+                                }
+                                localStorage.setItem("user", JSON.stringify(newObject));
+                                const contentPost = {
+                                    ...newObject,
+                                    content: value
+                                }
+                              //  console.log(contentPost);
+                                socket.emit('login',{userId: msg.data._id});
+                                socket.emit("sendDataClientPrivate", contentPost);
+                            })
+                    } else {
+                        chatUser = JSON.parse(localStorage.getItem("user"));
+                        const contentPost = {
+                          ...chatUser,
+                          content: value
+                        }
+                        socket.emit("sendDataClientPrivate", contentPost);
+                    }
+                    //console.log(chatUser);
+                    // alert(1);
+                    // $('#input-post').val("");
+                    // const msg = {
+                    //     name: nameUser,
+                    //     content: value,
+                    //     id: idUser,
+                    //     thumb :  null
+                    // };
+                    // socket.emit("sendDataClient", msg);
+                    // socket.emit("sendDataClientTyping", null);
+                }
+
+            }
+            socket.on("sendDataServerOnline", (item) => {
+                listOnline = (item.users);
+                $('.check-online').removeClass('app-chat__is-online');
+                $('.check-online').addClass('app-chat__is-offline');
+
+               for(const key in listOnline) {
+                    $('.' + listOnline[key]).addClass('app-chat__is-online');
+                    $('.' + listOnline[key]).removeClass('app-chat__is-offline');
+                }
+            });
+            socket.on("sendDataServerPrivateAddNewChat", (items) => {
+                console.log("sendDataServerPrivateAddNewChat >> ", items);
+                chatUser = JSON.parse(localStorage.getItem("user"));
+                if(chatUser.conversation_id == false){
+                    var newObject = {
+                        ...chatUser,
+                        conversation_id: items.dataMessenger.conversation_id
+                    }
+                    localStorage.setItem("user", JSON.stringify(newObject));
+                    renderComment(items.dataMessenger);
+                }
+            });
+            socket.on("sendDataServerPrivateAddNewChatList", (item) => {
+               
+               console.log("sendDataServerPrivateAddNewChatList >> ", item);
+            });
+
+            socket.on("sendDataServerPrivate", (item) => {
+                renderComment(item.dataMessage);
+              console.log("sendDataServerPrivate >> ", item);
+            });
+            socket.on("sendDataServerNewTopMessage", (item) => {
+
+              console.log("sendDataServerNewTopMessage >>" ,item);
+            });
+
+            socket.on("sendDataServerTypingPrivate", (item) => {
+                chatUser = JSON.parse(localStorage.getItem("user"));
+                if($('#chat').find('.app-chat__detail-text-typing').length !== 0){
+                    if (item.data === null ) {
+                        $('.add-typing-chat').remove();
+                    }
+                }else {
+                    if(item.data != null && item.data.user_id !==  chatUser.id && item.data.conversation_id ===  chatUser.conversation_id){
+                        $('#chat').append(`<div class="app-chat__detail-item add-typing-chat">
+                           <div class="app-chat__detail-someone">
+                            <div class="app-chat__detail-text-typing"><span>Ai đó đang nhập </span></div>
+                            <div>
+                                <div class="app-chat__detail-typing"><img src="https://vuminhhung.netlify.app/static/media/typing.4912cac814f4413ba9df.gif" alt=""></div>
+                            </div>
+                            </div>
+                        </div>`);
+                        $("#chat").scrollTop($("#chat")[0].scrollHeight);
+                    }else {
+                        $('.add-typing-chat').remove();
+                    }
+                }
+
+        
+           });
+
+
+            socket.on("sendDataServerPrivateReplyByAdmin", (item) => {
+                chatUser = JSON.parse(localStorage.getItem("user"));
+                console.log("sendDataServerPrivateReplyByAdmin >>" ,item);
+                if(item.conversation_id == chatUser.conversation_id){
+                    $('#chat').append(`  <div class="app-chat__detail-item ">
+                            <div class="app-chat__detail-someone">
+                                <div class="app-chat__detail-someone-name">
+                                    <div class="app-chat__detail-someone-name-char border-admin">
+                                        <div>S</div>
+                                        <div class="app-chat__supper-admin"> AD </div>
+                                        <div class="2"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="app-chat__detail-someone-name"><span>Hệ thống</span></div>
+                                    <div class="app-chat__detail-someone-content"><span> Admin "${item.name}" đã tham gia cuộc trò chuyện</span></div>
+                                </div>
+                            </div>
+                            <div class="app-chat__detail-someone-date-someone">
+                                <div><span class="time-current" >Ngay lúc này</span></div>
+                            </div>
+                        </div>`);
+                }
+             });
+
+
+            
+            function renderComment(dataMessage){
+                chatUser = JSON.parse(localStorage.getItem("user"));
+                //console.log(chatUser.conversation_id, dataMessage);
+                if(chatUser.conversation_id == dataMessage.conversation_id){
+                    if(chatUser.id == dataMessage.user_id._id){
+                        $('#chat').append(`<div class="app-chat__detail-item">
+                            <div class="app-chat__detail-item-flex">
+                                <div class="app-chat__detail-my-chat-image"></div>
+                                <div class="app-chat__detail-my-chat-content"><span> ${dataMessage.content}</span></div>
+                            </div>
+                            <div class="app-chat__detail-someone-date-my-chat">
+                                <div><span class="time-current" >${dataMessage.createdAt}</span></div>
+                            </div>
+                        </div>`);
+                    }else {
+                        $('#chat').append(`<div class="app-chat__detail-item ">
+                        <div class="app-chat__detail-someone">
+                            <div class="app-chat__detail-someone-name">
+                                <div class="app-chat__detail-someone-name-char border-admin">
+                                    <div>${dataMessage.user_id.name[(dataMessage.user_id.name).lastIndexOf(" ") + 1]}</div>
+                                    <div class="app-chat__supper-admin"> AD </div>
+                                    <div class="${dataMessage.user_id._id}  check-online ${checkOnline(dataMessage.user_id._id)}"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="app-chat__detail-someone-name"><span>${dataMessage.user_id.name}</span></div>
+                                <div class="app-chat__detail-someone-content"><span> ${dataMessage.content}</span></div>
+                            </div>
+                        </div>
+                        <div class="app-chat__detail-someone-date-someone">
+                            <div><span class="time-current" data-chat="2023-05-13T02:04:40.000Z">${dataMessage.createdAt}</span></div>
+                        </div>
+                    </div>`);
+                    }
+                    $("#chat").scrollTop($("#chat")[0].scrollHeight);
+                }
+            }
+
+
+
+             
+             
+             if(chatUser && chatUser.conversation_id != false){
+                const myTimeout = setTimeout(myGreeting, 1000);
+             }
+            function myGreeting() {
+                chatUser = JSON.parse(localStorage.getItem("user"));
+                $.ajax({
+                        method: "POST",
+                        url: `${host}get-chat-private`,
+                        data: {
+                            id : chatUser.conversation_id
+                        }
+
+                    })
+                    .done(function(msg) {
+                        msg.map((value, key) => {
+                        //console.log(value)
+                        if(chatUser.id == value.user_id._id){
+                            $('#chat').append(`<div class="app-chat__detail-item">
+                            <div class="app-chat__detail-item-flex">
+                                <div class="app-chat__detail-my-chat-image"></div>
+                                <div class="app-chat__detail-my-chat-content"><span> ${value.content}</span></div>
+                            </div>
+                            <div class="app-chat__detail-someone-date-my-chat">
+                                <div><span class="time-current" >${value.createdAt}</span></div>
+                            </div>
+                        </div>`);
+                        
+                        }else {
+                            $('#chat').append(`<div class="app-chat__detail-item ">
+                        <div class="app-chat__detail-someone">
+                            <div class="app-chat__detail-someone-name">
+                                <div class="app-chat__detail-someone-name-char border-admin">
+                                    <div>${value.user_id.name[(value.user_id.name).lastIndexOf(" ") + 1]}</div>
+                                       <div class="app-chat__supper-admin"> AD </div>
+                                    <div class="${value.user_id._id}  check-online ${checkOnline(value.user_id._id)}"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="app-chat__detail-someone-name"><span>${value.user_id.name}</span></div>
+                                <div class="app-chat__detail-someone-content"><span> ${value.content}</span></div>
+                            </div>
+                        </div>
+                        <div class="app-chat__detail-someone-date-someone">
+                            <div><span class="time-current" >${value.createdAt}</span></div>
+                        </div>
+                    </div>`);
+                    
+                        }
+                      
+                         });
+                         
+                    })
+
+            }
+
+        }); */
+    </script>
 </body>
 
 </html>

@@ -60,6 +60,25 @@ class Coupon extends Database{
         $sql = "DELETE FROM `coupons` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
    }
+   public function getAllCouponByOrderDetailID($order_id){
+      $sql = "SELECT `coupons`.`code`, `coupons`.`name` FROM `order_coupon` 
+      INNER JOIN `coupon_product`
+      INNER JOIN `coupons`
+      ON `order_coupon`.`order_detail_id` IN (SELECT `order_detail`.`id` FROM `order_detail` WHERE `order_detail`.`order_id` = ?)
+      AND `order_coupon`.`coupon_product_id` = `coupon_product`.`id`
+      AND `coupon_product`.`coupon_id` = `coupons`.`id`;";
+      return $this->pdo_query($sql, $order_id);
+   }
+   public function getAllProductGiftByOrderID($order_id){
+     $sql = "SELECT `products`.`name` ,`order_gift`.`id`, COUNT(`products`.`id`) AS `total` FROM `order_gift`
+     INNER JOIN `gift`
+     INNER JOIN `products`
+     ON `order_gift`.`order_detail_id` IN (SELECT `order_detail`.`id` FROM `order_detail` WHERE `order_detail`.`order_id` = ?)
+     AND `order_gift`.`gift_id` = `gift`.`id`
+     AND `gift`.`gift_product_id` = `products`.`id`
+     GROUP BY `products`.`id`";
+     return $this->pdo_query($sql, $order_id);
+   }
 
 }
 ?>

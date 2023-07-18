@@ -6,8 +6,9 @@ require_once("models/postModel.php");
 require_once("models/colorProductModel.php");
 require_once("models/couponModel.php");
 require_once("models/giftProductModel.php");
-
+require_once("models/addressModel.php");
 class handleController extends controller{
+    private $address;
     private $coupon;
     private $introduce;
     public $category;
@@ -16,6 +17,7 @@ class handleController extends controller{
     public $colorProduct;
     private $giftProduct;
     public function __construct(){
+       $this->address = new Address();
        $this->coupon = new Coupon();
        $this->colorProduct = new ColorProduct();
        $this->introduce =  new Introduce();
@@ -71,7 +73,9 @@ class handleController extends controller{
     return ($this->loadView('post/product/list'));
    }
    public function cart(){
-    return ($this->loadView('post/cart/index'));
+
+    $listCity = $this->address->getAllCity();
+    return ($this->loadView('post/cart/index', ['listCity' => $listCity]));
    }
    public function login(){
     return ($this->loadView('post/user/login'));
