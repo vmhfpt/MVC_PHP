@@ -27,6 +27,10 @@ class Transport extends Database{
         $sql = "DELETE FROM `transport_fee` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
    }
+   public function getTransportFee($city_id, $district_id, $ward_id){
+    $sql = "SELECT * FROM `transport_fee` WHERE `district_id` = ? AND `ward_id` = ? AND `city_id` = ?";
+    return $this->pdo_query_one($sql, $district_id, $ward_id, $city_id);
+}
 
 }
 ?>

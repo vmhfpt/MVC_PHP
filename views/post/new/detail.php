@@ -4,7 +4,7 @@
         <div class="container">
           <ul class="">
             <li class=""><a href="" class="">Trang chủ</a> /</li>
-            <li class=""><a href="" class="">Tin tức & Sự kiện</a></li>
+            <li class=""><a href="" class=""><?=$item['title']?></a></li>
           </ul>
         </div>
       </section>
@@ -37,12 +37,12 @@
                         <div class="app-detail-post__content">
                              <div class="app-detail-post__content-title">
                                   <div class="app-detail-post__content-title-h3">
-                                    <h3 class="">Oppo Find N2 Flip liệu có là đối thủ xứng tầm với Samsung Galaxy Z Flip4?</h3>
+                                    <h3 class=""><?=$item['title']?></h3>
                                   </div>
 
                                   <div class="app-detail-post__content-title-date">
                                        <div class="app-detail-post__content-title-date-item">
-                                          <span class=""><i class="fa fa-calendar" aria-hidden="true"></i> 18/02/2023</span>
+                                          <span class=""><i class="fa fa-calendar" aria-hidden="true"></i> <?=$item['createdAt']?></span>
                                           <span class="">
                                             <i class="fa fa-eye" aria-hidden="true"></i> 35
                                           </span>
@@ -55,37 +55,11 @@
                              </div>
 
                              <div class="app-detail-post__content-news">
-                                 <span class="">Kỷ nguyên điện thoại gập đang được mở rộng, đi đầu là hai ông lớn Samsung và Oppo. Vậy liệu Oppo Find N2 Flip có là đối thủ xứng tầm với Samsung Galaxy Z Flip4? Đọc ngay!</span>
-
-                                 <img src="https://didongthongminh.vn/upload_images/images/2023/02/19/so-sanh-oppo-find-n2-flip-vs-samsung-galaxy-z-flip4.jpg" alt="" class="">
-
-                                 <h3 class="">So sánh Oppo Find N2 Flip và Samsung Galaxy Z Flip4</h3>
-
-                                 <p class="">Nhìn chung, Oppo Find N2 Flip có thiết kế lớn hơn một chút so với Galaxy Z Flip4 cả về tỷ lệ máy, kích thước màn hình lẫn trọng lượng. Find N2 Flip cũng sở hữu những thông số về camera, pin và sạc nhỉnh hơn đối thủ. </p>
-                                 <img src="https://didongthongminh.vn/upload_images/images/2023/02/19/so-sanh-oppo-find-n2-flip-vs-samsung-galaxy-z-flip4-1.jpg" alt="" class="">
-                                 <p class="">Chất lượng màn hình của điện thoại gập đến từ Oppo được cho là tốt hơn Samsung. Trong khi Galaxy Z Flip4 sử dụng tấm nền Dynamic AMOLED 2X, hỗ trợ độ sáng 1200 nits cho màn hình chính thì Oppo lại trang bị cho Find N2 Flip màn hình chính LTPO AMOLED, đi kèm độ sáng lên tới 1600 nits. Nết gập màn hình ở Find N2 Flip được đánh giá hoàn thiện hơn Z Flip4.</p>
-                                 <img src="https://didongthongminh.vn/upload_images/images/2023/02/19/so-sanh-oppo-find-n2-flip-vs-samsung-galaxy-z-flip4-2.jpg" alt="" class="">
-                                 <p class="">Thiết kế màn hình phụ đặt dọc của Oppo là điểm khác với màn hình phụ nằm ngang của nhà Samsung. 
-
-                                    Tốc độ chip ở Galaxy Z Flip4 tối đa đạt 3.19 GHz trong khi ở Find N2 Flip nhỉnh hơn một chút với 3.20 GHz. Điều đáng nói, phiên bản bộ nhớ tối thiểu của Find N2 Flip là 256GB 8GB RAM nhưng con số đó ở Z Flip4 chỉ là 128GB 8GB RAM.</p>
-
-                                    <img src="https://didongthongminh.vn/upload_images/images/2023/02/19/so-sanh-oppo-find-n2-flip-vs-samsung-galaxy-z-flip4-3.jpg" alt="" class="">
-                                    <h3 class="">Mua Galaxy Z Flip4 ở đâu uy tín giá tốt?</h3>
-
-                                    <p class="">Galaxy Z Flip4 đã ra mắt vào năm trước và giá bán đang có xu hướng hạ nhiệt. Đây là thời điểm thích hợp cho SamFan muốn sở hữu một chiếc điện thoại có vẻ ngoài mang tính cách mạng, màn hình gập độc đáo cùng hiệu năng mạnh mẽ.</p>
-                                    <img src="https://didongthongminh.vn/upload_images/images/2023/02/19/so-sanh-oppo-find-n2-flip-vs-samsung-galaxy-z-flip4-4.jpg" alt="" class="">
-                                    <p class="">Hãy đến ngay Di Động Thông Minh và tìm chọn cho mình một chiếc điện thoại Galaxy Z Flip4 vừa ý. Với hệ thống trải dài từ Bắc vào Nam cùng hơn 10 năm kinh nghiệm trong nghề, Di Động Thông Minh hứa hẹn đem đến trải nghiệm mua sắm tốt nhất, chất lượng uy tín, giá cả hợp lý và vô vàng phần quà có giá trị. 
-
-                                        Mời bạn đọc tham khảo thêm giá Galaxy Z Flip4.</p>
-                                        <h2 class="">Tổng kết</h2>
-
-                                        <p class="">Bài viết trên đây tổng hợp những so sánh về hai thiết bị có thể gập Oppo Find N2 Flip và Samsung Galaxy Z Flip4. Không quên nhắc bạn đọc Galaxy Z Flip4 đang được giảm giá sâu tại Di Động Thông Minh.
-
-                                            Bạn có ấn tượng với sản phẩm này không? Hãy để lại bình luận nhé. Không quên nhắc bạn đọc truy cập Di Động Thông Minh thường xuyên để cập nhật những thông tin công nghệ mới nhất.</p>
+                                  <?=$item['content']?>
                              </div>
 
                              <div class="app-detail-post__content-next-suggest">
-                                 <span class=""><b class="">Bạn đang xem:</b>Oppo Find N2 Flip liệu có là đối thủ xứng tầm với Samsung Galaxy Z Flip4?</span>
+                                 <span class=""><b class="">Bạn đang xem:</b><?=$item['title']?></span>
 
                                  <span class=""><i class="fa fa-angle-left" aria-hidden="true"></i> Bài trước</span>
                              </div>

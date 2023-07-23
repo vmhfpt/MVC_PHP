@@ -76,8 +76,8 @@
                     </div>
                 </div>
                 <div class="app-header__top-item">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                    <a href="">
+                    <a style="color : white" href="/cart" class=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                    <a href="/cart">
                         <div class="app-header__top-item-icon-cart-quantity"></div>
                     </a>
                 </div>
@@ -87,3 +87,4 @@
             </div>
         </div>
     </header>
+    

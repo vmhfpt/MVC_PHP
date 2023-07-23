@@ -232,3 +232,31 @@ SELECT `types`.`id`,`products`.`name`,`types`.`name` AS `type_name`,`values`.`va
         AND `product_color`.attribute_product_id = 138
         AND `values`.`value` IN ('256 Gb', '8Gb')
         ORDER BY `types`.`id` ASC;
+
+/*******************************************************/
+SELECT (`products`.`price` - (`products`.`price` * `products`.`price_sale`)) AS `price_init` ,`products`.`name` FROM `attribute_product` 
+INNER JOIN `products`
+INNER JOIN `brands`
+ON `products`.`id` = `attribute_product`.`product_id`
+AND `products`.`brand_id` = `brands`.`id`
+WHERE `attribute_product`.`type_id` IN(1,2) 
+AND `attribute_product`.`value_id` IN(1,2,3,4)
+AND (`products`.`price` - (`products`.`price` * `products`.`price_sale`)) >= 3 AND (`products`.`price` - (`products`.`price` * `products`.`price_sale`)) <= 50000000
+AND `products`.`brand_id` IN (1,2,3,5);
+
+
+/***********************************/
+SELECT c1.name AS `category_name`, c2.name AS `platform_name`, `products`.`name` AS `product_name`, `brands`.`name` AS `brand_name`, `products`.`price`, `products`.`price_sale` FROM `attribute_product`
+RIGHT JOIN `products`
+ON `attribute_product`.`product_id` = `products`.`id`
+INNER JOIN `categories` c1
+ON `products`.`category_id` = c1.`id`
+INNER JOIN `categories` c2
+ON c2.id = c1.parent_id
+INNER JOIN `brands`
+ON `products`.`brand_id` = `brands`.`id`
+WHERE c2.slug = "dien-thoai"
+AND `attribute_product`.`value_id` IN (9)
+AND `brands`.`id` IN(3)
+AND `products`.`price` - (`products`.`price` * `products`.`price_sale`) BETWEEN 3000000 AND 7000000
+GROUP BY `products`.`name`

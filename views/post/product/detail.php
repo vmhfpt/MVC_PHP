@@ -1,6 +1,30 @@
 <?php $this->loadView('post/Layout/header') ?>
 <?php $this->loadView('post/Layout/nav') ?>
-
+<style class="">
+   .your-vote {
+            margin : 20px 0px;
+            display : flex;
+            gap : 10px;
+            align-items: flex-start;
+          }
+          .your-vote__item {
+            width : 60px;
+            justify-content: center;
+            align-items: center;
+            display : flex;
+            flex-direction: column;
+            gap : 5px;
+            text-align: center;
+          }
+          .your-vote__item span {
+            font-size: 13px;
+          }
+          .your-vote__item i {
+            color : #fe8c23;
+            font-size: 30px;
+            cursor: pointer;
+          }
+</style>
 <section class="app-bread-crumb container-fluid">
         <div class="container">
           <ul class="">
@@ -14,7 +38,7 @@
         <div class="container">
           <div class="app-detail-title__content">
             <div class="app-detail-title__content-item price-price-init" data-price="<?=$item['price'] - ($item['price'] * $item['price_sale'])?>" >
-              <h2 class="data-name-product"><?=$item['name']?></h2>
+              <h2 data-id="<?=$item['id']?>" class="data-name-product"><?=$item['name']?></h2>
             </div>
             <div class="app-detail-title__content-item">
               <span class="">Cam kết Zin 100%, Đẹp Như Mới</span>
@@ -692,24 +716,18 @@
                  
 
                  <div class="app-detail-top__content-right-product">
+                  <?php for($i = 0; $i < 3; $i ++){ ?>
                     <div class="app-detail-top__content-right-product-item">
                       <div class="app-detail-top__content-right-product-item-img">
-                          <img src="https://didongthongminh.vn/images/products/2022/11/24/resized/1_1649230516.webp" alt="" class="" />
+                         <a href="/product/<?=$top10ProductSuggest[$i]['platform_slug']?>/<?=$top10ProductSuggest[$i]['slug']?>" class=""> <img src="<?= IMAGE_DIR_PRODUCT.$top10ProductSuggest[$i]['thumb']?>" alt="" class="" /></a>
                       </div>
                       <div class="app-detail-top__content-right-product-item-detail">
-                         <span class=""> iPhone 13 Pro Cũ Đẹp 128GB</span>
-                          <span class="">Giá: <b class="">20.890.000đ</b></span>
+                         <span class=""> <?=$top10ProductSuggest[$i]['name']?></span>
+                          <span class="">Giá: <b class=""><?= currency_format($top10ProductSuggest[$i]['price'] - ($top10ProductSuggest[$i]['price'] * $top10ProductSuggest[$i]['price_sale']))?></b></span>
                       </div>
                     </div>
-                    <div class="app-detail-top__content-right-product-item">
-                      <div class="app-detail-top__content-right-product-item-img">
-                          <img src="https://didongthongminh.vn/images/products/2022/12/15/resized/iPhone-13-Pro-Max_(2)(3).webp" alt="" class="" />
-                      </div>
-                      <div class="app-detail-top__content-right-product-item-detail">
-                         <span class=""> iPhone 13 Pro Max Cũ Đẹp 128GB</span>
-                          <span class="">Giá: <b class="">20.890.000đ</b></span>
-                      </div>
-                    </div>
+                  <?php }?>
+                  
                  </div>
 
 
@@ -811,130 +829,136 @@
               </div>
 
               <div class="app-detail-bottom__item-review-content">
-                <div class="app-detail-bottom__item-review-content-item ">
-                   <div class="app-detail-bottom__item-review-content-item-total">
-                         <div class="app-detail-bottom__item-review-content-item-total-top">
-                          <span class="">4.7</span>
-                          <span class="">/5</span>
-                         </div>
-                         <div class="app-detail-bottom__item-review-content-item-total-center">
-                          <ul class="">
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                          </ul>
-                         </div>
-                         <div class="app-detail-bottom__item-review-content-item-total-bottom">
-                          <span class="">(26 đánh giá )</span>
 
-                         </div>
-                   </div>
+
+                 <div class="app-detail-bottom__item-review-content-item ">
+            <div class="app-detail-bottom__item-review-content-item-total">
+              <div class="app-detail-bottom__item-review-content-item-total-top">
+                <span class=""><?=round($total / $totalRank , 1)?></span>
+                <span class="">/5</span>
+              </div>
+              <div class="app-detail-bottom__item-review-content-item-total-center">
+                <ul class="">
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                  <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                </ul>
+              </div>
+              <div class="app-detail-bottom__item-review-content-item-total-bottom">
+                <span class="">(<?=count($comments)?> đánh giá )</span>
+
+              </div>
+            </div>
+          </div>
+          <div class="app-detail-bottom__item-review-content-item ">
+            <div class="app-detail-bottom__item-review-content-item-vote">
+
+              <div class="app-detail-bottom__item-review-content-item-vote-flex">
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <ul class="">
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                  </ul>
                 </div>
-                <div class="app-detail-bottom__item-review-content-item ">
-                   <div class="app-detail-bottom__item-review-content-item-vote">
-
-                    <div class="app-detail-bottom__item-review-content-item-vote-flex">
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                           <ul class="">
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                           </ul>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
-                            <div style="width : 20%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
-                         </div>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <span class="">85%</span>
-                      </div>
-                    </div>
-
-                    <div class="app-detail-bottom__item-review-content-item-vote-flex">
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                           <ul class="">
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                           </ul>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
-                            <div style="width : 50%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
-                         </div>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <span class="">50%</span>
-                      </div>
-                    </div>
-                    <div class="app-detail-bottom__item-review-content-item-vote-flex">
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                           <ul class="">
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                           </ul>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
-                            <div style="width : 74%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
-                         </div>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <span class="">74%</span>
-                      </div>
-                    </div>
-                    <div class="app-detail-bottom__item-review-content-item-vote-flex">
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                           <ul class="">
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                           </ul>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
-                            <div style="width : 12%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
-                         </div>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <span class="">12%</span>
-                      </div>
-                    </div>
-                    <div class="app-detail-bottom__item-review-content-item-vote-flex">
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                           <ul class="">
-                             <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                             <li><i class="fa fa-star " aria-hidden="true"></i></li>
-                           </ul>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
-                            <div style="width : 32%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
-                         </div>
-                      </div>
-                      <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
-                         <span class="">32%</span>
-                      </div>
-                    </div>
-
-
-                   </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
+                    <div style="width : <?=(100/$totalRank) * $bestVote?>%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
+                  </div>
                 </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <span class=""><?=round((100/$totalRank) * $bestVote , 0)?>%</span>
+                </div>
+              </div>
+
+              <div class="app-detail-bottom__item-review-content-item-vote-flex">
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <ul class="">
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                  </ul>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
+                    <div style="width : <?=(100/$totalRank) * $goodVote?>%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
+                  </div>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <span class=""><?=round((100/$totalRank) * $goodVote , 0)?>%</span>
+                </div>
+              </div>
+              <div class="app-detail-bottom__item-review-content-item-vote-flex">
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <ul class="">
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                  </ul>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
+                    <div style="width : <?=(100/$totalRank) * $normalVote?>%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
+                  </div>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <span class=""><?=round((100/$totalRank) * $normalVote , 0)?>%</span>
+                </div>
+              </div>
+              <div class="app-detail-bottom__item-review-content-item-vote-flex">
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <ul class="">
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                  </ul>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
+                    <div style="width : <?=(100/$totalRank) * $badVote?>%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
+                  </div>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <span class=""><?=round((100/$totalRank) * $badVote , 0)?>%</span>
+                </div>
+              </div>
+              <div class="app-detail-bottom__item-review-content-item-vote-flex">
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <ul class="">
+                    <li><i class="fa fa-star fa-star-active" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star " aria-hidden="true"></i></li>
+                  </ul>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <div class="app-detail-bottom__item-review-content-item-vote-flex-item-process">
+                    <div style="width : <?=(100/$totalRank) * $worstVote?>%" class="app-detail-bottom__item-review-content-item-vote-flex-item-process-detail"></div>
+                  </div>
+                </div>
+                <div class="app-detail-bottom__item-review-content-item-vote-flex-item ">
+                  <span class=""><?=round((100/$totalRank) * $worstVote , 0)?>%</span>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
                 <div class="app-detail-bottom__item-review-content-item">
                     <button class="">viết đánh giá</button>
                 </div>
@@ -946,114 +970,29 @@
               <div class="app-detail-bottom__item-comment-content ">
 
                  <div class="">
-                  <div class="app-detail-bottom__item-comment-content-item">
-                    <div class="app-detail-bottom__item-comment-content-item-top">
-                      <div class="app-detail-bottom__item-comment-content-item-top-left">
-                          <span class="">Thế tài</span>
-                          <ul class="">
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                          </ul>
-                      </div>
-                      <div class="app-detail-bottom__item-comment-content-item-top-right">
-                        <span class="">23:07:54 04/02/2023</span>
-                      </div>
-                    </div>
-                    <div class="app-detail-bottom__item-comment-content-item-bottom">
-                      <p class="">shop cho tôi hỏi giá iphone 14 pro max 128gb là 28tr990 bản màu gold là đã áp dụng giảm giá 500k khi thanh toán qua kredivo chưa. nếu chưa thì áp giảm giá còn 28tr490 đúng không .</p>
-                    </div>
-                </div>
-                <div class="app-detail-bottom__item-comment-content-item">
-                  <div class="app-detail-bottom__item-comment-content-item-top">
-                    <div class="app-detail-bottom__item-comment-content-item-top-left">
-                        <span class="">Thế tài</span>
-                        <ul class="">
-                          <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                          <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                          <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                          <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                          <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        </ul>
-                    </div>
-                    <div class="app-detail-bottom__item-comment-content-item-top-right">
-                      <span class="">23:07:54 04/02/2023</span>
-                    </div>
-                  </div>
-                  <div class="app-detail-bottom__item-comment-content-item-bottom">
-                    <p class="">shop cho tôi hỏi giá iphone 14 pro max 128gb là 28tr990 bản màu gold là đã áp dụng giảm giá 500k khi thanh toán qua kredivo chưa. nếu chưa thì áp giảm giá còn 28tr490 đúng không .</p>
-                  </div>
-
-                  <div class="app-detail-bottom__item-comment-content-item-child">
-                    
-
-
-                    <div class="app-detail-bottom__item-comment-content-item">
-                      <div class="app-detail-bottom__item-comment-content-item-top">
-                        <div class="app-detail-bottom__item-comment-content-item-top-left">
-                            <span class="">Thế tài</span>
-                            <ul class="">
-                              <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                              <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                              <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                              <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                              <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            </ul>
-                        </div>
-                        <div class="app-detail-bottom__item-comment-content-item-top-right">
-                          <span class="">23:07:54 04/02/2023</span>
-                        </div>
-                      </div>
-                      <div class="app-detail-bottom__item-comment-content-item-bottom">
-                        <p class="">shop cho tôi hỏi giá iphone 14 pro max 128gb là 28tr990 bản màu gold là đã áp dụng giảm giá 500k khi thanh toán qua kredivo chưa. nếu chưa thì áp giảm giá còn 28tr490 đúng không .</p>
-                      </div>
-                  </div>
-
-                  
-                  </div>
-              </div>
+                 <?php
+            foreach ($comments as $key => $value) {
+            ?>
               <div class="app-detail-bottom__item-comment-content-item">
                 <div class="app-detail-bottom__item-comment-content-item-top">
                   <div class="app-detail-bottom__item-comment-content-item-top-left">
-                      <span class="">Thế tài</span>
-                      <ul class="">
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
+                    <span class=""><?= $value['name'] ?></span>
+                    <ul class="">
+                      <?=str_repeat('<li><i class="fa fa-star" aria-hidden="true"></i></li>', $value['vote']);?>
+                      
+                    </ul>
                   </div>
                   <div class="app-detail-bottom__item-comment-content-item-top-right">
-                    <span class="">23:07:54 04/02/2023</span>
+                    <span class=""><?= $value['createdAt'] ?></span>
                   </div>
                 </div>
                 <div class="app-detail-bottom__item-comment-content-item-bottom">
-                  <p class="">shop cho tôi hỏi giá iphone 14 pro max 128gb là 28tr990 bản màu gold là đã áp dụng giảm giá 500k khi thanh toán qua kredivo chưa. nếu chưa thì áp giảm giá còn 28tr490 đúng không .</p>
-                </div>
-            </div>
-            <div class="app-detail-bottom__item-comment-content-item">
-              <div class="app-detail-bottom__item-comment-content-item-top">
-                <div class="app-detail-bottom__item-comment-content-item-top-left">
-                    <span class="">Thế tài</span>
-                    <ul class="">
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                </div>
-                <div class="app-detail-bottom__item-comment-content-item-top-right">
-                  <span class="">23:07:54 04/02/2023</span>
+                  <p class=""><?= $value['content'] ?></p>
                 </div>
               </div>
-              <div class="app-detail-bottom__item-comment-content-item-bottom">
-                <p class="">shop cho tôi hỏi giá iphone 14 pro max 128gb là 28tr990 bản màu gold là đã áp dụng giảm giá 500k khi thanh toán qua kredivo chưa. nếu chưa thì áp giảm giá còn 28tr490 đúng không .</p>
-              </div>
-          </div>
+            <?php
+            }
+            ?>
                  </div>
                 
 
@@ -1064,12 +1003,209 @@
 
 
               </div>
+              <div class="app-detail-post__add-comment ">
+                                 <div class="app-detail-post__add-comment-title">
+                                     <h3 class="">VIẾT BÌNH LUẬN CỦA BẠN
+                                    </h3>
 
+                                    <span class="">Địa chỉ email của bạn sẽ được bảo mật. Các trường bắt buộc được đánh dấu *</span>
+                                 </div>
+
+                                 <div class="app-detail-post__add-comment-form">
+                                     <form action="" class="">
+                                         <div class="row">
+
+
+                                         <div class="col-sm-12">
+                    <div class="your-vote">
+                         <div class="your-vote__item">
+                                <i class="fa fa-star-o fa-star-click" aria-hidden="true" data-vote="1"></i>
+                                <span class="your-vote__item-label">Rất tệ</span>
+                         </div>
+                         <div class="your-vote__item">
+                         <i class="fa fa-star-o fa-star-click" aria-hidden="true" data-vote="2"></i>
+                                <span class="your-vote__item-label">Tệ</span>
+                         </div>
+                         <div class="your-vote__item">
+                         <i class="fa fa-star-o fa-star-click" aria-hidden="true" data-vote="3"></i>
+                                <span class="your-vote__item-label">Bình thường</span>
+                         </div>
+                         <div class="your-vote__item">
+                         <i class="fa fa-star-o fa-star-click" aria-hidden="true" data-vote="4"></i>
+                                <span class="your-vote__item-label">Tốt</span>
+                         </div>
+                         <div class="your-vote__item">
+                         <i class="fa fa-star-o fa-star-click" aria-hidden="true" data-vote="5"></i>
+                                <span class="your-vote__item-label">Tuyệt vời</span>
+                         </div>
+                    </div>
+                </div>
+
+
+
+                                           
+                                             <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="" class="">Họ tên <span class="">*</span></label>
+                                                    <input placeholder="Họ tên" type="text" class="cmt-input-name">
+                                                    <span class="error-name" style="color : red"></span>
+                                               </div>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="" class="">Số điện thoại <span class="">*</span></label>
+                                                    <input placeholder="Nhập số điện thoại" type="number" class="cmt-input-phone">
+                                                    <span class="error-phone-number" style="color : red"></span>
+                                               </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="" class="">Email <span class="">*</span></label>
+                                                    <input placeholder="Email" type="email" class="cmt-input-email">
+                                                    <span class="error-email" style="color : red"></span>
+                                               </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                     <label for="" class="">Nội dung <span class="">*</span></label>
+                                                     <textarea class="cmt-input-content" placeholder="Mời bạn thảo luận, vui lòng nhập Tiếng Việt có dấu" name="" id="" cols="30" rows="10"></textarea>
+                                                     <span class="error-content" style="color : red"></span>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-md-12">
+                                                <div class=" form-group-btn">
+                                                    <div class="">
+                                                        <button type="button" class="post-comment">Gửi bình luận</button>
+                                                    </div>
+                                                </div>
+                                             </div>
+                                             
+                                         </div>
+                                     </form>
+                                 </div>
+                            </div>
 
             </div>
           </div>
         </div>
       </section>
+      <script>
+  var vote = 0;
+  $('.fa-star-click').click(function(){
+     vote = ($(this).attr("data-vote"));
+     $(".your-vote__item-label").removeAttr("style");
+     $('.your-vote__item-label').eq((vote-1)).css('color', '#fe8c23');
+     $('.fa-star-click').map((index,value) => {
+         if($(value).attr("data-vote") <= vote){
+            $(value).removeClass('fa-star-o');
+            $(value).addClass('fa-star');
+         }else {
+            $(value).removeClass('fa-star');
+            $(value).addClass('fa-star-o');
+         }
+     });
+  })
+
+
+
+  var errorInputContent = true;
+  var errorInputName = true;
+  var errorInputEmail = true;
+  var errorInputPhone = true;
+
+
+
+
+  $('.cmt-input-phone').on('input keyup paste', function () {
+	text = $(this).val();
+   if(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(text)){
+  	$('.error-phone-number').text('');
+  	errorInputPhone = false;
+  }else {
+  	errorInputPhone = true;
+  	$('.error-phone-number').text('* Số điện thoại không hợp lệ');
+  	
+  }
+});
+
+  $('.cmt-input-email').on('input keyup paste', function () {
+	text = $(this).val();
+
+   if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)){
+  	$('.error-email').text('');
+  	errorInputEmail = false;
+  }else {
+  	$('.error-email').text('* Email không hợp lệ');
+  	errorInputEmail = true;
+  	
+  }
+});
+  $('.cmt-input-name').on('input keyup paste', function () {
+	text = $(this).val();
+   
+
+
+  if(/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềếểỄỆỈỊỌỎỐỒỔỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]{4,})+$/.test(text)){
+    errorInputName = false;
+  	$('.error-name').text('');
+  }else {
+    errorInputName = true;
+  	$('.error-name').text('* Tên không hợp lệ');
+  	
+  }
+});
+  $('.cmt-input-content').on('input keyup paste', function() {
+    text = $(this).val();
+
+
+
+    if (/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềếểỄỆỈỊỌỎỐỒỔỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]{4,})+$/.test(text)) {
+      errorInputContent = false;
+      $('.error-content').text('');
+    } else {
+      errorInputContent = true;
+      $('.error-content').text('* Nội dung quá ngắn');
+
+    }
+  });
+
+
+  $('.post-comment').on('click', function() {
+    /*
+    var errorInputContent = true;
+  var errorInputName = true;
+  var errorInputEmail = true;
+  var errorInputPhone = true;
+    
+    */
+  
+    if (errorInputContent == false && errorInputName == false && errorInputEmail == false && errorInputPhone == false) {
+    
+      $.ajax({
+          method: "POST",
+          url: "/api/product/post-coment",
+          data: {
+            id: $('.data-name-product').attr('data-id'),
+            content: $('.cmt-input-content').val(),
+            vote : vote,
+            name : $('.cmt-input-name').val(),
+            phone : $('.cmt-input-phone').val(),
+            email : $('.cmt-input-email').val()
+          }
+        })
+        .done(function(msg) {
+          
+          location.reload();
+        });
+
+    } else {
+      $([document.documentElement, document.body]).animate({
+        scrollTop: $(".app-detail-post__add-comment").offset().top
+      }, 600);
+    }
+  });
+</script>
       <section class="app-phone-suggest container-fluid">
         <div class="container">
           <div class="app-phone-suggest__title">
@@ -1081,694 +1217,76 @@
                 Top Tab đáng mua nhất
               </div>
             </div>
-            <div class="app-phone-suggest__title-right">
-              <ul>
-                <li><button>iPad cũ</button></li>
-                <li><button>Apple iPad</button></li>
-                <li><button>Samsung Tab</button></li>
-                <li><button>Máy tính bảng khác</button></li>
-
-                <li>
-                  <button class="app-phone-suggest__title-right-active">
-                    Xem tất cả 148 máy tính bảng
-                  </button>
-                </li>
-              </ul>
-            </div>
+           
           </div>
+
           <div class="app-phone-suggest__product-flex">
-            <div class="app-top-sale__day-carousel app-information__content-four owl-carousel owl-theme owl-loaded owl-drag">
-                <div class="owl-stage-outer">
-                    <div class="owl-stage" style="width: 3577px; transform: translate3d(-1192px, 0px, 0px); transition: all 0s ease 0s;"><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
+      <div class="app-top-sale__day-carousel app-information__content-four owl-carousel owl-theme owl-loaded owl-drag">
+        <div class="owl-stage-outer">
+          <div class="owl-stage" style="width: 3577px; transform: translate3d(-1192px, 0px, 0px); transition: all 0s ease 0s;">
+            
+           <?php
+              foreach($top10ProductSuggest as $key => $value){
+           ?>
+            <div class="app-top-sale__day-carousel-item owl-item " style="width: 227.4px; margin-right: 11px;">
+              <div class="app-top-sale__day-carousel-item-img-top-sale">
+                -<?= (float)$value['price_sale'] * 100 ?>%
+              </div>
+              <div class="app-top-sale__day-carousel-item-img">
+                <img src="<?= IMAGE_DIR_PRODUCT . $value['thumb'] ?> " alt="">
+              </div>
+
+              <div class="app-top-sale__day-carousel-item-detail">
+                <div class="app-top-sale__day-carousel-item-detail-title">
+                  <a href="/product/<?=$value['platform_slug']?>/<?=$value['slug']?>"><?= $value['name'] ?></a>
                 </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/12/resized/AIR_2.jpeg" alt="">
+                <div class="app-top-sale__day-carousel-item-detail-price">
+                  <b><?= currency_format($value['price'] - ($value['price'] * (float)$value['price_sale'])) ?></b> <span><?= currency_format($value['price']) ?></span>
                 </div>
 
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
+                <div class="sale-product">
+                  <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
                 </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/06/resized/iPad-Gen-10-Xanh(3).webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
+                <div class="app-top-sale__day-carousel-item-detail-bottom">
+                  <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
+                    <ul>
+                      <li>
+                        <i class="vote-active fa fa-star" aria-hidden="true"></i>
+                      </li>
+                      <li>
+                        <i class="vote-active fa fa-star" aria-hidden="true"></i>
+                      </li>
+                      <li>
+                        <i class="vote-active fa fa-star" aria-hidden="true"></i>
+                      </li>
+                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    </ul>
                   </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/29/resized/Tab-A7-Lite.webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/29/resized/Tab-A8-2022.webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/12/resized/iPad-Air-5-Tim(1).webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
+                  <div class="app-top-sale__day-carousel-item-detail-like-product">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
                   </div>
                 </div>
               </div>
+            </div>
+           <?php
+              }
+           ?>
 
-              <div class="app-top-sale__day-carousel-item owl-item active" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/12/resized/AIR_2.jpeg" alt="">
-                </div>
+            
 
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item owl-item active" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/06/resized/iPad-Gen-10-Xanh(3).webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item owl-item active" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/29/resized/Tab-A7-Lite.webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item owl-item active" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/29/resized/Tab-A8-2022.webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item owl-item active" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/12/resized/iPad-Air-5-Tim(1).webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/12/resized/AIR_2.jpeg" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/06/resized/iPad-Gen-10-Xanh(3).webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/29/resized/Tab-A7-Lite.webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/29/resized/Tab-A8-2022.webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div><div class="app-top-sale__day-carousel-item owl-item cloned" style="width: 227.4px; margin-right: 11px;">
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img src="https://didongthongminh.vn/images/products/2022/12/12/resized/iPad-Air-5-Tim(1).webp" alt="">
-                </div>
-
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-
-                  <div class="sale-product">
-                    <span>Giảm 100.000đ khi mua kèm iPhone 14</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div class="app-top-sale__day-carousel-item-detail-bottom-vote">
-                      <ul>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                          <i class="vote-active fa fa-star" aria-hidden="true"></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div class="app-top-sale__day-carousel-item-detail-like-product">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> Yêu thích
-                    </div>
-                  </div>
-                </div>
-              </div></div>
+          
+          </div>
         </div>
 
-            <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div></div>
-          </div>
+        
+      </div>
+    </div>
+          
         </div>
       </section>
 
-      <section class="app-name-product__suggest container-fluid">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-2 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-2 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-2 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-smd-6 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  
       <section class="app-fixed-mobile">
         <div class="app-fixed-mobile__detail">
            <div class="app-fixed-mobile__detail-left">
@@ -1966,6 +1484,12 @@
          </div>
          
       </section>
-      <script src="<?= SITE_URL_POST ?>/javascript/detail.js"> </>
+
+
+      
+      <script src="<?= SITE_URL_POST ?>/javascript/detail.js"> </script>
+
+
+
 <?php $this->loadView('post/Layout/top') ?>
 <?php $this->loadView('post/Layout/footer') ?>

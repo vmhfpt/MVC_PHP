@@ -57,21 +57,21 @@ $(".app-detail-promotion__content-flex").owlCarousel({
 
 
 
-//  function getTotalCart(arr){
-//  	  	$('.app-header__top-item-icon-cart-quantity').empty();
-//  	  if(arr == null){
-//  	  		$('.app-header__top-item-icon-cart-quantity').text(0)
-//  	  }else {
-//  	  	var sum = 0;
-//  	  	for(var i = 0; i < arr.length; i ++){
-//  	  		 sum = sum + Number(arr[i].quantity);
-//  	  	}
-//  	  	$('.app-header__top-item-icon-cart-quantity').text( String(sum));
-//  	  }
-//  }
+ function getTotalCart(arr){
+ 	  	$('.app-header__top-item-icon-cart-quantity').empty();
+ 	  if(arr == null){
+ 	  		$('.app-header__top-item-icon-cart-quantity').text(0)
+ 	  }else {
+ 	  	var sum = 0;
+ 	  	for(var i = 0; i < arr.length; i ++){
+ 	  		 sum = sum + Number(arr[i].quantity);
+ 	  	}
+ 	  	$('.app-header__top-item-icon-cart-quantity').text( String(sum));
+ 	  }
+ }
 
 
-// getTotalCart(JSON.parse(localStorage.getItem("carts")));
+getTotalCart(JSON.parse(localStorage.getItem("carts")));
 
 var selector = $('.item');
         var sum = selector.length;

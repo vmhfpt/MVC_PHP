@@ -119,6 +119,26 @@
 
  Router::handle('GET',  'admin/user/privilege/{id}',       'admin/userPrivilegeController', 'add', 'admin');
  Router::handle('POST',  'admin/user/privilege/{id}',       'admin/userPrivilegeController', 'create', 'admin');
+ /********************************************************************************************* */
+ Router::handle('POST',  'admin/order/get-list-attribute-price',       'admin/orderController', 'getListAttributePriceProduct', 'admin');
+ Router::handle('POST',  'admin/order/get-color',       'admin/orderController', 'getListColor', 'admin');
+ Router::handle('POST',  'admin/order/delete',       'admin/orderController', 'delete', 'admin');
+ Router::handle('GET',  'admin/order/change/{product_id}/{product_color_id}/{order_id}/{order_detail_id}',       'admin/orderController', 'edit', 'admin');
+ Router::handle('POST',  'admin/order/change/{product_id}/{product_color_id}/{order_id}/{order_detail_id}',       'admin/orderController', 'update', 'admin');
+ Router::handle('GET',  'admin/order/list',       'admin/orderController', 'index', 'admin');
+ Router::handle('GET',  'admin/order/detail/{id}',       'admin/orderController', 'detail', 'admin');
+ Router::handle('POST',  'admin/order/detail/{id}',       'admin/orderController', 'change', 'admin');
+ Router::handle('POST',  'admin/order/change-active-detail/{id}',       'admin/orderController', 'changeActive', 'admin');
+ Router::handle('GET',  'admin/order/{id}',       'admin/orderController', 'listOrder', 'admin');
+ Router::handle('POST',  'admin/order/{id}',       'admin/orderController', 'addItemToOrderDetail', 'admin');
+ Router::handle('POST',  'api/admin/change-order',       'admin/orderController', 'getAttributeByColoProduct', 'admin');
+
+  /********************************************************************************************* */
+  Router::handle('POST',  'api/product/post-coment',       'post/commentController', 'postComment');
+  Router::handle('GET',  'admin/comment/list',       'admin/commentController', 'index', 'admin');
+  Router::handle('POST',  'admin/comment/delete',       'admin/commentController', 'destroy', 'admin');
+  Router::handle('GET',  'admin/comment-detail/list/{id}',       'admin/commentController', 'detailListComment', 'admin');
+  
 /*************************************************************************************
   * ********************************
   * ********************************
@@ -141,8 +161,9 @@
   Router::handle('GET',  '', 'post/handleController', 'home');
   Router::handle('GET',  'index.html', 'post/handleController', 'home');
   Router::handle('GET',  'cart', 'post/handleController', 'cart');
+  Router::handle('POST',  'api/plat-form/{slug}', 'post/handleController', 'getTotalFilter');
   Router::handle('GET',  'plat-form/{slug}', 'post/handleController', 'platForm');
-  Router::handle('GET',  'category/{platform_slug}/{category_slug}', 'post/handleController', 'category');
+  //Router::handle('GET',  'category/{platform_slug}/{category_slug}', 'post/handleController', 'category');
   Router::handle('GET',  'product/{platform_slug}/{product_slug}', 'post/handleController', 'detailProduct');
   Router::handle('GET',  'introduce/agent', 'post/handleController', 'detailAgent');
   Router::handle('GET',  'introduce/{slug}', 'post/handleController', 'detailIntroduce');
@@ -153,7 +174,9 @@
   Router::handle('POST',  'api/address/get-transport-fee', 'post/productController', 'getTransportFee');
   Router::handle('POST',  'api/check-coupon', 'post/productController', 'checkCoupon');
   Router::handle('POST',  'api/purchase', 'post/cartController', 'purchaseCart');
- 
+ /**************************************************************************************/
+ Router::handle('POST',  'api/chatbot/get-order', 'post/orderController', 'getOrderByCode');
+ Router::handle('POST',  'api/chatbot/get-product', 'post/productController', 'getProductByChat');
 
  http_response_code(404);
  return ($viewLoad->loadView('admin/errorPage/404notFound'));

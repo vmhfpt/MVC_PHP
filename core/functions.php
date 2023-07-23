@@ -85,7 +85,9 @@
         return($name);
    }
    function currency_format($number, $suffix = 'đ') {
+
         if (!empty($number)) {
+            if( $number == 0) return ('0đ');
             return number_format($number, 0, ',', '.') . "{$suffix}";
         }
    }

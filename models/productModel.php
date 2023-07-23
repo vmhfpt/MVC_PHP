@@ -105,7 +105,7 @@ class Product extends Database{
     }
 
     public function getPriceAttributeByProductColorID($product_color_id){
-        $sql = "SELECT `types`.`id`,`products`.`name`,`types`.`name` AS `type_name`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` , `attribute_price`.`id` AS `attribute_price_id`
+        $sql = "SELECT `types`.`id` AS `type_id`,`products`.`name`,`types`.`name` AS `type_name`,`values`.`value`,`attribute_price`.`price`, `attribute_price`.`price_sale`,`attribute_price`.`quantity`,`attribute_price`.`active` , `attribute_price`.`id` AS `attribute_price_id`
         FROM `attribute_price` 
         JOIN `product_color` 
         JOIN `attribute_product` 
@@ -122,7 +122,7 @@ class Product extends Database{
         return $this->pdo_query($sql, $product_color_id);
     }
     public function countPriceAttributeByProductColorID($product_color_id){
-        $sql="SELECT `types`.`name` 
+        $sql="SELECT `types`.`name` , `types`.`description`, `types`.`id`
         FROM `attribute_price` 
         JOIN `product_color` 
         JOIN `attribute_product` 
@@ -157,5 +157,82 @@ class Product extends Database{
         return $this->pdo_query($sql, $attribute_product_id);
     }
 
+    public function getAttributePriceProductByOrderDetailID($order_detail_id){
+        $sql = "SELECT `products`.name AS `product_name`, v1.value AS `product_color`, `types`.`description`, `values`.`value`, `attribute_price`.`price`,`attribute_price`.`price_sale`
+        FROM `order_attribute_product` 
+        INNER JOIN `order_detail`
+        ON `order_attribute_product`.`order_detail_id` = `order_detail`.`id`
+        AND `order_attribute_product`.`order_detail_id`= ?
+        INNER JOIN `product_color` 
+        ON `order_detail`.`product_id` = `product_color`.`id`
+        INNER JOIN `attribute_product` p1
+        ON `product_color`.`attribute_product_id` = p1.id
+        INNER JOIN `types` t1
+        INNER JOIN `values` v1
+        ON p1.type_id = t1.id
+        AND p1.value_id = v1.id
+        INNER JOIN `attribute_price`
+        ON `order_attribute_product`.`attribute_price_id` = `attribute_price`.`id`
+        INNER JOIN `attribute_product`
+        ON `attribute_price`.`attribute_product_id` = `attribute_product`.`id`
+        INNER JOIN `values`
+        INNER JOIN `types`
+        ON `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        INNER JOIN `products`  
+        ON `attribute_product`.`product_id` = `products`.`id`
+        ";
+         return $this->pdo_query($sql, $order_detail_id);
+    }
+    public function getProductSuggestByPlatFormSLug($slug){
+        $sql = "SELECT `products`.`name`, `products`.`price`, `products`.`price_sale`, `products`.`thumb`, `products`.`slug`, c2.slug AS `platform_slug`  FROM `products` 
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+        AND c2.slug = ? 
+        ORDER BY `products`.`id` 
+        ASC LIMIT 0,10";
+        return $this->pdo_query($sql, $slug);
+    }
+    public function getAttributeByProductIDChatBot($product_id){
+        $sql = "SELECT `attribute_product`.`id`, `types`.`description`, `values`.`value`, `products`.`name` FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types`
+        WHERE `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        AND `products`.`id` = `attribute_product`.`product_id`
+        AND `types`.`id` != 3";
+        return $this->pdo_query($sql, $product_id);
+    }
+    public function getProductSearchByName($name){
+        $sql = "SELECT `products`.`id`,`products`.`name`, `products`.`price`, `products`.`price_sale`, `products`.`thumb`, `products`.`slug`, c2.slug AS `platform_slug`  FROM `products` 
+        
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+        WHERE `products`.`name` LIKE ?
+        ORDER BY `products`.`id` 
+        ASC LIMIT 0,1";
+        return $this->pdo_query_one($sql,  "%$name%");
+
+    }
+    public function getPriceProductInitByProductColorID($product_color_id){
+        $sql = "SELECT `products`.`name`, (`products`.`price` - (`products`.`price` * `products`.`price_sale`) ) AS `price_init` FROM `product_color` 
+        INNER JOIN `attribute_product`
+        ON `product_color`.`attribute_product_id` = `attribute_product`.`id`
+        INNER JOIN `products`
+        ON `products`.`id` = `attribute_product`.`product_id`
+        WHERE `product_color`.`id` = ?";
+        return $this->pdo_query_one($sql,  $product_color_id);
+    }
+    public function getProductByFilter($arr){
+        //$string = "WHERE `id` = 1";
+        //$sql = "SELECT * FROM `products`'".$string."' ";
+        return $this->pdo_query($sql);
+    }
 }
 ?>

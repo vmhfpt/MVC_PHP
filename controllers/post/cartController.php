@@ -258,29 +258,5 @@ class cartController extends controller{
         }
       
        die();
-
-    //    foreach($request['carts'] as $key => $value){
-        
-    //     print("<pre>".print_r( $request['detail_user'],true)."</pre>"); echo "<br/>";die();
-    //     $dataItem = $this->product->getByName($value['name']);
-    //     $product_id = $dataItem['id'];
-    //     $listGiftProduct = $this->giftProduct->getGiftProductByProductId($product_id);
-    //   //  continue;
-    //         echo '<br/>';
-    //         var_dump("product_id : " .$this->getProductColorIdByColorCurrent($value['dataListColorProduct'], $value['colorCurrent']['id']). "<br/>" );
-    //         var_dump("total : ".$value['priceCurrent']. "<br/>");
-    //         var_dump('quantity : '. $value['quantity']. "<br/>");
-    //         foreach($value['attributePriceCurrent'] as $k => $attribute){
-    //             print("<pre>".print_r( $attribute,true)."</pre>"); echo "<br/>";
-    //         }
-    //         foreach($value['dataListCouponProduct'] as $k1 => $coupon){
-    //             print("<pre>".print_r( $coupon,true)."</pre>"); echo "<br/>";
-    //         }
-            
-    //         foreach($listGiftProduct as $k3 => $gift){
-    //             print("<pre>".print_r( $gift,true)."</pre>"); echo "<br/>";
-    //         }
-
-    //    }
     }
 }

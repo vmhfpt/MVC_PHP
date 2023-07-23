@@ -382,11 +382,11 @@ var errorInputEmail = true;
         // console.log(">> fee trasport :", $('.transport-fee').attr('data-price'));
         // console.log(">> total : ", $('.total-price-checkout').text().replaceAll('.', '').slice(0, -1));
         //return true;
-        if (true || errorInputEmail == false && errorInputName == false && errorInputPhone == false) {
+        if ( errorInputEmail == false && errorInputName == false && errorInputPhone == false) {
 
 
-            if (false) {
-                //$('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null'
+            if ($('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null') {
+                //
                 $([document.documentElement, document.body]).animate({
                     scrollTop: $(".scroll-to-address").offset().top
                 }, 600);
@@ -541,6 +541,7 @@ var errorInputEmail = true;
 
                             $('.show-popup-state').empty();
                             $('.show-popup-state').append(template);
+                            $('.app-header__top-item-icon-cart-quantity').text(0)
                             localStorage.removeItem("carts");
 
                         }

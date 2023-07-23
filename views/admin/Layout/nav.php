@@ -478,7 +478,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/don-hang" class="nav-link">
+                            <a href="/admin/order/list" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Đơn hàng
@@ -489,7 +489,7 @@
 
                         <li class="nav-header">Bình luận</li>
                         <li class="nav-item">
-                            <a href="/binh-luan" class="nav-link">
+                            <a href="/admin/comment/list" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                    Sản phẩm

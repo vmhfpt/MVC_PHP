@@ -19,6 +19,10 @@ class ColorProduct extends Database{
         AND `attribute_product`.`id` = ?";
         return $this->pdo_query_one($sql, $attribute_product_id);
     }
+    public function getByID($id){
+        $sql = "SELECT * FROM `product_color` WHERE `id` = ?";
+        return $this->pdo_query_one($sql, $id);
+    }
     public function getLibraryByColorProductID($colorProduct_id){
        $sql = "SELECT * FROM `library_color` WHERE `product_color_id` = ?";
        return  $this->pdo_query($sql, $colorProduct_id);
@@ -73,6 +77,23 @@ class ColorProduct extends Database{
         AND `attribute_product`.`value_id` = `values`.`id` 
         AND `products`.`id` = `attribute_product`.`product_id`";
         return  $this->pdo_query($sql, $product_id);
+    }
+    public function getPriceAttributeByProductColorID($product_color_id){
+        $sql="SELECT `types`.`id` AS `type_id`,`types`.`description`, `product_color`.`id` AS `product_color_id`, `attribute_price`.`id` AS `attribute_price_id`, `attribute_product`.`id` AS `attribute_product_id`
+        FROM `attribute_price` 
+        JOIN `product_color` 
+        JOIN `attribute_product` 
+        JOIN `types` 
+        JOIN `values` 
+        JOIN `products` 
+        ON `attribute_price`.`product_color_id` = `product_color`.`id` 
+        AND `attribute_price`.`attribute_product_id` = `attribute_product`.`id` 
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `attribute_product`.`product_id` = `products`.`id` 
+        AND `attribute_price`.`product_color_id` = ?
+        GROUP BY `types`.`name` ORDER BY `types`.`id` ASC;";
+        return $this->pdo_query($sql, $product_color_id);
     }
 
 }

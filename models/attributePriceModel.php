@@ -63,6 +63,8 @@ class AttributePrice extends Database{
         $sql = "UPDATE `attribute_price` SET `price` = ?, `price_sale` = ?, `quantity` = ?, `active` = ?, `updatedAt` = current_timestamp() WHERE `attribute_price`.`id` = ?";
         return $this->pdo_execute($sql, $price, $price_sale, $quantity, $active, $id);
     }
+
+    
     
 }
 ?>

@@ -7,7 +7,12 @@ require_once("models/colorProductModel.php");
 require_once("models/couponModel.php");
 require_once("models/giftProductModel.php");
 require_once("models/addressModel.php");
+require_once("models/commentModel.php");
+require_once("models/brandModel.php");
+require_once("models/attributesModel.php");
 class handleController extends controller{
+    public $attribute;
+    private $brand;
     private $address;
     private $coupon;
     private $introduce;
@@ -16,7 +21,10 @@ class handleController extends controller{
     private $post;
     public $colorProduct;
     private $giftProduct;
+    private $comment;
     public function __construct(){
+       $this->brand = new Brand();
+       $this->attribute = new Attributes();
        $this->address = new Address();
        $this->coupon = new Coupon();
        $this->colorProduct = new ColorProduct();
@@ -25,8 +33,17 @@ class handleController extends controller{
        $this->product = new Product();
        $this->post = new Post();
        $this->giftProduct = new GiftProduct();
+       $this->comment = new Comment();
     }
    public function home(){
+      // $array = ['name' => ['join', 'alex', 'tom'], 'age' => 32];
+      // $array['name'] = implode(', ', $array['name']);
+      // var_dump($array);die();
+
+
+
+
+
       $topPhoneSuggest = $this->product->getProductByPlatformID(1);
       $listPostsSuggest = $this->post->getFivePostsSuggest();
       $firstPost = $this->post->getFirstItem();
@@ -41,6 +58,7 @@ class handleController extends controller{
       ]));
    }
    public function detailProduct($request, $response){
+       $platform = $request[0]['platform_slug'];
        $item = $this->product->getBySlug($request[0]['product_slug']);
       if(!$item) return ($this->loadView('admin/errorPage/404notFound'));
       $product_id = $item['id'];
@@ -50,9 +68,43 @@ class handleController extends controller{
       $listColorProduct = $this->colorProduct->getAllColorByProduct($product_id);
       $listCoupon = $this->coupon->getDetailListCouponByProduct($product_id);
       $giftProduct = $this->giftProduct->getGiftProductByProductId($product_id);
+      $comments = $this->comment->getAllCommentByProductId($product_id);
       $postSuggest = $this->post->getFivePostsSuggest();
       $totalArrayAttribute = $this->product->countPriceAttributeByProductColorID($firstColor['product_color_id']);
       $listPriceAttributeProduct = $this->product->getPriceAttributeByProductColorID($firstColor['product_color_id']);
+      $top10ProductSuggest = $this->product->getProductSuggestByPlatFormSLug($platform);
+      $voteRank = $this->comment->getRankProduct($product_id);
+
+      $total = 0;
+      $totalRank = 0;
+      $worstVote = 0;
+      $badVote = 0;
+      $normalVote = 0;
+      $goodVote = 0;
+      $bestVote = 0;
+
+      foreach($voteRank as $key => $value){
+         $totalRank = $totalRank + ($value['total']);
+         if($value['vote'] == 1){
+            $worstVote = $value['total'];
+         }
+         if($value['vote'] == 2){
+            $badVote = $value['total'];
+         }
+         if($value['vote'] == 3){
+            $normalVote  = $value['total'];
+         }
+         if($value['vote'] == 4){
+            $goodVote = $value['total'];
+         }
+         if($value['vote'] == 5){
+            $bestVote = $value['total'];
+         }
+         $total = $total + $value['caculation'];
+      }
+ 
+   if($totalRank  == 0) $totalRank = 0.1;
+   if($total == 0) $total = 0;
      return ($this->loadView('post/product/detail', [
          'attributeProduct' => $attributeProduct,
          'firstColor' => $firstColor,
@@ -63,11 +115,27 @@ class handleController extends controller{
          'listCoupon' => $listCoupon,
          'giftProduct' => $giftProduct,
          'postSuggest' => $postSuggest,
-         'totalArrayAttribute' => $totalArrayAttribute 
+         'totalArrayAttribute' => $totalArrayAttribute,
+         'comments' => $comments,
+         "total" => $total,
+         "totalRank" => $totalRank,
+         "worstVote" =>$worstVote,
+         "badVote" => $badVote,
+         "normalVote" => $normalVote,
+         "goodVote" => $goodVote,
+         "bestVote" => $bestVote,
+         'top10ProductSuggest' => $top10ProductSuggest
      ]));
    }
    public function platForm($request, $response){
-    return ($this->loadView('post/product/list'));
+    $listBrand = $this->brand->getAll();
+    $listFilter = $this->category->getFilterByPlatFormSlug($request[0]['slug']);
+
+    //var_dump($listFilter);die();
+    return ($this->loadView('post/product/list', [
+      'listBrand' => $listBrand,
+      'listFilter' => $listFilter
+   ]));
    }
    public function category($request, $response){
     return ($this->loadView('post/product/list'));
@@ -89,8 +157,10 @@ class handleController extends controller{
    public function new(){
     return ($this->loadView('post/new/index'));
    }
-   public function detailNew(){
-    return ($this->loadView('post/new/detail'));
+   public function detailNew($request, $response){
+      $item = $this->post->getBySlug($request[0]['slug']);
+      
+    return ($this->loadView('post/new/detail', ['item' => $item]));
    }
    public function detailIntroduce($request, $response){
     $slug = $request[0]['slug'];
@@ -99,5 +169,36 @@ class handleController extends controller{
    }
    public function detailAgent(){
     return ($this->loadView('post/introduce/shop'));
+   }
+   public function getTotalFilter($request, $response){
+     // var_dump($request);
+    // $arr = "1,2,3,4,5";
+    // $dataItem = $this->product->getProductWhereINId($arr);
+    // var_dump($dataItem);
+     $platFormSlug = $request[0]['slug'];
+     unset($request[0]);
+     //var_dump($request);die();
+     
+      if(isset($request['price'])){
+            $result = str_replace("p", "", $request['price']);
+           // var_dump($result);
+      }
+      if(isset($request['brand'])){
+         $result = str_replace("b", "", $request['brand']);
+         //var_dump($result);
+      }
+      $arrQuery = [];
+      foreach($request as $key => $value){
+         if($key != "brand" && $key != "price" ){
+            $arrQuery[] = $value;
+         };
+      }
+      
+      $string = implode(",", $arrQuery);
+      //var_dump($string);
+       
+      $dataItem = $this->product->getProductByFilter(3);
+
+      print("<pre>".print_r( $dataItem,true)."</pre>");die();
    }
 }
