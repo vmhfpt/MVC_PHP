@@ -15,7 +15,7 @@
                   src="https://didongthongminh.vn/images/menus/dien-thoai.webp"
                   alt=""
                 />
-                <?=$value['name']?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <a href="/plat-form/<?=$value['slug']?>" class=""><?=$value['name']?></a> <i class="fa fa-angle-right" aria-hidden="true"></i>
                 <?php if($this->category->getCategoryByPlatformID($value['id'])){?>
                     <div class="app-header__flex-item-nav-child">
                   <div class="app-header__flex-item-nav-child-list">
@@ -26,7 +26,7 @@
                         </li>
 
                         <?php foreach($this->category->getCategoryByPlatformID($value['id']) as $key1 => $child){?>
-                            <li><a href=""><?=$child['name']?> </a></li>
+                            <li><a href="/plat-form/<?=$value['slug']?>?ca=c<?=$child['id']?>"><?=$child['name']?> </a></li>
 
                         <?php }?>
                         

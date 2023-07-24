@@ -120,6 +120,13 @@
          background: #ff6700;
          color : white;
       }
+      .close-filter {
+        padding : 6px 10px;
+         border : 1px solid red;
+         border-radius: 3px;
+         background: white;
+         color : red;
+      }
       .point-filter {
         position: absolute;
         top : -6px;
@@ -135,6 +142,42 @@
         border : 1px solid #ff6700;
         
       }
+      .app-category-sort__content-item-sort {
+        position: relative;
+      }
+      .app-category-sort__content-item-sort-list{
+        position: absolute;
+        left :0px;
+        top : 100%;
+        background: white;
+        border : 1px solid #eeeeee;
+        box-shadow: 0px 0px 5px black;
+        z-index: 999;
+      
+        flex-direction: column;
+        display : none;
+        width : 140px;
+      }
+      .app-category-sort__content-item-sort-list span {
+        padding : 5px 5px;
+      }
+      .app-category-sort__content-item-sort-list span:first-child {
+        border-bottom: 1px solid #eeeeee;
+      }
+      .app-category-sort__content-item-sort-list span:hover {
+        background: #ff6700;
+        color : white;
+      }
+      .app-top-sale__day-carousel-item-detail-attribute {
+        margin : 5px 0px;
+      }
+      .app-top-sale__day-carousel-item-detail-attribute li{
+         position: relative;
+         left : 18px;
+         line-height: 20px;
+         font-size: 15px;
+       
+     }
     </style>
 
 
@@ -185,6 +228,23 @@
                             
                            </li>
                           </a> -->
+                          <a href="javascript:;">
+                            <li class="container-filter__attribute-content-list-relative">
+                            <div class="container-filter__attribute-content-list-btn click-filter-get">
+                              <span class="">Danh mục</span>
+                              <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="container-filter__attribute-content-list-absolute">
+                                 <div class="point-filter"></div>
+                                 <?php foreach($categoryFilter as $key => $value){?>
+                                  <div data-filter="c<?=$value['id']?>" type-filter="ca" class="container-filter__attribute-content-list-absolute-item container-filter__attribute-content-item-list"><?=$value['name']?></div>
+                                 <?php }?>
+                                 
+                    
+                            </div>
+                            
+                           </li>
+                          </a>
                           <?php foreach($listFilter as $key => $value){?>
                               <a href="javascript:;">
                               <li class="container-filter__attribute-content-list-relative">
@@ -259,1252 +319,24 @@
 
 
 
-                <div class="app-category-sort__content-item "><span class="">Sắp xếp </span><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                <div class="app-category-sort__content-item app-category-sort__content-item-sort">
+                  <span class="app-category-sort__content-item-click">Sắp xếp </span><i class="fa fa-angle-down" aria-hidden="true"></i>
+                  <div class="app-category-sort__content-item-sort-list">
+                     <span class="orderby" data-sort="asc" >Tăng dần theo giá</span>
+                     <span class="orderby" data-sort="desc" >Giảm dần theo giá</span>
+                  </div>
+              </div>
             </div>
         </div>
      </section>
 
 
      <section class="app-phone-suggest container-fluid">
-        <div class="container">
+        <div class="container" id="show-products">
          
 
-          <div class="app-phone-suggest__product">
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/23/resized/gold.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-position">
-                  <div
-                    class="app-top-sale__day-carousel-item-img-position-center"
-                  >
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-top"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-icon"
-                      >
-                        <i class="fa fa-bolt" aria-hidden="true"></i>
-                      </div>
-                      <div class="discount-val">-21%</div>
-                    </div>
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-price"
-                    >
-                      2.290.000đ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                  <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/14/resized/A73-xanh.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-position">
-                  <div
-                    class="app-top-sale__day-carousel-item-img-position-center"
-                  >
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-top"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-icon"
-                      >
-                        <i class="fa fa-bolt" aria-hidden="true"></i>
-                      </div>
-                      <div class="discount-val">-21%</div>
-                    </div>
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-price"
-                    >
-                      2.290.000đ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/17/resized/Techno-Spark-6-Go.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                  <img
-                    src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item-img-top-sale">
-                -40%
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/13/resized/1(1).webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                  <img
-                    src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item-img-top-sale">
-                -40%
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/29/resized/iPhone-12-Pro-Max_(2)(1).webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                  <img
-                    src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item-img-top-sale">
-                -40%
-              </div>
-            </div>
-
-
-
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/01/resized/Redmi-Note-11-xanh.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-position">
-                  <div
-                    class="app-top-sale__day-carousel-item-img-position-center"
-                  >
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-top"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-icon"
-                      >
-                        <i class="fa fa-bolt" aria-hidden="true"></i>
-                      </div>
-                      <div class="discount-val">-21%</div>
-                    </div>
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-price"
-                    >
-                      2.290.000đ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/14/resized/A53-cam.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-position">
-                  <div
-                    class="app-top-sale__day-carousel-item-img-position-center"
-                  >
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-top"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-icon"
-                      >
-                        <i class="fa fa-bolt" aria-hidden="true"></i>
-                      </div>
-                      <div class="discount-val">-21%</div>
-                    </div>
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-price"
-                    >
-                      2.290.000đ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/11/22/resized/Xiaomi-Redmi-Note-11S.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-position">
-                  <div
-                    class="app-top-sale__day-carousel-item-img-position-center"
-                  >
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-top"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-icon"
-                      >
-                        <i class="fa fa-bolt" aria-hidden="true"></i>
-                      </div>
-                      <div class="discount-val">-21%</div>
-                    </div>
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-price"
-                    >
-                      2.290.000đ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/10/resized/iPhone-11-64GB-Trang.webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-position">
-                  <div
-                    class="app-top-sale__day-carousel-item-img-position-center"
-                  >
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-top"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-icon"
-                      >
-                        <i class="fa fa-bolt" aria-hidden="true"></i>
-                      </div>
-                      <div class="discount-val">-21%</div>
-                    </div>
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center-price"
-                    >
-                      2.290.000đ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="app-phone-suggest__product-item">
-              <div class="app-top-sale__day-carousel-item-img">
-                <img
-                  src="https://didongthongminh.vn/images/products/2022/12/25/resized/iPhone-14-Pro-Max(5).webp"
-                  alt=""
-                />
-                <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                  <img
-                    src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <div class="app-top-sale__day-carousel-item-detail">
-                <div class="app-top-sale__day-carousel-item-detail-title">
-                  <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-price">
-                  <b>32.990.000đ</b> <span>34.390.000đ</span>
-                </div>
-                <div class="app-top-sale__day-carousel-item-time-sale">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i
-                  ><span>
-                    Còn: <span class="highlight-time">2</span> ngày
-                    <span class="highlight-time">18</span> giờ</span
-                  >
-                </div>
-                <div class="app-top-sale__day-carousel-item-total-product">
-                  <div
-                    style="width: 60%"
-                    class="app-top-sale__day-carousel-item-total-product-tag"
-                  ></div>
-                  <div class="app-top-sale__day-carousel-item-quantity-product">
-                    Đã bán 82/100
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-detail-bottom">
-                  <div
-                    class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                  >
-                    <ul>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li>
-                        <i
-                          class="vote-active fa fa-star"
-                          aria-hidden="true"
-                        ></i>
-                      </li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    </ul>
-                  </div>
-                  <div
-                    class="app-top-plush-category__add"
-                  >
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                  </div>
-                </div>
-              </div>
-              <div class="app-top-sale__day-carousel-item-img-top-sale">
-                -40%
-              </div>
-            </div>
-
-
-
-            <div class="app-phone-suggest__product-item">
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img
-                    src="https://didongthongminh.vn/images/products/2022/12/23/resized/gold.webp"
-                    alt=""
-                  />
-                  <div class="app-top-sale__day-carousel-item-img-position">
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-top"
-                      >
-                        <div
-                          class="app-top-sale__day-carousel-item-img-position-center-icon"
-                        >
-                          <i class="fa fa-bolt" aria-hidden="true"></i>
-                        </div>
-                        <div class="discount-val">-21%</div>
-                      </div>
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-price"
-                      >
-                        2.290.000đ
-                      </div>
-                    </div>
-                  </div>
-                </div>
-  
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-time-sale">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i
-                    ><span>
-                      Còn: <span class="highlight-time">2</span> ngày
-                      <span class="highlight-time">18</span> giờ</span
-                    >
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-total-product">
-                    <div
-                      style="width: 60%"
-                      class="app-top-sale__day-carousel-item-total-product-tag"
-                    ></div>
-                    <div class="app-top-sale__day-carousel-item-quantity-product">
-                      Đã bán 82/100
-                    </div>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div
-                      class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                    >
-                      <ul>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div
-                      class="app-top-plush-category__add"
-                    >
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="app-phone-suggest__product-item">
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img
-                    src="https://didongthongminh.vn/images/products/2022/12/14/resized/A73-xanh.webp"
-                    alt=""
-                  />
-                  <div class="app-top-sale__day-carousel-item-img-position">
-                    <div
-                      class="app-top-sale__day-carousel-item-img-position-center"
-                    >
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-top"
-                      >
-                        <div
-                          class="app-top-sale__day-carousel-item-img-position-center-icon"
-                        >
-                          <i class="fa fa-bolt" aria-hidden="true"></i>
-                        </div>
-                        <div class="discount-val">-21%</div>
-                      </div>
-                      <div
-                        class="app-top-sale__day-carousel-item-img-position-center-price"
-                      >
-                        2.290.000đ
-                      </div>
-                    </div>
-                  </div>
-                </div>
-  
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-time-sale">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i
-                    ><span>
-                      Còn: <span class="highlight-time">2</span> ngày
-                      <span class="highlight-time">18</span> giờ</span
-                    >
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-total-product">
-                    <div
-                      style="width: 60%"
-                      class="app-top-sale__day-carousel-item-total-product-tag"
-                    ></div>
-                    <div class="app-top-sale__day-carousel-item-quantity-product">
-                      Đã bán 82/100
-                    </div>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div
-                      class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                    >
-                      <ul>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div
-                      class="app-top-plush-category__add"
-                    >
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="app-phone-suggest__product-item">
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img
-                    src="https://didongthongminh.vn/images/products/2022/12/17/resized/Techno-Spark-6-Go.webp"
-                    alt=""
-                  />
-                  <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                    <img
-                      src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-  
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-time-sale">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i
-                    ><span>
-                      Còn: <span class="highlight-time">2</span> ngày
-                      <span class="highlight-time">18</span> giờ</span
-                    >
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-total-product">
-                    <div
-                      style="width: 60%"
-                      class="app-top-sale__day-carousel-item-total-product-tag"
-                    ></div>
-                    <div class="app-top-sale__day-carousel-item-quantity-product">
-                      Đã bán 82/100
-                    </div>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div
-                      class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                    >
-                      <ul>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div
-                      class="app-top-plush-category__add"
-                    >
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                    </div>
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-              </div>
-              <div class="app-phone-suggest__product-item">
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img
-                    src="https://didongthongminh.vn/images/products/2022/12/13/resized/1(1).webp"
-                    alt=""
-                  />
-                  <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                    <img
-                      src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-  
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-time-sale">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i
-                    ><span>
-                      Còn: <span class="highlight-time">2</span> ngày
-                      <span class="highlight-time">18</span> giờ</span
-                    >
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-total-product">
-                    <div
-                      style="width: 60%"
-                      class="app-top-sale__day-carousel-item-total-product-tag"
-                    ></div>
-                    <div class="app-top-sale__day-carousel-item-quantity-product">
-                      Đã bán 82/100
-                    </div>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div
-                      class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                    >
-                      <ul>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div
-                      class="app-top-plush-category__add"
-                    >
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                    </div>
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-              </div>
-              <div class="app-phone-suggest__product-item">
-                <div class="app-top-sale__day-carousel-item-img">
-                  <img
-                    src="https://didongthongminh.vn/images/products/2022/12/29/resized/iPhone-12-Pro-Max_(2)(1).webp"
-                    alt=""
-                  />
-                  <div class="app-top-sale__day-carousel-item-img-bottom-gift">
-                    <img
-                      src="https://didongthongminh.vn/modules/products/assets/images/icon-gift.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-  
-                <div class="app-top-sale__day-carousel-item-detail">
-                  <div class="app-top-sale__day-carousel-item-detail-title">
-                    <a href="">Iphone 14 Pro Max 128Gb chính hãng VN/A</a>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-price">
-                    <b>32.990.000đ</b> <span>34.390.000đ</span>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-time-sale">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i
-                    ><span>
-                      Còn: <span class="highlight-time">2</span> ngày
-                      <span class="highlight-time">18</span> giờ</span
-                    >
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-total-product">
-                    <div
-                      style="width: 60%"
-                      class="app-top-sale__day-carousel-item-total-product-tag"
-                    ></div>
-                    <div class="app-top-sale__day-carousel-item-quantity-product">
-                      Đã bán 82/100
-                    </div>
-                  </div>
-                  <div class="app-top-sale__day-carousel-item-detail-bottom">
-                    <div
-                      class="app-top-sale__day-carousel-item-detail-bottom-vote"
-                    >
-                      <ul>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li>
-                          <i
-                            class="vote-active fa fa-star"
-                            aria-hidden="true"
-                          ></i>
-                        </li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                      </ul>
-                    </div>
-                    <div
-                      class="app-top-plush-category__add"
-                    >
-                      <i class="fa fa-plus-circle" aria-hidden="true"></i> So sánh
-                    </div>
-                  </div>
-                </div>
-                <div class="app-top-sale__day-carousel-item-img-top-sale">
-                  -40%
-                </div>
-              </div>
-          </div>
-
-          <div class="app-phone-suggest__product-paginate">
-                 <button class="">Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-          </div>
-        </div>
+          
+        
       </section>
 
       <section class="app-name-product__suggest container-fluid">
@@ -1800,12 +632,29 @@ function nullArr(array) {
     }
 }
 function handleFilter() {
+  
+  
+
+  filterArray = filterArray.filter(obj => {
+    return !Object.values(obj).every(val => Array.isArray(val) && val.length === 0);
+  });
+
+
+
+
+
   let result = filterArray.reduce((acc, curr) => {
     let key = Object.keys(curr)[0];
     let value = curr[key].join(',');
     return acc + `&${key}=${value}`; 
 }, '');
-result = result.replace('&', '?');
+  if(sort != ""){
+    result = result + `&sort=${sort}`;
+  }
+  if(page != ""){
+    result = result + `&page=${page}`;
+  }
+  result = result.replace('&', '?');
 
   
   
@@ -1865,15 +714,16 @@ result = result.replace('&', '?');
     
 
  // alert(stringUrl);
+ //console.log( ('/api' + window.location.pathname + result));
     $.ajax({
         type: "POST",
         url: ('/api' + window.location.pathname + result),
-        data: {},
+        
         dataType: "json",
         success: function (result) {
-            // $(".ajax-quantity-show").text(
-            //     "Xem " + result.quantity + " Sản phẩm"
-            // );
+           
+            $('.show-result-filter').empty();
+            $('.show-result-filter').text(`Xem ${result.length} kết quả`);
         },
     });
 }
@@ -1924,148 +774,113 @@ $(document).on("click", ".filter-category", function () {
         );
     }
 });
-$(document).on("click", ".pagination-more", function () {
-    // handleFilter();
-    page = $(this).data("page");
-    handleFilter();
 
-    history.pushState({}, null, window.location.pathname);
-    history.pushState({}, null, window.location.href + urlFilter);
-    var url = String("/get" + window.location.pathname + urlFilter);
-
-    $.ajax({
-        type: "POST",
-        url: String(url),
-        dataType: "html",
-        success: function (result) {
-            $(".more-product-filter").empty();
-            $(".more-product-filter").append(result);
-        },
-    });
-});
 //pagination-more
 //orderby
-$(document).on("change", ".orderby", function () {
 
-    if ($(this).val() == "asc") {
-        sort = "asc";
-    }
-    if ($(this).val() == "desc") {
-        sort = "desc";
-    }
-    handleFilter();
-    //  alert(urlFilter);
-    history.pushState({}, null, window.location.pathname);
-    history.pushState({}, null, window.location.href + urlFilter);
-    var url = String("/get" + window.location.pathname + urlFilter);
-    $.ajax({
-        type: "POST",
-        url: String(url),
-        dataType: "html",
-        success: function (result) {
-            $(".more-product-filter").empty();
-            $(".more-product-filter").append(result);
-            $("html, body").animate(
-                {
-                    scrollTop: $(".more-product-filter").offset().top,
-                },
-                1000
-            );
-        },
-    });
-});
-$(document).on("click", ".ajax-quantity-show", function () {
 
-    history.pushState({}, null, window.location.pathname);
-    history.pushState({}, null, window.location.href + urlFilter);
-    var url = String("/get" + window.location.pathname + urlFilter);
-    $.ajax({
-        type: "POST",
-        url: String(url),
-        dataType: "html",
-        success: function (result) {
-            $(".more-product-filter").empty();
-            $(".more-product-filter").append(result);
-            $("html, body").animate(
-                {
-                    scrollTop: $(".more-product-filter").offset().top,
-                },
-                1000
-            );
-        },
-    });
-});
-$(document).on("click", ".filter-ram", function () {
 
-    if (filterRam.includes($(this).data("filter")) == false) {
-        filterRam.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="ra" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
-$(document).on("click", ".filter-rom", function () {
 
-    if (filterRom.includes($(this).data("filter")) == false) {
-        filterRom.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="ro" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
-$(document).on("click", ".filter-price", function () {
 
-    if (filterPrice.includes($(this).data("filter")) == false) {
-        filterPrice.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="pr" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
 
 
 
 
 
 /*************************************************************** */
+$(document).on("click", ".app-phone-suggest__product-paginate", function () {
+    // handleFilter();
+    page = $(this).attr('next-page');
+    handleFilter();
+
+    history.pushState({}, null, window.location.pathname);
+    history.pushState({}, null, window.location.href + urlFilter);
+    var url = String("/get" + window.location.pathname + urlFilter);
+
+    $.ajax({
+        type: "POST",
+        url: String(url),
+        dataType: "html",
+        success: function (result) {
+          $('#show-products').empty();
+          $('#show-products').html(result);
+          $('.container-filter__attribute-content-list-absolute').fadeOut();
+            $([document.documentElement, document.body]).animate({
+            scrollTop: $(".app-phone-suggest__product").offset().top
+          }, 1200);
+        },
+    });
+});
+$(document).on("click", ".orderby", function () {
+
+  if ($(this).attr("data-sort") == "asc") {
+      sort = "asc";
+  }
+  if ($(this).attr("data-sort") == "desc") {
+      sort = "desc";
+  }
+  $(".app-category-sort__content-item-sort-list").slideToggle({
+  start: function () {
+    $(this).css({
+      display: "flex"
+    })
+  }
+});
+  handleFilter();
+
+  history.pushState({}, null, window.location.pathname);
+history.pushState({}, null, window.location.href + urlFilter);
+var url = String("/get" + window.location.pathname + urlFilter);
+$.ajax({
+    type: "POST",
+    url: String(url),
+    dataType: "html",
+    success: function (result) {
+      $('#show-products').empty();
+      $('#show-products').html(result);
+      $('.container-filter__attribute-content-list-absolute').fadeOut();
+        $([document.documentElement, document.body]).animate({
+        scrollTop: $(".app-phone-suggest__product").offset().top
+       }, 1200);
+    },
+});
+
+
+
+});
+$(document).on("click", ".app-category-sort__content-item-click", function () {
+  $(".app-category-sort__content-item-sort-list").slideToggle({
+  start: function () {
+    $(this).css({
+      display: "flex"
+    })
+  }
+});
+});
+$(document).on("click", ".close-filter", function () {
+
+  $('.container-filter__attribute-content-list-absolute').fadeOut();
+});
 $(document).on("click", ".show-result-filter", function () {
 
 history.pushState({}, null, window.location.pathname);
 history.pushState({}, null, window.location.href + urlFilter);
 var url = String("/get" + window.location.pathname + urlFilter);
-// $.ajax({
-//     type: "POST",
-//     url: String(url),
-//     dataType: "html",
-//     success: function (result) {
-//         $(".more-product-filter").empty();
-//         $(".more-product-filter").append(result);
-//         $("html, body").animate(
-//             {
-//                 scrollTop: $(".more-product-filter").offset().top,
-//             },
-//             1000
-//         );
-//     },
-// });
+$.ajax({
+    type: "POST",
+    url: String(url),
+    dataType: "html",
+    success: function (result) {
+      $('#show-products').empty();
+      $('#show-products').html(result);
+      $('.container-filter__attribute-content-list-absolute').fadeOut();
+        $([document.documentElement, document.body]).animate({
+        scrollTop: $(".app-phone-suggest__product").offset().top
+       }, 1200);
+    },
+});
+
+
 });
 
 $(document).on("click", ".select-delete-filter-item", function () {
@@ -2115,8 +930,8 @@ $('.click-filter-get').click(function(e){
             $('.container-filter__attribute-content-list-absolute').eq(index).css("display", "flex").hide().fadeToggle();
         })
         $('.container-filter__attribute-content-list-absolute-item').click(function(e){
-           $('.show-result-filter').remove();
-            $('.container-filter__attribute-content-list-absolute').append('<div class="show-result-filter">Xem 3 kết quả</div>')
+           $('.show-result-filter,.close-filter').remove();
+            $('.container-filter__attribute-content-list-absolute').append('<div class="show-result-filter"> <i class="fa fa-spinner fa-spin"></i></div> <div class="close-filter">Đóng</div>')
             $(this).removeClass('container-filter__attribute-content-list-absolute-item');
              if($(this).hasClass('active-filter')){
               var dataFilter = $(this).attr('data-filter');
@@ -2180,276 +995,40 @@ $('.click-filter-get').click(function(e){
              }
             
              handleFilter();
-        })
+        });
+      function renderProduct(){
+        $.ajax({
+        type: "POST",
+        url: '/get' + window.location.pathname + window.location.search,
+        dataType: "html",
+        success: function (result) {
+            $('#show-products').empty();
+            $('#show-products').html(result);
+            $([document.documentElement, document.body]).animate({
+        scrollTop: $(".app-phone-suggest__product").offset().top
+       }, 1200);
+        },
+    });
+        //console.log();
+      }
+      renderProduct();
         
 
-
-        /*
-        var filterCategory = [];
-var filterPrice = [];
-var filterRam = [];
-var filterRom = [];
-var arrayFilter = [];
-var sort = "";
-var page = "";
-var stringUrl = "";
-
-function getUrlVars() {
-
-    var parts = window.location.href.replace(
-        /[?&]+([^=&]+)=([^&]*)/gi,
-        function (m) {
-            stringUrl = stringUrl + String(m);
-        }
-    );
-    return stringUrl;
-}
-
-var urlFilter = "";
-if (getUrlVars() != "") {
-    urlFilter = getUrlVars();
-}
-//?ca=1,2,3&p=1,2,39&r=7
-function nullArr(array) {
-    if (array.length == 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function handleFilter() {
-
-    urlFilter = "";
-    var demoArr = [];
-    if (nullArr(filterCategory) == false) {
-        if (nullArr(demoArr) == true) {
-            demoArr.push("?ca=" + String(filterCategory.reverse()));
-        } else {
-            demoArr.push("&ca=" + String(filterCategory.reverse()));
-        }
-    }
-    if (nullArr(filterPrice) == false) {
-        if (nullArr(demoArr) == true) {
-            demoArr.push("?pr=" + String(filterPrice.reverse()));
-        } else {
-            demoArr.push("&pr=" + String(filterPrice.reverse()));
-        }
-    }
-    if (nullArr(filterRam) == false) {
-        if (nullArr(demoArr) == true) {
-            demoArr.push("?ra=" + String(filterRam.reverse()));
-        } else {
-            demoArr.push("&ra=" + String(filterRam.reverse()));
-        }
-    }
-    if (nullArr(filterRom) == false) {
-        if (nullArr(demoArr) == true) {
-            demoArr.push("?ro=" + String(filterRom.reverse()));
-        } else {
-            demoArr.push("&ro=" + String(filterRom.reverse()));
-        }
-    }
-    if (sort != "") {
-        if (nullArr(demoArr) == true) {
-            demoArr.push("?sort=" + sort);
-        } else {
-            demoArr.push("&sort=" + sort);
-        }
-    }
-    if (page != "") {
-        if (nullArr(demoArr) == true) {
-            demoArr.push("?page=" + page);
-        } else {
-            demoArr.push("&page=" + page);
-        }
-    }
-
-    for (var i = 0; i < demoArr.length; i++) {
-        urlFilter = urlFilter + demoArr[i];
-    }
-   //  history.pushState({}, null, window.location.pathname);
-
-     //history.pushState({}, null, window.location.href +  urlFilter);
-    var url = String(urlFilter);
-
- // alert(stringUrl);
-    $.ajax({
+        window.onpopstate = function(event) {
+          $.ajax({
         type: "POST",
-        url: String(url),
-        data: {},
-        dataType: "json",
-        success: function (result) {
-            $(".ajax-quantity-show").text(
-                "Xem " + result.quantity + " Sản phẩm"
-            );
-        },
-    });
-}
-
-$(document).on("click", ".show-select", function () {
-    page = 0;
-    var elementDelete = Number($(this).data("delete"));
-    var type = $(this).data("filter");
-    if (type == "ca") {
-        filterCategory = filterCategory.filter(function (e) {
-            return e !== elementDelete;
-        });
-        $(this).remove();
-    }
-    if (type == "pr") {
-        filterPrice = filterPrice.filter(function (e) {
-            return e !== elementDelete;
-        });
-        $(this).remove();
-    }
-    if (type == "ro") {
-        filterRom = filterRom.filter(function (e) {
-            return e !== elementDelete;
-        });
-        $(this).remove();
-    }
-    if (type == "ra") {
-        filterRam = filterRam.filter(function (e) {
-            return e !== elementDelete;
-        });
-        $(this).remove();
-    }
-    handleFilter();
-});
-$(document).on("click", ".filter-category", function () {
-
-    if (filterCategory.includes($(this).data("filter")) == false) {
-        filterCategory.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="ca" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
-$(document).on("click", ".pagination-more", function () {
-    // handleFilter();
-    page = $(this).data("page");
-    handleFilter();
-
-    history.pushState({}, null, window.location.pathname);
-    history.pushState({}, null, window.location.href + urlFilter);
-    var url = String("/get" + window.location.pathname + urlFilter);
-
-    $.ajax({
-        type: "POST",
-        url: String(url),
+        url: '/get' + window.location.pathname + window.location.search,
         dataType: "html",
         success: function (result) {
-            $(".more-product-filter").empty();
-            $(".more-product-filter").append(result);
+            $('#show-products').empty();
+            $('#show-products').html(result);
+            $([document.documentElement, document.body]).animate({
+        scrollTop: $(".app-phone-suggest__product").offset().top
+       }, 1200);
         },
     });
-});
-//pagination-more
-//orderby
-$(document).on("change", ".orderby", function () {
-
-    if ($(this).val() == "asc") {
-        sort = "asc";
-    }
-    if ($(this).val() == "desc") {
-        sort = "desc";
-    }
-    handleFilter();
-    //  alert(urlFilter);
-    history.pushState({}, null, window.location.pathname);
-    history.pushState({}, null, window.location.href + urlFilter);
-    var url = String("/get" + window.location.pathname + urlFilter);
-    $.ajax({
-        type: "POST",
-        url: String(url),
-        dataType: "html",
-        success: function (result) {
-            $(".more-product-filter").empty();
-            $(".more-product-filter").append(result);
-            $("html, body").animate(
-                {
-                    scrollTop: $(".more-product-filter").offset().top,
-                },
-                1000
-            );
-        },
-    });
-});
-$(document).on("click", ".ajax-quantity-show", function () {
-
-    history.pushState({}, null, window.location.pathname);
-    history.pushState({}, null, window.location.href + urlFilter);
-    var url = String("/get" + window.location.pathname + urlFilter);
-    $.ajax({
-        type: "POST",
-        url: String(url),
-        dataType: "html",
-        success: function (result) {
-            $(".more-product-filter").empty();
-            $(".more-product-filter").append(result);
-            $("html, body").animate(
-                {
-                    scrollTop: $(".more-product-filter").offset().top,
-                },
-                1000
-            );
-        },
-    });
-});
-$(document).on("click", ".filter-ram", function () {
-
-    if (filterRam.includes($(this).data("filter")) == false) {
-        filterRam.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="ra" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
-$(document).on("click", ".filter-rom", function () {
-
-    if (filterRom.includes($(this).data("filter")) == false) {
-        filterRom.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="ro" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
-$(document).on("click", ".filter-price", function () {
-
-    if (filterPrice.includes($(this).data("filter")) == false) {
-        filterPrice.push($(this).data("filter"));
-        page = 0;
-        handleFilter();
-        $(".show-delete").append(
-            ` <a class="show-select" data-filter="pr" data-delete="${$(
-                this
-            ).data("filter")}" href="javascript:;">${$(
-                this
-            ).text()} &times;</a>`
-        );
-    }
-});
+       };
         
-        */
       </script>
 
 <?php $this->loadView('post/Layout/top') ?>

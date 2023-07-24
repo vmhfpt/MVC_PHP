@@ -146,8 +146,114 @@
 .chatbot-title-product {
     color :red;
 }
-
+.icon-compare {
+    cursor: pointer;
+    position: fixed;
+    bottom : 150px;
+    font-size: 15px;
+    left : 40px;
+    background: white;
+    z-index: 9999;
+    box-shadow: 0px 0px 9px black;
+    border-radius: 20px;
+    padding : 8px 15px;
+}
+.icon-compare-tab {
+   position: relative;
+    width : 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.icon-compare-tab-item:first-child {
+    display : flex;
+    
+}
+.icon-compare-tab-item-product img {
+  width : 60px;
+  height : 60px;
+  object-fit: cover;
+}
+.icon-compare-tab-item-product {
+    text-align: center;
+    border-right: 1px solid #eeeeee;
+    display:  flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap : 2px;
+    font-size: 15px;
+    width : 220px;
+}
+.icon-compare-tab-item-product i {
+    font-size: 30px;
+}
+.icon-compare-tab-item-product .button-compare-click {
+  background: #2f80ed;
+  color : white;
+  padding : 10px 20px;
+  cursor: pointer;
+}
+.icon-compare-tab-item-product .button-text-click {
+    cursor: pointer;
+  color :#2f80ed;
+  margin : 10px 0px;
+}
+.icon-compare-tab-parent {
+    
+    padding : 10px;
+    box-shadow: 0px 0px 9px black;
+    z-index: 2000;
+    position: fixed;
+    bottom: 10px;
+    background: white;
+    width : 60%;
+    display : flex;
+    justify-content: center;
+    border-radius: 4px;
+}
+.icon-compare-tab-close {
+    cursor: pointer;
+    box-shadow: 0 -2px 10px #0000001f;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 10px;
+    position: absolute;
+    top : -40px;
+    right : 0px;
+    background: white;
+    padding : 10px;
+}
   </style>
+
+  <div class="icon-compare">
+      <span class="">So sánh (2)</span>
+  </div>
+  <div class="icon-compare-tab-parent">
+  <div class="icon-compare-tab-close">Đóng lại &times;</div>
+  <div class="icon-compare-tab">
+    
+      <div class="icon-compare-tab-item">
+            <div class="icon-compare-tab-item-product">
+               <div class=""><img src="https://cdn.tgdd.vn/Products/Images/44/285962/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg" alt="" class=""> </div>
+               <div class="">Laptop HP 240Gb</div>
+               <div class="">2GB/8GB/Snapdragon 865</div>
+            </div>
+            <div class="icon-compare-tab-item-product">
+                <div class=""><i class="fa fa-plus" aria-hidden="true"></i></div>
+                <div class="">Thêm sản phẩm</div>
+            </div>
+      </div>
+      <div class="icon-compare-tab-item">
+                <div class="icon-compare-tab-item-product">
+                    <div class="button-compare-click">So sánh ngay</div>
+                    <div class="button-text-click">Xóa tất cả sản phẩm</div>
+                </div>
+      </div>
+  </div>
+
+
+  </div>
+
     <div class="chat-now">
         <a href="javascript:;" class="show-chat-click"> <img src="https://vuminhhung.netlify.app/static/media/200w.002949c9c69a8105b467.gif" alt=""></a>
     </div>

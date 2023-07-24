@@ -312,14 +312,14 @@
             <div class="app-phone-suggest__title-right">
               <ul>
                 <?php foreach($this->category->getCategoryByPlatformID($value['id']) as $key3 => $child){?>
-                  <li><button><?=$child['name']?></button></li>
+                  <li><button><a href="/plat-form/<?=$value['slug']?>?ca=c<?=$child['id']?>" class=""><?=$child['name']?></a></button></li>
                 <?php }?>
                
                
 
                 <li>
                   <button class="app-phone-suggest__title-right-active">
-                    Xem tất cả <?=$value['name']?>
+                    <a href="/plat-form/<?=$value['slug']?>" class="">Xem tất cả <?=$value['name']?></a>
                   </button>
                 </li>
               </ul>

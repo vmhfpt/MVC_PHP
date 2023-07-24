@@ -43,6 +43,13 @@ class Category extends Database{
       $sql = "SELECT * FROM `categories` WHERE `parent_id` = ?";
       return $this->pdo_query($sql, $platform_id);
    }
+   public function getCategoryByPlatformSlug($platform_slug){
+    $sql = "SELECT c1.id, c1.name FROM `categories` c1
+    INNER JOIN `categories` c2
+    ON c1.parent_id = c2.id
+    WHERE c2.slug = ?";
+    return $this->pdo_query($sql, $platform_slug);
+ }
    public function getFilterByPlatFormSlug($slug){
      $sql = "SELECT `types`.`description`, `types`.`id`, `filter`.`url_query` FROM `filter` 
      INNER JOIN `categories`

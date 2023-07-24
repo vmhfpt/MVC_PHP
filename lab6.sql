@@ -246,7 +246,7 @@ AND `products`.`brand_id` IN (1,2,3,5);
 
 
 /***********************************/
-SELECT c1.name AS `category_name`, c2.name AS `platform_name`, `products`.`name` AS `product_name`, `brands`.`name` AS `brand_name`, `products`.`price`, `products`.`price_sale` FROM `attribute_product`
+SELECT `products`.`price` - (`products`.`price` * `products`.`price_sale`) AS `product_sale_price`,c1.name AS `category_name`, c2.name AS `platform_name`, `products`.`name` AS `product_name`, `brands`.`name` AS `brand_name`, `products`.`price`, `products`.`price_sale` FROM `attribute_product`
 RIGHT JOIN `products`
 ON `attribute_product`.`product_id` = `products`.`id`
 INNER JOIN `categories` c1
@@ -256,7 +256,9 @@ ON c2.id = c1.parent_id
 INNER JOIN `brands`
 ON `products`.`brand_id` = `brands`.`id`
 WHERE c2.slug = "dien-thoai"
+AND c1.id IN(4,3)
 AND `attribute_product`.`value_id` IN (9)
 AND `brands`.`id` IN(3)
 AND `products`.`price` - (`products`.`price` * `products`.`price_sale`) BETWEEN 3000000 AND 7000000
 GROUP BY `products`.`name`
+ORDER BY `product_sale_price` DESC

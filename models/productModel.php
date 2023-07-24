@@ -229,10 +229,36 @@ class Product extends Database{
         WHERE `product_color`.`id` = ?";
         return $this->pdo_query_one($sql,  $product_color_id);
     }
-    public function getProductByFilter($arr){
-        //$string = "WHERE `id` = 1";
-        //$sql = "SELECT * FROM `products`'".$string."' ";
-        return $this->pdo_query($sql);
+    public function getProductByFilter($platFormSlug, $filter = '', $sortOrBy = '', $pagination = ''){
+       
+        $sql = "SELECT `products`.`id` AS `product_id`,c2.slug AS `platform_slug`,`products`.`slug` AS `product_slug`,`products`.`thumb`,`products`.`price` - (`products`.`price` * `products`.`price_sale`) AS `product_sale_price`,c1.name AS `category_name`, c2.name AS `platform_name`, `products`.`name` AS `product_name`, `brands`.`name` AS `brand_name`, `products`.`price`, `products`.`price_sale` FROM `attribute_product`
+        RIGHT JOIN `products`
+        ON `attribute_product`.`product_id` = `products`.`id`
+        INNER JOIN `categories` c1
+        ON `products`.`category_id` = c1.`id`
+        INNER JOIN `categories` c2
+        ON c2.id = c1.parent_id
+        INNER JOIN `brands`
+        ON `products`.`brand_id` = `brands`.`id`
+        WHERE c2.slug = ?
+        $filter
+        GROUP BY `products`.`name`
+        $sortOrBy 
+        $pagination
+        ";
+        return $this->pdo_query($sql, $platFormSlug);
+    }
+    public function getAttributeByProductIDLimitType($product_id){
+        $sql = "SELECT `attribute_product`.`id`, `types`.`description`, `values`.`value`, `products`.`name` FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types`
+        WHERE `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        AND `products`.`id` = `attribute_product`.`product_id`
+        AND `types`.`id` != 3 LIMIT 0,4";
+        return $this->pdo_query($sql, $product_id);
     }
 }
 ?>

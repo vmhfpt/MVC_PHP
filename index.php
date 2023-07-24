@@ -19,6 +19,7 @@ $ADMIN_URL = "$ROOT_URL/admin";
 //$IMAGE_DIR_USER = $ROOT_URL."/uploaded/user/" ;
 //$IMAGE_DIR_PRODUCT = $ROOT_URL."/uploaded/product/" ;
 define('ITEM_PER_PAGE', 5);
+define('ITEM_PER_PAGE_PRODUCT', 5);
 
 define('UPLOAD_URL_POST', __DIR__ . "/public/image/post/");
 define('IMAGE_DIR_POST', $ROOT_URL . "/public/image/post/");

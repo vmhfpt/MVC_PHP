@@ -161,6 +161,7 @@
   Router::handle('GET',  '', 'post/handleController', 'home');
   Router::handle('GET',  'index.html', 'post/handleController', 'home');
   Router::handle('GET',  'cart', 'post/handleController', 'cart');
+  Router::handle('POST',  'get/plat-form/{slug}', 'post/handleController', 'getFilter');
   Router::handle('POST',  'api/plat-form/{slug}', 'post/handleController', 'getTotalFilter');
   Router::handle('GET',  'plat-form/{slug}', 'post/handleController', 'platForm');
   //Router::handle('GET',  'category/{platform_slug}/{category_slug}', 'post/handleController', 'category');
