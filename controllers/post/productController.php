@@ -182,5 +182,11 @@ class productController extends controller{
       //echo json_encode($result);
 
          }
-
+   public function getAutoComplete($request, $response){
+      $dataItem = $this->product->getSearchByAutoComplele($request['key']);
+      echo json_encode([
+         'data' => $dataItem,
+         'rootUrl' => IMAGE_DIR_PRODUCT
+      ]);
+   }
 }

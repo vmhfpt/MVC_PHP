@@ -59,5 +59,14 @@ class Category extends Database{
      WHERE `categories`.`slug` = ?";
      return $this->pdo_query($sql, $slug);
    }
+   public function selectPlatFormIdByProductSlug($slug){
+    $sql = "SELECT c2.id FROM `categories` c1
+    JOIN `categories` c2
+    ON c1.parent_id = c2.id
+    JOIN `products`
+    ON `products`.`category_id` = c1.id
+    WHERE `products`.`slug` = ?";
+    return $this->pdo_query_one($sql, $slug);
+ }
 }
 ?>

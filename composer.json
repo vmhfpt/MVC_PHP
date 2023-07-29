@@ -1,6 +1,8 @@
 {
     "require": {
         "nesbot/carbon": "^2.67",
-        "phpmailer/phpmailer": "^6.8"
+        "phpmailer/phpmailer": "^6.8",
+        "google/apiclient": "^2.15",
+        "facebook/graph-sdk": "^5.7"
     }
 }

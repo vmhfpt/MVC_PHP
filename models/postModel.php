@@ -46,6 +46,52 @@ class Post extends Database{
       $sql = "SELECT * FROM `posts` ORDER BY `posts`.`id` DESC LIMIT 5 OFFSET 1"; 
       return $this->pdo_query($sql);
    }
-
+   public function getPostSuggestByCategory($category_post_id){
+     $sql = "SELECT `category_post`.`name`, `posts`.`title`, `posts`.`description`, `posts`.`slug`, `posts`.`thumb`, `posts`.`createdAt` FROM `posts`
+     INNER JOIN `category_post`
+     ON `category_post`.`id` = `posts`.`category_post_id`
+     WHERE `category_post`.`id` = ?
+     LIMIT 0,5";
+     return $this->pdo_query($sql, $category_post_id);
+   }
+   public function getTop10Post($limit, $offset){
+    $sql = "SELECT `category_post`.`name`, `posts`.`title`, `posts`.`description`, `posts`.`slug`, `posts`.`thumb`, `posts`.`createdAt` FROM `posts`
+    INNER JOIN `category_post`
+    ON `category_post`.`id` = `posts`.`category_post_id`
+    ORDER BY `posts`.`id` DESC
+    LIMIT ".$limit." OFFSET ".$offset."";
+    return $this->pdo_query($sql);
+   }
+   public function post_count_total(){
+    $sql = "SELECT `posts`.`id` FROM `posts`";
+    return $this->pdo_query_get_total($sql);
+ }
+ public function getTop10PostByCategory($limit, $offset, $slug){
+    $sql = "SELECT `category_post`.`name`, `posts`.`title`, `posts`.`description`, `posts`.`slug`, `posts`.`thumb`, `posts`.`createdAt` FROM `posts`
+    INNER JOIN `category_post`
+    ON `category_post`.`id` = `posts`.`category_post_id`
+    WHERE `category_post`.`slug` = ?
+    ORDER BY `posts`.`id` DESC
+    LIMIT ".$limit." OFFSET ".$offset."";
+    return $this->pdo_query($sql, $slug);
+   }
+   public function post_count_totalByCategory($slug){
+    $sql = "SELECT `posts`.`id` FROM `posts`
+     INNER JOIN `category_post`
+     ON `category_post`.`id` = `posts`.`category_post_id`
+     WHERE `category_post`.`slug` = ?";
+    return $this->pdo_query_get_total($sql, $slug);
+ }
+ public function getTop3PostSuggestByCategory($category_id){
+    $sql = "SELECT `category_post`.`name`, `posts`.`title`, `posts`.`description`, `posts`.`slug`, `posts`.`thumb`, `posts`.`createdAt` FROM `posts`
+    INNER JOIN `category_post`
+    ON `category_post`.`id` = `posts`.`category_post_id`
+    WHERE `category_post`.`id` = ?
+    ORDER BY `posts`.`id` DESC
+    LIMIT 0,3
+    ";
+   return $this->pdo_query($sql, $category_id);
+ }
+   
 }
 ?>

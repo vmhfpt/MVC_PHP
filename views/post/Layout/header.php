@@ -28,6 +28,47 @@
 </head>
 
 <body>
+<style>
+      .app-header__top-item {
+                        position: relative;
+                    }
+     .app-header__top-item-auto-complete {
+        z-index: 999;
+        position: absolute;
+        top : 100%;
+        left : 0px;
+        width : 100%;
+        background: white;
+        box-shadow: 0px 0px 9px black;
+        border-radius: 2px;
+        padding : 10px 13px;
+        display : none;
+        flex-direction: column;
+        gap : 10px;
+     }
+     .app-header__top-item-auto-complete-item {
+        display : flex;
+        gap : 10px;
+     }
+     .app-header__top-item-auto-complete-item img {
+        width : 50px;
+        height : 50px;
+        object-fit: cover;
+     }
+     .app-header__top-item-auto-complete-item-detail {
+        display : flex;
+        flex-direction: column;
+        gap : 5px;
+        font-size: 13px;
+     }
+     .app-header__top-item-auto-complete-item-detail span:first-child {
+        font-weight: 500;
+        line-height: 15px;
+     }
+     .app-header__top-item-auto-complete-item-detail span:last-child {
+       color : red;
+     }
+</style>
     <header class="app-header container-fluid">
         <div class="container">
             <div class="app-header__top">
@@ -50,14 +91,34 @@
                         Đà Nẵng<i class="fa fa-caret-down" aria-hidden="true"></i>
                     </div>
                 </div>
-                <form action="hang-hoa/liet-ke.php" method="GET" class="app-header__top-item">
+            
+                <form autocomplete="off" action="/plat-form/tim-kiem" method="GET" class="app-header__top-item">
                     <div class="app-header__top-item-input">
-                        <input value="" name="keywords" placeholder="Bạn tìm gì ..." />
+                        <input id="key-search" value="<?=isset($_GET['key']) ? $_GET['key'] : ''?>" name="key" placeholder="Bạn tìm gì ..." autocomplete="off" />
                     </div>
                     <div class="app-header__top-item-icon">
-                        <button class=""> <i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button type="submit" class=""> <i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="app-header__top-item-auto-complete">
+                      
+                      <a href="" class=""><div class="app-header__top-item-auto-complete-item">
+                            <div class=""><img src="https://didongthongminh.vn/images/products/2023/05/12/resized/Xiaomi-redmi-note-10-je-5g.jpg" alt="" class=""></div>
+                            <div class="app-header__top-item-auto-complete-item-detail">
+                                <span class=""> Vòng đeo tay thông minh Xiaomi Mi Band 6 - Chính hãng  </span>
+                                <span class="">2.790.000d</span>
+                            </div>
+                      </div></a>
+                      <a href="" class=""><div class="app-header__top-item-auto-complete-item">
+                            <div class=""><img src="https://didongthongminh.vn/images/products/2023/05/12/resized/Xiaomi-redmi-note-10-je-5g.jpg" alt="" class=""></div>
+                            <div class="app-header__top-item-auto-complete-item-detail">
+                                <span class=""> Vòng đeo tay thông minh Xiaomi Mi Band 6 - Chính hãng  </span>
+                                <span class="">2.790.000d</span>
+                            </div>
+                      </div></a>
+                      
                     </div>
                 </form>
+              
                 <div class="app-header__top-item">
                     <div class="">
                         <img src="https://didongthongminh.vn/templates/default/images/call.svg" alt="" />
@@ -82,9 +143,55 @@
                     </a>
                 </div>
                 <div class="app-header__top-item">
-                    <a href="<?= false  ?  '/dashboard' :   '/tai-khoan?dang-nhap' ?>" class=""> <i class="fa fa-user-o" aria-hidden="true"></i></a>
+                    <a href="<?= isset($_SESSION['user'])  ?  '/dashboard' :   '/login' ?>" class=""> <i class="fa fa-user-o" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
     </header>
-    
+    <script >
+   $('#key-search').on('keyup paste', function() {
+       text = $(this).val();
+       if(text == ''){
+        $(".app-header__top-item-auto-complete").fadeOut(50);
+        return true;
+       }
+       $.ajax({
+                        method: "POST",
+                        url: `/api/get-autocomplete`,
+                        data: {
+                            key : text
+                        }
+
+                    })
+                    .done(function(msg) {
+                        $(".app-header__top-item-auto-complete").empty();
+                       
+                        msg = JSON.parse(msg);
+                        if(msg.data.length == 0){
+                            $(".app-header__top-item-auto-complete").fadeOut(50);
+                            return true;
+                        }
+                       
+                        
+                        $(".app-header__top-item-auto-complete").fadeIn({
+                            start: function () {
+                                $(this).css({
+                                display: "flex"
+                                })
+                            }
+                        });
+                        console.log(msg);
+                        msg.data.map((value, key) => {
+                            $('.app-header__top-item-auto-complete').append(`<a href="/product/${value.platform_slug}/${value.slug}" class=""><div class="app-header__top-item-auto-complete-item">
+                            <div class=""><img src="${msg.rootUrl}${value.thumb}" alt="" class=""></div>
+                            <div class="app-header__top-item-auto-complete-item-detail">
+                                <span class=""> ${value.name}   </span>
+                                <span class="">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value.price_init)}</span>
+                            </div>
+                      </div></a>`);
+                        });
+                         
+                    })
+    });
+                 
+    </script>

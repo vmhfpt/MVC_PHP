@@ -1004,6 +1004,7 @@
 
               </div>
               <div class="app-detail-post__add-comment ">
+                
                                  <div class="app-detail-post__add-comment-title">
                                      <h3 class="">VIẾT BÌNH LUẬN CỦA BẠN
                                     </h3>
@@ -1044,7 +1045,8 @@
 
 
                                            
-                                             <div class="col-md-6">
+                                             <?php if(!isset($_SESSION['user'])){?>
+                                              <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="" class="">Họ tên <span class="">*</span></label>
                                                     <input placeholder="Họ tên" type="text" class="cmt-input-name">
@@ -1065,6 +1067,13 @@
                                                     <span class="error-email" style="color : red"></span>
                                                </div>
                                              </div>
+                                             <?php } else {?>
+                                              <input placeholder="Họ tên" type="hidden" class="cmt-input-name" value="<?=$_SESSION['user']['name']?>">
+                                              <input placeholder="Nhập số điện thoại" type="hidden" class="cmt-input-phone" value="<?=$_SESSION['user']['phone_number']?>3">
+                                              <input placeholder="Email" type="hidden" class="cmt-input-email" value="<?=$_SESSION['user']['email']?>">
+                                            <?php }?>
+
+
                                              <div class="col-md-12">
                                                 <div class="form-group">
                                                      <label for="" class="">Nội dung <span class="">*</span></label>
@@ -1110,9 +1119,11 @@
 
 
   var errorInputContent = true;
-  var errorInputName = true;
-  var errorInputEmail = true;
-  var errorInputPhone = true;
+
+
+  var errorInputName = $('.cmt-input-name').val() == '' ? true : false;
+  var errorInputEmail = $('.cmt-input-email').val() == '' ? true : false;
+  var errorInputPhone = $('.cmt-input-phone').val() == '' ? true : false;
 
 
 
@@ -1182,6 +1193,8 @@
   
     if (errorInputContent == false && errorInputName == false && errorInputEmail == false && errorInputPhone == false) {
     
+     console.log($('.cmt-input-content').val(), $('.cmt-input-name').val(), $('.cmt-input-phone').val(),$('.cmt-input-email').val());
+     
       $.ajax({
           method: "POST",
           url: "/api/product/post-coment",

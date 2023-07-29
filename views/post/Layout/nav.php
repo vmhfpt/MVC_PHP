@@ -40,6 +40,16 @@
               
               </li>
                 <?php }?>
+                <li class=""> <img
+                  class="icon-desktop"
+                  src="https://didongthongminh.vn/images/menus/icon-dien-thoai.svg"
+                  alt=""
+                />
+                <img
+                  class="icon-mobile"
+                  src="https://didongthongminh.vn/images/menus/dien-thoai.webp"
+                  alt=""
+                /><a href="/new" class="">Tin công nghệ</a></li>
              
             </ul>
           </div>
@@ -101,7 +111,7 @@
                     </div>
                 </div>
                 <div class="app-header__flex-item-image">
-                    <img src="https://didongthongminh.vn/images/video/resized/12345_1671757676.jpeg" alt="" />
+                    <img src="https://didongthongminh.vn/images/video/resized/iphone-2023-9_1687611596.webp" alt="" />
                     <div class="app-header__flex-item-image-icon-play">
                         <img src="https://didongthongminh.vn/templates/default/images/play.svg" alt="" />
                     </div>

@@ -40,4 +40,8 @@ class Comment extends Database{
         $sql = "DELETE FROM `comment` WHERE `id` = ?";
         $this->pdo_execute($sql, $comment_id);
     }
+    public function commentGetTop5(){
+        $sql = "SELECT `comment`.`content`, `comment`.`createdAt`, `products`.`name`, `comment`.`name` FROM `comment` JOIN `products`  WHERE  `comment`.`product_id` = `products`.`id` ORDER BY `comment`.`createdAt` DESC LIMIT 5 OFFSET 0";
+        return $this->pdo_query($sql);
+    }
 }

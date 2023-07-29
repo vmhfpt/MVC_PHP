@@ -147,6 +147,7 @@
     color :red;
 }
 .icon-compare {
+    display : none;
     cursor: pointer;
     position: fixed;
     bottom : 150px;
@@ -188,6 +189,14 @@
 .icon-compare-tab-item-product i {
     font-size: 30px;
 }
+.icon-compare-tab-item-product div {
+    font-size: 13.9px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+}
 .icon-compare-tab-item-product .button-compare-click {
   background: #2f80ed;
   color : white;
@@ -201,14 +210,14 @@
 }
 .icon-compare-tab-parent {
     
-    padding : 10px;
+    padding : 20px 10px;
     box-shadow: 0px 0px 9px black;
     z-index: 2000;
     position: fixed;
     bottom: 10px;
     background: white;
     width : 60%;
-    display : flex;
+    display : none;
     justify-content: center;
     border-radius: 4px;
 }
@@ -234,9 +243,8 @@
     
       <div class="icon-compare-tab-item">
             <div class="icon-compare-tab-item-product">
-               <div class=""><img src="https://cdn.tgdd.vn/Products/Images/44/285962/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg" alt="" class=""> </div>
-               <div class="">Laptop HP 240Gb</div>
-               <div class="">2GB/8GB/Snapdragon 865</div>
+                <div class=""><i class="fa fa-plus" aria-hidden="true"></i></div>
+                <div class="">Thêm sản phẩm</div>
             </div>
             <div class="icon-compare-tab-item-product">
                 <div class=""><i class="fa fa-plus" aria-hidden="true"></i></div>
@@ -254,6 +262,10 @@
 
   </div>
 
+
+
+
+
     <div class="chat-now">
         <a href="javascript:;" class="show-chat-click"> <img src="https://vuminhhung.netlify.app/static/media/200w.002949c9c69a8105b467.gif" alt=""></a>
     </div>
@@ -266,6 +278,107 @@
     <script src="<?= SITE_URL_POST ?>/javascript/index.js"> </script>
     
     <script>
+        function addCompare(item){
+                    var arrCompare = JSON.parse(localStorage.getItem("compare"));
+                    if(arrCompare == null){
+                        localStorage.setItem("compare", JSON.stringify([item]));
+                    }else {
+                        if(!arrCompare[0]){
+                            arrCompare[0] = item;
+                            localStorage.setItem("compare", JSON.stringify(arrCompare));
+                        }else if(!arrCompare[1] ){
+                            if((String(JSON.stringify(arrCompare[0])) == String(JSON.stringify(item)))){
+                                alert('Sản phẩm đã được thêm vào phần so sánh');
+                            }else if((arrCompare[0].category_slug != item.category_slug)){
+                                alert('Sản phẩm so sánh phải chung 1 nền tảng');
+                            }else {
+                                arrCompare[1] = item;
+                                localStorage.setItem("compare", JSON.stringify(arrCompare));
+                            }
+                            
+                        }
+                    } 
+                    $('.icon-compare').fadeIn();
+                    $('.icon-compare').children('span').text(`So sánh (${JSON.parse(localStorage.getItem("compare")).length})`);
+                     arrCompare = JSON.parse(localStorage.getItem("compare"));
+            for(let i = 0; i < arrCompare.length; i ++){
+                $('.icon-compare-tab-item-product').eq(i).html(`<div class=""><img src="${arrCompare[i].thumb}" alt="" class=""> </div>
+               <div class="">${arrCompare[i].name}</div>
+               <div class="">${arrCompare[i].description}</div>`);
+            }
+        }
+
+       $(document).on("click", ".icon-compare", function() {
+            $(".icon-compare-tab-parent").fadeToggle({
+                start: function () {
+                    $(this).css({
+                      display: "flex"
+                    })
+                }
+            });
+            var arrCompare = JSON.parse(localStorage.getItem("compare"));
+            for(let i = 0; i < arrCompare.length; i ++){
+                $('.icon-compare-tab-item-product').eq(i).html(`<div class=""><img src="${arrCompare[i].thumb}" alt="" class=""> </div>
+               <div class="">${arrCompare[i].name}</div>
+               <div class="">${arrCompare[i].description}</div>`);
+            }
+
+        });
+        $(document).on("click", ".icon-compare-tab-close", function() {
+            $(".icon-compare-tab-parent").fadeToggle({
+                start: function () {
+                    $(this).css({
+                      display: "flex"
+                    })
+                }
+            });
+        });
+        
+        $(document).on("click", ".button-text-click", function() {
+            localStorage.setItem("compare", JSON.stringify([]));
+            $('.icon-compare-tab-item-product').eq(0).html(` <div class=""><i class="fa fa-plus" aria-hidden="true"></i></div>
+                <div class="">Thêm sản phẩm</div>`);
+            $('.icon-compare-tab-item-product').eq(1).html(` <div class=""><i class="fa fa-plus" aria-hidden="true"></i></div>
+                <div class="">Thêm sản phẩm</div>`);
+                $('.icon-compare').children('span').text(`So sánh (0)`);
+        });
+        $(document).on("click", ".button-compare-click", function() {
+            var arrCompare = JSON.parse(localStorage.getItem("compare"));
+           if(arrCompare && arrCompare.length == 2){
+            window.location.replace(`/compare/${arrCompare[0].slug}/${arrCompare[1].slug}`);
+           }else {
+             alert('Cần ít nhất 2 sản phẩm để so sánh');
+           }
+              
+        });
+
+        
+        $(document).on("click", ".app-top-plush-category__add", function() {
+
+            var index = $('.app-top-plush-category__add').index(this);
+            
+                
+
+            var childText = $('.text-get-compare', $('.app-top-sale__day-carousel-item-detail-attribute').eq(index)).map(function() {
+                return $(this).text();
+            }).get();
+            //alert(childText)
+
+            let object = {
+                category_slug : $(this).attr('data-category'),
+                name : $(this).attr('data-name'),
+                thumb : $(this).attr('data-thumb'),
+                description : childText.join('/'),
+                id : $(this).attr('data-id'),
+                slug : $(this).attr('data-product')
+            }
+            addCompare(object);
+        });
+        
+       if(JSON.parse(localStorage.getItem("compare"))){
+         $('.icon-compare').fadeIn();
+         $('.icon-compare').children('span').text(`So sánh (${JSON.parse(localStorage.getItem("compare")).length})`);
+       }
 //         var errorInputEmail = true;
 //         var errorInputName = true;
 //         var errorInputPhone = true;

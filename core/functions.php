@@ -118,4 +118,17 @@
     }
     return ($menuTree);
   }
+  function add_cookie($name, $value, $day){
+    setcookie($name, json_encode($value), time() + (86400 * $day), "/");
+  }
+    function delete_cookie($name){
+        add_cookie($name, "", -1);
+    }
+    function get_cookie($name){
+        
+        if(isset($_COOKIE[$name])){
+            return json_decode($_COOKIE[$name]);
+        }
+        return false;
+    }
 ?>

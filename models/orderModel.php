@@ -182,6 +182,21 @@ class Order extends Database{
      $sql = "DELETE FROM `order_detail` WHERE `id` = ?";
      $this->pdo_execute($sql, $orderDetailId);
    }
-    
+   public function getOrderByUserId($user_id){
+    $sql = "SELECT * FROM `order` WHERE `user_id` = ? ORDER BY `order`.`id` DESC";
+    return  $this->pdo_query($sql, $user_id);
+   }
+   public function statisticOrderTypeAreaChart(){
+        $sql = "SELECT COUNT(*) AS `total`,`createdAt` from `order` GROUP BY CAST(`createdAt` AS DATE) ORDER BY `order`.`createdAt` ASC";
+        return  $this->pdo_query($sql);
+   }
+   public function orderStatisticGet(){
+    $sql = "SELECT SUM(`order`.`total`) AS `total_price`, COUNT(*) AS `total`, `order`.`active`  FROM `order` GROUP BY `order`.`active`";
+    return  $this->pdo_query($sql);
+   }
+   public function orderSelectSuggest(){
+        $sql = "SELECT * FROM `order` ORDER BY `order`.`id` DESC LIMIT 13";
+        return  $this->pdo_query($sql);
+   }
 }
 ?>

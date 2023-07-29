@@ -64,13 +64,13 @@
               <div class="container-filter__brand-content-list">
                 <ul>
                   
-                 <?php foreach($listBrand as $key => $value){?>
+                 <?php if(!isset($_GET['key'])){ foreach($listBrand as $key => $value){?>
                   <a href="javascript:;" >
                     <li> <div data-filter="b<?=$value['id']?>" type-filter="brand" class="container-filter__attribute-content-list-absolute-item container-filter__brand-content-list-btn" >
                        <?=$value['name']?>
                     </div></li>
                   </a>
-                 <?php }?>
+                 <?php }}?>
                  
                  
                 </ul>
@@ -264,6 +264,7 @@
                           <?php }?>
 
 
+                          <?php if(!isset($_GET['key'])) {?>
                           <a href="javascript:;">
                             <li class="container-filter__attribute-content-list-relative">
                             <div class="container-filter__attribute-content-list-btn click-filter-get">
@@ -282,6 +283,7 @@
                             
                            </li>
                           </a>
+                          <?php }?>
 
                          
                          
@@ -320,12 +322,15 @@
 
 
                 <div class="app-category-sort__content-item app-category-sort__content-item-sort">
+                <?php if(!isset($_GET['key'])) {?>
                   <span class="app-category-sort__content-item-click">Sắp xếp </span><i class="fa fa-angle-down" aria-hidden="true"></i>
                   <div class="app-category-sort__content-item-sort-list">
                      <span class="orderby" data-sort="asc" >Tăng dần theo giá</span>
                      <span class="orderby" data-sort="desc" >Giảm dần theo giá</span>
                   </div>
+                  <?php }?>
               </div>
+
             </div>
         </div>
      </section>
@@ -339,60 +344,7 @@
         
       </section>
 
-      <section class="app-name-product__suggest container-fluid">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-2 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-2 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-2 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-smd-6 col-sm-6 col-6">
-              <div class="app-name-product__suggest-item">
-                <ul>
-                  <li class=""><a href="" class=""> Poco x4 Pro</a></li>
-                  <li class=""><a href="" class=""> Iphone cũ giá rẻ</a></li>
-                  <li class=""><a href="" class=""> Iphone 11 cũ</a></li>
-                  <li class="">
-                    <a href="" class=""> Iphone 12 Pro Max Cũ 256GB</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       <section class="app-fixed-mobile">
         <div class="app-fixed-mobile__detail">

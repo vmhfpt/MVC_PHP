@@ -71,7 +71,7 @@
             if($middleware){
               Middleware::auth( function($controller, $methodName){
                   $controller->{$methodName}($_REQUEST, $_SERVER);
-              },$controller, $methodName );  
+              },$controller, $methodName , $middleware);  
             }else {
               $controller->{$methodName}($_REQUEST, $_SERVER);
             }

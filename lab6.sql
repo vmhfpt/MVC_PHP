@@ -262,3 +262,19 @@ AND `brands`.`id` IN(3)
 AND `products`.`price` - (`products`.`price` * `products`.`price_sale`) BETWEEN 3000000 AND 7000000
 GROUP BY `products`.`name`
 ORDER BY `product_sale_price` DESC
+
+/************************************************/
+SELECT `products`.`name`, `types`.`description`, `values`.`value`
+FROM `type_category`
+LEFT JOIN `attribute_product`
+ON `attribute_product`.`type_id` = `type_category`.`type_id`
+JOIN `products`
+ON `attribute_product`.`product_id`= `products`.`id`
+JOIN `types` 
+ON `attribute_product`.`type_id` = `types`.`id`
+JOIN `values`
+ON `attribute_product`.`value_id` = `values`.`id`
+JOIN `categories`
+ON `categories`.`id` = `type_category`.`category_id`
+WHERE `categories`.`slug` = "dien-thoai"
+AND `products`.`slug` = "iphone-13"

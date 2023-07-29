@@ -190,10 +190,11 @@ class cartController extends controller{
         }
     }
     public function addOrder($user,  $transportFee, $codeCoupon,$total){
+         $user_id = isset($_SESSION['user']) ? $_SESSION['user']['id'] : null;
          $dataAddress = $this->address->addressSelectall($user['address_code']['city'], $user['address_code']['district'], $user['address_code']['aware']);
          $fullAddress = $user["address"]. "," . $dataAddress["aware"] . "," . $dataAddress["district"] . "," . $dataAddress["city"];
          $codeOrderRandom = randomCoupon();
-         return $this->order->insertAndGetLastId($codeOrderRandom, null, $transportFee, $codeCoupon, $user['note'], $user['email'], $user['name'], $user['phone'], $fullAddress, $total, 6);
+         return $this->order->insertAndGetLastId($codeOrderRandom, $user_id, $transportFee, $codeCoupon, $user['note'], $user['email'], $user['name'], $user['phone'], $fullAddress, $total, 6);
          
     }
     public function insertOrderDetail($orderId, $carts){
@@ -253,9 +254,7 @@ class cartController extends controller{
 
                             );
             }
-        } else {
-          
-        }
+        } 
       
        die();
     }

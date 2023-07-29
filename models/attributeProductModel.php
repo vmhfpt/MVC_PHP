@@ -56,5 +56,6 @@ class AttributeProduct extends Database{
         AND `attribute_product`.`id` = ?";
         return  $this->pdo_query_one($sql, $id);
     }
+   
 }
 ?>

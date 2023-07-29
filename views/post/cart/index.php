@@ -51,7 +51,7 @@
                             <div class="">
                                 <div class="row">
                                     <?php
-                                    if (true) {
+                                    if (!isset($_SESSION['user'])) {
 
                                     ?>
                                         <div class="col-sm-6">
@@ -64,10 +64,12 @@
 
                                     <?php
 
-                                    }
+                                    }else {
                                     ?>
+                                             <input placeholder="Họ và tên" type="hidden" class="pay-input-name" value="<?=$_SESSION['user']['name']?>">
+                                    <?php }?>
 
-                                    <div class="<?= true ? "col-sm-6" : "col-sm-12" ?>">
+                                    <div class="<?= !isset($_SESSION['user']) ? "col-sm-6" : "col-sm-12" ?>">
                                         <div class="form-group">
 
                                             <input placeholder="Số điện thoại" type="number" class="pay-input-phone">
@@ -76,7 +78,7 @@
                                     </div>
 
                                     <?php
-                                    if (true) {
+                                    if (!isset($_SESSION['user'])) {
 
                                     ?>
                                         <div class="col-sm-12">
@@ -89,8 +91,10 @@
 
                                     <?php
 
-                                    }
+                                    } else {
                                     ?>
+                                        <input placeholder="Email" type="hidden" class="pay-input-email" value="<?=$_SESSION['user']['email']?>">
+                                    <?php }?>
 
                                 </div>
 
@@ -298,8 +302,8 @@
 
 
 var codeCoupon = false;
-var errorInputEmail = true;
-    var errorInputName = true;
+    var errorInputEmail = $('.pay-input-email').val() == '' ? true : false;
+    var errorInputName = $('.pay-input-name').val() == '' ? true : false;
     var errorInputPhone = true;
     if ($('.pay-input-name').length == 0) {
         errorInputName = false;
@@ -398,7 +402,8 @@ var errorInputEmail = true;
                 const payEmail = $('.pay-input-email').val();
                 const payPhone = $('.pay-input-phone').val();
                 const payNote = $('.note').val();
-
+                //console.log($('.pay-input-name').val(),$('.pay-input-email').val(), $('.pay-input-phone').val(), $('.note').val());
+                //return true;
                 $.ajax({
                         method: "POST",
                         url: "/api/purchase",

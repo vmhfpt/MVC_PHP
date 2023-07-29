@@ -177,22 +177,7 @@
                 Điện thoại đáng mua nhất
               </div>
             </div>
-            <div class="app-phone-suggest__title-right">
-              <ul>
-                <li><button>iphone</button></li>
-                <li><button>iphone cũ</button></li>
-                <li><button>Samsung</button></li>
-                <li><button>Xiaomi</button></li>
-                <li><button>REDMI</button></li>
-                <li><button>Tecno</button></li>
-                <li><button>POCO</button></li>
-                <li>
-                  <button class="app-phone-suggest__title-right-active">
-                    Xem tất cả 1196 Điện thoại
-                  </button>
-                </li>
-              </ul>
-            </div>
+           
           </div>
 
           <div class="app-phone-suggest__product">

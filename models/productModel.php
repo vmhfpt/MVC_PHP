@@ -22,6 +22,34 @@ class Product extends Database{
         $sql = "SELECT * FROM `products` WHERE `slug`=?";
         return  $this->pdo_query_one($sql, $slug);
     }
+    public function getTop16Product(){
+        $sql = "SELECT `products`.`id`,`products`.`name`,  `products`.`slug`, c2.slug AS `platform_slug`  FROM `products` 
+        
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+       
+       
+        ORDER BY `products`.`id` 
+        ASC LIMIT 0,16";
+        return $this->pdo_query($sql);
+    }
+    public function getProductBySlugMore($slug){
+        $sql = "SELECT `brands`.`name` AS `brand_name` ,`products`.`id`,`products`.`name`, `products`.`price`, `products`.`price_sale`, `products`.`thumb`, `products`.`slug`, c2.slug AS `platform_slug`  FROM `products` 
+        
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+        INNER JOIN `brands`
+        ON `products`.`brand_id` = `brands`.`id`
+        WHERE `products`.`slug` = ?
+        ORDER BY `products`.`id` 
+        ASC LIMIT 0,1";
+        return $this->pdo_query_one($sql,  $slug);
+
+    }
     public function getById($id){
         $sql = "SELECT * FROM `products` WHERE `id`=?";
         return  $this->pdo_query_one($sql, $id);
@@ -220,6 +248,18 @@ class Product extends Database{
         return $this->pdo_query_one($sql,  "%$name%");
 
     }
+    public function getSearchByAutoComplele($key){
+        $sql = "SELECT `products`.`id`,`products`.`name`, (`products`.`price` - ( `products`.`price` * `products`.`price_sale`)) AS `price_init`, `products`.`thumb`, `products`.`slug`, c2.slug AS `platform_slug`  FROM `products` 
+        
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+        WHERE `products`.`name` LIKE ?
+        ORDER BY `products`.`id` 
+        ASC LIMIT 0,8";
+        return $this->pdo_query($sql,  "%$key%");
+    }
     public function getPriceProductInitByProductColorID($product_color_id){
         $sql = "SELECT `products`.`name`, (`products`.`price` - (`products`.`price` * `products`.`price_sale`) ) AS `price_init` FROM `product_color` 
         INNER JOIN `attribute_product`
@@ -260,5 +300,61 @@ class Product extends Database{
         AND `types`.`id` != 3 LIMIT 0,4";
         return $this->pdo_query($sql, $product_id);
     }
+    public function getAllAttributeProductByProductSlug($slug){
+        $sql = "SELECT `types`.`id`, `types`.`description`, `values`.`value`, `products`.`name` FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types`
+        WHERE `products`.`slug` = ?
+        AND `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        AND `products`.`id` = `attribute_product`.`product_id`";
+        return $this->pdo_query($sql, $slug);
+    }
+    public function getSearchAllByProductName($key){
+        $sql = "SELECT `products`.`id` AS `product_id`,`products`.`name` AS `product_name`, (`products`.`price` - ( `products`.`price` * `products`.`price_sale`)) AS `product_sale_price`, `products`.`thumb`, `products`.`slug` AS `product_slug`, c2.slug AS `platform_slug`, `products`.`price`, `products`.`price_sale`  FROM `products` 
+        
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+        WHERE `products`.`name` LIKE ?
+        ORDER BY `products`.`id` 
+        ASC ";
+        return $this->pdo_query($sql,  "%$key%");
+    }
+    public function getProductNewAdd(){
+        $sql = "SELECT `products`.`slug`,`products`.`id`,`categories`.`name`,`products`.`price`,`products`.`thumb`, `products`.`name` AS `product_name`, c1.slug AS `platform_slug` FROM `products` JOIN `categories` 
+        JOIN `categories` c1
+        ON `categories`.`parent_id` = c1.id
+        WHERE `categories`.`id` =`products`.`category_id` ORDER BY `products`.`id` DESC LIMIT 4";
+        return $this->pdo_query($sql);
+     }
+     function statisticProduct(){
+        $sql = " SELECT  AVG(`products`.`price`) as `don_gia_avg`,COUNT(*) as `so_luong`, MIN(`products`.`price`) as `min_price`, MAX(`products`.`price`) as `max_price`, c2.`name` 
+        FROM `products` 
+          INNER JOIN `categories` c1 
+          ON `products`.`category_id` = c1.id 
+          INNER JOIN `categories` c2 
+          ON c1.parent_id = c2.id 
+          AND c2.parent_id = 0
+          GROUP BY c2.`id`, c2.`name`";
+        return $this->pdo_query($sql);
+      }
+      public function getTop5Product(){
+        $sql = "SELECT `products`.`price`,`products`.`id`,`products`.`name`,  `products`.`slug`, c2.slug AS `platform_slug`, `products`.`thumb`  FROM `products` 
+        
+        INNER JOIN `categories` c1 
+        ON `products`.`category_id` = c1.id 
+        INNER JOIN `categories` c2 
+        ON c1.parent_id = c2.id 
+       
+       
+        ORDER BY `products`.`id` 
+        ASC LIMIT 0,5";
+        return $this->pdo_query($sql);
+      }
+     
+      
 }
 ?>

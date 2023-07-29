@@ -298,7 +298,7 @@ class orderController extends controller{
      
    }
    public function addItemToOrderDetail($request, $response){
-     //var_dump($request);die();
+     
      $priceProductOrigin = $this->product->getPriceProductInitByProductColorID($request['color_product_id']);
      //var_dump($priceProductOrigin["price_init"]);
      $attributePrice = 0;
@@ -313,7 +313,9 @@ class orderController extends controller{
       }
    }
     $totalProductAll = $priceProductOrigin["price_init"] + $priceColor + $attributePrice;
-    $this->order->updateTotalIncreateOrderWhenDeleteOrderDetail($request[0]['id'], ($totalProductAll * $request['quantity']));
+    
+    $this->order->updateTotalIncreateOrderWhenDeleteOrderDetail(($totalProductAll * ((int)$request['quantity'])),$request[0]['id']);
+   // var_dump( $request);die();
     $order_detail_id = $this->order->insertOrderDetailAndGetLastID($request[0]['id'], $request['color_product_id'],$totalProductAll, $request['quantity'] );
     if(isset($request['attribute_price_id'] )){
       foreach($request['attribute_price_id'] as $key => $value){

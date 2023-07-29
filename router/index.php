@@ -8,6 +8,7 @@
  Router::handle('GET',  'admin/login',       'admin/loginController', 'login');
  Router::handle('POST',  'admin/login',       'admin/loginController', 'authen');
  /*************************************************************************************** */
+ Router::handle('GET',  'admin','admin/homeController', 'index', 'admin');
  Router::handle('POST',  'admin/platform/edit/{slug}','admin/platformController', 'update', 'admin');
  Router::handle('GET',  'admin/platform/edit/{slug}','admin/platformController', 'edit', 'admin');
  Router::handle('GET',  'admin/platform/list',       'admin/platformController', 'index', 'admin');
@@ -152,12 +153,22 @@
   * ********************************
   * ********************************
   **************************************************************************************/
- 
+  
+  Router::handle('GET',  'category/new/{slug}', 'post/handleController', 'detailCategoryPost');
+  Router::handle('GET',  'compare/{url_first}/{url_second}', 'post/handleController', 'compare');
   Router::handle('GET',  'new', 'post/handleController', 'new');
   Router::handle('GET',  'new/{slug}', 'post/handleController', 'detailNew');
-  Router::handle('GET',  'dashboard', 'post/handleController', 'dashboard');
+  Router::handle('GET',  'dashboard', 'post/handleController', 'dashboard', 'user');
+  Router::handle('POST',  'dashboard', 'post/userController', 'update', 'user');
+
   Router::handle('GET',  'login', 'post/handleController', 'login');
+  Router::handle('GET',  'logout', 'post/userController', 'logout');
+  Router::handle('GET',  'order', 'post/userController', 'getListOrder', 'user');
+  Router::handle('POST',  'api/authentication/force-password', 'post/userController', 'authenticationForcePassWord');
+  Router::handle('POST',  'api/authentication/handle-otp', 'post/userController', 'getPassWord');
+  Router::handle('POST',  'login', 'post/userController', 'login');
   Router::handle('GET',  'register', 'post/handleController', 'register');
+  Router::handle('POST',  'register', 'post/userController', 'register');
   Router::handle('GET',  '', 'post/handleController', 'home');
   Router::handle('GET',  'index.html', 'post/handleController', 'home');
   Router::handle('GET',  'cart', 'post/handleController', 'cart');
@@ -178,7 +189,7 @@
  /**************************************************************************************/
  Router::handle('POST',  'api/chatbot/get-order', 'post/orderController', 'getOrderByCode');
  Router::handle('POST',  'api/chatbot/get-product', 'post/productController', 'getProductByChat');
-
+ Router::handle('POST',  'api/get-autocomplete', 'post/productController', 'getAutoComplete');
  http_response_code(404);
  return ($viewLoad->loadView('admin/errorPage/404notFound'));
  

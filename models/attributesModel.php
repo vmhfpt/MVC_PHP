@@ -36,6 +36,13 @@ class Attributes extends Database{
         $sql = "SELECT `types`.`id` AS `type_id`, `values`.`id`, `values`.`value`, `types`.`description` FROM `values` JOIN `types` WHERE `values`.`type_id` = `types`.`id` AND `types`.`id`  = ? ORDER BY `values`.`id` DESC";
         return $this->pdo_query($sql, $type_id);
     }
+    public function getAttributeCategoryByPlatFormId($id){
+        $sql = "SELECT `types`.`id`,`types`.`description`, `types`.`name` FROM `type_category` 
+        JOIN `types`
+        ON `type_category`.`type_id` = `types`.`id`
+        WHERE `type_category`.`category_id` = ?";
+        return  $this->pdo_query($sql, $id);
+    }
 
 }
 ?>
