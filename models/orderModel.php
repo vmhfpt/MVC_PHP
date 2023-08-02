@@ -79,6 +79,10 @@ class Order extends Database{
         $sql = "SELECT * FROM `order_detail` WHERE `id` = ?";
         return  $this->pdo_query_one($sql, $orderDetailId);
     }
+    public function getAllOrderDetailByOrderChangeInventory($order_id){
+        $sql = "SELECT * FROM `order_detail` WHERE `order_id` = ?";
+        return $this->pdo_query($sql, $order_id);
+    }
     public function getAllOrderDetailByOrderID($order_id){
          $sql = "SELECT  `products`.`id` AS `product_id`, `product_color`.`id` AS `product_color_id`,(`products`.`price` - (`products`.`price` * `products`.`price_sale`)) AS `init_price` , `order_detail`.`id`, `products`.`name`,`types`.`description`, `values`.`value`, `product_color`.`price`, `product_color`.`price_sale`, `product_color`.`thumb`, `order_detail`.`total`, `order_detail`.`quantity`
 
@@ -197,6 +201,13 @@ class Order extends Database{
    public function orderSelectSuggest(){
         $sql = "SELECT * FROM `order` ORDER BY `order`.`id` DESC LIMIT 13";
         return  $this->pdo_query($sql);
+   }
+   public function checkInventoryCart($attribute_product_id){
+     $sql = "SELECT `inventory`.`quantity_in_inventory`, `inventory`.`quantity_current`, `inventory`.`quantity_temp_order` FROM `product_color`
+     INNER JOIN `inventory`
+     ON `inventory`.`color_id` = `product_color`.`id`
+     WHERE `product_color`.`attribute_product_id` = ?";
+     return  $this->pdo_query_one($sql, $attribute_product_id);
    }
 }
 ?>

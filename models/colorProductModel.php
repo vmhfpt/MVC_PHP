@@ -3,20 +3,28 @@
  require_once("core/Database.php");
  
 class ColorProduct extends Database{
-    
+    public function getByAttributeProductID($attribute_product_id){
+        $sql = "SELECT `product_color`.`id`
+        FROM `product_color` 
+        WHERE `product_color`.`attribute_product_id` = ?
+        ";
+        return $this->pdo_query_one($sql, $attribute_product_id);
+    }
    
     public function getColorProductByAttributeProductID($attribute_product_id){
-        $sql = "SELECT `product_color`.*, `values`.`value`, `types`.`description`, `products`.`name` AS `product_name`, `products`.`id` AS `product_id`
+        $sql = "SELECT `inventory`.`quantity_in_inventory` , `inventory`.`quantity_current`, `inventory`.`quantity_temp_order`,`product_color`.*, `values`.`value`, `types`.`description`, `products`.`name` AS `product_name`, `products`.`id` AS `product_id` 
         FROM `product_color` 
-        JOIN `products`
-        JOIN `attribute_product`
-        JOIN `values`
-        JOIN `types`
-        ON `product_color`.`attribute_product_id` = `attribute_product`.`id`
-        AND `attribute_product`.`product_id` = `products`.`id`
-        AND `attribute_product`.`type_id` = `types`.`id`
-        AND `attribute_product`.`value_id` = `values`.`id`
-        AND `attribute_product`.`id` = ?";
+        JOIN `products` 
+        JOIN `attribute_product` 
+        JOIN `values` 
+        JOIN `types` 
+        ON `product_color`.`attribute_product_id` = `attribute_product`.`id` 
+        AND `attribute_product`.`product_id` = `products`.`id` 
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `attribute_product`.`id` = ? 
+        LEFT JOIN `inventory` 
+        ON `inventory`.`color_id` = `product_color`.`id`";
         return $this->pdo_query_one($sql, $attribute_product_id);
     }
     public function getByID($id){
@@ -64,18 +72,55 @@ class ColorProduct extends Database{
         return  $this->pdo_query($sql);
     }
     public function getAllColorByProduct($product_id){
+        $sql = "SELECT `inventory`.`quantity_in_inventory`,`inventory`.`quantity_current`,`inventory`.`quantity_temp_order`, `attribute_product`.`id` AS `attribute_prd_id`,`types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
+        FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types` 
+        JOIN `product_color` 
+        INNER JOIN `inventory`
+        WHERE `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = 3 
+        AND `attribute_product`.`id` = `product_color`.`attribute_product_id`
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `products`.`id` = `attribute_product`.`product_id`
+        AND `inventory`.`color_id` = `product_color`.`id`";
+        return  $this->pdo_query($sql, $product_id);
+    }
+    public function getAllColorByProductExceptInventory($product_id){
         $sql = "SELECT  `attribute_product`.`id` AS `attribute_prd_id`,`types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
         FROM `attribute_product` 
         JOIN `products` 
         JOIN `values` 
         JOIN `types` 
         JOIN `product_color` 
+       
         WHERE `attribute_product`.`product_id` = ?
         AND `attribute_product`.`type_id` = 3 
         AND `attribute_product`.`id` = `product_color`.`attribute_product_id`
         AND `attribute_product`.`type_id` = `types`.`id` 
         AND `attribute_product`.`value_id` = `values`.`id` 
-        AND `products`.`id` = `attribute_product`.`product_id`";
+        AND `products`.`id` = `attribute_product`.`product_id`
+       ";
+        return  $this->pdo_query($sql, $product_id);
+    }
+    public function getAllColorByProductAttachInventory($product_id){
+        $sql = "SELECT  `attribute_product`.`id` AS `attribute_prd_id`,`types`.`description`, `values`.`value`, `products`.`name`, `product_color`.* 
+        FROM `attribute_product` 
+        JOIN `products` 
+        JOIN `values` 
+        JOIN `types` 
+        JOIN `product_color` 
+        JOIN `inventory`
+        WHERE `attribute_product`.`product_id` = ?
+        AND `attribute_product`.`type_id` = 3 
+        AND `attribute_product`.`id` = `product_color`.`attribute_product_id`
+        AND `attribute_product`.`type_id` = `types`.`id` 
+        AND `attribute_product`.`value_id` = `values`.`id` 
+        AND `products`.`id` = `attribute_product`.`product_id`
+        AND `product_color`.`id` = `inventory`.`color_id`
+        AND `inventory`.`quantity_current` - `inventory`.`quantity_temp_order` > 0";
         return  $this->pdo_query($sql, $product_id);
     }
     public function getPriceAttributeByProductColorID($product_color_id){

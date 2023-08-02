@@ -223,7 +223,10 @@
                 
                  msg = JSON.parse(msg);
                  msg.map((value, key) => {
-                        $('#show-color-product').append(`<option value=${value.id}>${value.value}</option>`);
+                    if((Number(value.quantity_current) - Number(value.quantity_temp_order) > 0)){
+                        $('#show-color-product').append(`<option value=${value.id}>${value.value} - còn ${Number(value.quantity_current) - Number(value.quantity_temp_order)} sản phẩm</option>`);
+                    }
+                       
                 })
                  
              });

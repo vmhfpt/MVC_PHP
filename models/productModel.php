@@ -117,7 +117,7 @@ class Product extends Database{
         return $this->pdo_query($sql, $product_id);
     }
     public function getFirstColorByProductID($product_id){
-        $sql = "SELECT `attribute_product`.`id` AS `attribute_product_id`, `products`.`name` AS `product_name` , `types`.`name` AS `attribute`, `values`.`value` , `product_color`.`thumb`, `product_color`.`price`, `product_color`.`price_sale`, `product_color`.`quantity`, `product_color`.`id` AS `product_color_id`
+        $sql = "SELECT `inventory`.`quantity_in_inventory`, `inventory`.`quantity_current`, `inventory`.`quantity_temp_order` ,`attribute_product`.`id` AS `attribute_product_id`, `products`.`name` AS `product_name` , `types`.`name` AS `attribute`, `values`.`value` , `product_color`.`thumb`, `product_color`.`price`, `product_color`.`price_sale`, `product_color`.`quantity`, `product_color`.`id` AS `product_color_id`
         FROM `attribute_product` 
         INNER JOIN `products`
         INNER JOIN `types`
@@ -128,7 +128,11 @@ class Product extends Database{
         AND `attribute_product`.`product_id` = `products`.`id`
         AND `attribute_product`.`value_id` = `values`.`id`
         AND `attribute_product`.`product_id` = ?
-        AND `attribute_product`.`type_id` = 3 LIMIT 0,1";
+        AND `attribute_product`.`type_id` = 3 
+        LEFT JOIN `inventory`
+        ON `inventory`.`color_id` = `product_color`.`id`
+        
+        LIMIT 0,1";
         return $this->pdo_query_one($sql, $product_id);
     }
 

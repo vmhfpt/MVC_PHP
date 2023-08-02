@@ -78,8 +78,14 @@ class handleController extends controller{
       $product_id = $item['id'];
       $attributeProduct = $this->product->getAttributeByProduct($product_id);
       $firstColor = $this->product->getFirstColorByProductID($product_id);
+      //var_dump($firstColor );die();
+      //var_dump($firstColor['product_color_id']);die();
       $firstLibraryColor = $this->colorProduct->getLibraryByColorProductID($firstColor['product_color_id']);
-      $listColorProduct = $this->colorProduct->getAllColorByProduct($product_id);
+     // var_dump($firstLibraryColor);die();
+      //print("<pre>".print_r($firstLibraryColor,true)."</pre>");die();
+      $listColorProduct = $this->colorProduct->getAllColorByProductExceptInventory($product_id);
+     // print("<pre>".print_r($listColorProduct,true)."</pre>");die();
+      $listColorProductCheckInventory = $this->colorProduct->getAllColorByProductAttachInventory($product_id);
       $listCoupon = $this->coupon->getDetailListCouponByProduct($product_id);
       $giftProduct = $this->giftProduct->getGiftProductByProductId($product_id);
       $comments = $this->comment->getAllCommentByProductId($product_id);
@@ -120,6 +126,7 @@ class handleController extends controller{
    if($totalRank  == 0) $totalRank = 0.1;
    if($total == 0) $total = 0;
      return ($this->loadView('post/product/detail', [
+         'listColorProductCheckInventory' => $listColorProductCheckInventory,
          'attributeProduct' => $attributeProduct,
          'firstColor' => $firstColor,
          'item' => $item,

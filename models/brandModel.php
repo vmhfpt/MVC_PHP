@@ -32,6 +32,10 @@ class Brand extends Database{
         $sql = "DELETE FROM `brands` WHERE `id` = ?";
         $this->pdo_execute($sql, $id);
    }
+   public function testUpdate($name, $id){
+    $sql = "UPDATE `brands` SET `name` = ?, `updatedAt` =  current_timestamp() WHERE `brands`.`id` = ?";
+    return $this->pdo_update_get_Id($sql, $name, $id);
+}
 
 }
 ?>

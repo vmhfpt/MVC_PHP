@@ -379,6 +379,7 @@
          $('.icon-compare').fadeIn();
          $('.icon-compare').children('span').text(`So sánh (${JSON.parse(localStorage.getItem("compare")).length})`);
        }
+       /*************************************************************** */
 //         var errorInputEmail = true;
 //         var errorInputName = true;
 //         var errorInputPhone = true;
@@ -936,7 +937,7 @@
     //     }
 
 
-        //
+        
     </script>
 </body>
 

@@ -24,6 +24,11 @@
             font-size: 30px;
             cursor: pointer;
           }
+          .app-detail-top__center-cost-inventory {
+            font-size : 18px;
+            font-weight: 600;
+            color : red;
+          }
 </style>
 <section class="app-bread-crumb container-fluid">
         <div class="container">
@@ -129,10 +134,19 @@
                             <option value="" class="">Đà Nẵng</option>
                         </select>
                      </div>
+                     
                      <div class="">
                         <b class="app-detail-top__center-cost-sale" id="show-price-product"><?= currency_format(($item['price'] - ($item['price'] * (float)$item['price_sale'])) + ( $firstColor['price'] - ($firstColor['price'] * $firstColor['price_sale'] ))) ?></b>
                         <span class="app-detail-top__center-cost-promotion" data-price-sale="<?=$item['price'] - ($item['price'] * $item['price_sale'])?>" data-price="<?=$item['price']?>" ><?= currency_format($item['price']) ?></span>
                      </div>
+
+                     <div class="app-detail-top__center-cost-inventory">
+                      <?php if($firstColor['quantity_in_inventory'] != null){?>
+                         <?=($firstColor['quantity_current'] - $firstColor['quantity_temp_order']) > 0 ? 'Còn '.($firstColor['quantity_current'] - $firstColor['quantity_temp_order']).' sản phẩm' : "Tạm hết hàng"?>
+                      <?php }else{?>
+                        Không kinh doanh
+                      <?php }?>
+                    </div>
                      
                 </div>
                
@@ -150,7 +164,7 @@
                       
                     </div>
                    
-                    <div class="app-detail-top__center-filter-color" data-color='<?= json_encode($listColorProduct)?>' >
+                    <div class="app-detail-top__center-filter-color" data-color='<?= json_encode($listColorProductCheckInventory)?>' >
                       <?php foreach($listColorProduct as $key => $value) {?>
                         <div data-name="<?=$value['value']?>" data-thumb="<?=IMAGE_DIR_PRODUCT.$value['thumb']?>"  data-price="<?=($item['price'] - ($item['price'] * (float)$item['price_sale'])) + ($value['price'] - ($value['price'] * $value['price_sale']))?>" data-color="<?=$value["attribute_prd_id"]?>" class="app-detail-top__center-filter-color-item <?=$value['attribute_prd_id'] == $firstColor['attribute_product_id'] ? "item_same-active": "" ?>">
                             <div class="">
@@ -225,8 +239,13 @@
                     </div>
                 </div>
 
+               
                 <div class="app-detail-top__center-payload">
-                    <div class="row">
+                <?php if($firstColor['quantity_in_inventory'] != null){
+                   if(($firstColor['quantity_current'] - $firstColor['quantity_temp_order']) > 0 ){
+                  ?>
+                  
+                     <div class="row">
                         <div class="col-sm-12">
                             <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-orange add-to-cart">
                                 <span class="">mua ngay</span>
@@ -246,10 +265,18 @@
                             </div>
                         </div>
                         
-                    </div>
-                </div>
+                    </div> 
+                
+                <?php 
+                   }
+              }?>
+              </div> 
+
+
+
                 <script>
                   function addCart(item){
+                    
                     var shopCart = JSON.parse(localStorage.getItem("carts"));
                     if(shopCart == null){
                         localStorage.setItem("carts", JSON.stringify([item]));
@@ -272,7 +299,40 @@
                           return false;
                       
                         }
-                    
+                        function checkInventory(shopCart, item){
+                          var boolen = false;
+                          for(var i = 0; i < shopCart.length; i ++){
+                             if((item.id === shopCart[i].id)){
+                               var quantity = Number(shopCart[i].quantity) + 1;
+                               $.ajax({
+                                  url: '/api/check-inventory/cart',
+                                  method : "POST",
+                                  async: false,
+                                  data: {
+                                      id: shopCart[i].colorCurrent.id, 
+                                  },
+                                  success: function(result) {
+                                      result = JSON.parse(result);
+                                    // console.log(result);
+                                      if(quantity > (Number(result.quantity_current) - Number(result.quantity_temp_order))){
+                                          boolen = true;
+                                          
+                                      }else {
+                                          boolen = false;
+                                      }
+                                  }
+                              })
+                              
+                              
+                             }
+                          }
+                          return boolen;
+                         
+                        }
+                        if(checkInventory(JSON.parse(localStorage.getItem("carts")), item) == true){
+                          alert('Số lượng vượt quá số lượng sản phẩm tồn kho');
+                           return false;
+                        }
                        // isEqual(item);
                         if(checkArray(shopCart, item.id) == true && isEqual(item) == true){
                         var newArr = shopCart.map((value, key) => {

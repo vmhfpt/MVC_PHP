@@ -278,3 +278,19 @@ JOIN `categories`
 ON `categories`.`id` = `type_category`.`category_id`
 WHERE `categories`.`slug` = "dien-thoai"
 AND `products`.`slug` = "iphone-13"
+
+/****************kiem tra ton kho*****************************/
+SELECT `inventory`.`quantity_in_inventory` , `inventory`.`quantity_current`, `inventory`.`quantity_temp_order`,`product_color`.*, `values`.`value`, `types`.`description`, `products`.`name` AS `product_name`, `products`.`id` AS `product_id` 
+FROM `product_color` 
+JOIN `products` 
+JOIN `attribute_product` 
+JOIN `values` 
+JOIN `types` 
+ON `product_color`.`attribute_product_id` = `attribute_product`.`id` 
+AND `attribute_product`.`product_id` = `products`.`id` 
+AND `attribute_product`.`type_id` = `types`.`id` 
+AND `attribute_product`.`value_id` = `values`.`id` 
+AND `attribute_product`.`id` = 324 
+LEFT 
+JOIN `inventory` 
+ON `inventory`.`color_id` = `product_color`.`id`;

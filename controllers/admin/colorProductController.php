@@ -182,7 +182,7 @@ class colorProductController extends controller{
     public function show($request, $response){
         $product_id = $request[0]['id'];
         $item = $this->product->getById($product_id);
-        $dataItem = $this->colorProduct->getAllColorByProduct($product_id);
+        $dataItem = $this->colorProduct->getAllColorByProductExceptInventory($product_id);
         return ($this->loadView('admin/colorProduct/show',
              [
                 'dataItem' => $dataItem,

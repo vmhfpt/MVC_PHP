@@ -8,6 +8,7 @@ require_once("models/couponModel.php");
 require_once("models/giftProductModel.php");
 require_once("models/addressModel.php");
 require_once("models/orderModel.php");
+require_once("models/inventoryModel.php");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -16,6 +17,7 @@ class cartController extends controller{
     private $address;
     private $coupon;
     private $introduce;
+    private $inventory;
     private $order;
     public $category;
     public $product;
@@ -23,6 +25,7 @@ class cartController extends controller{
     public $colorProduct;
     private $giftProduct;
     public function __construct(){
+       $this->inventory = new Inventory();
        $this->address = new Address();
        $this->coupon = new Coupon();
        $this->colorProduct = new ColorProduct();
@@ -232,7 +235,18 @@ class cartController extends controller{
         }
 
     }
+    public function changeQuantityTempOrderInInventory($array){
+        foreach($array as $key => $value){
+          $attributeProductId = $value["colorCurrent"]["id"];
+          $color_id = $this->colorProduct->getByAttributeProductID($attributeProductId);
+          
+          $this->inventory->increateQuantityTempOrder($value['quantity'], $color_id['id']);
+        }
+      
+    }
     public function purchaseCart($request, $response){
+         $this->changeQuantityTempOrderInInventory($request['carts']);
+       
       // var_dump(  $response['HTTP_HOST']); die();
          $transportFee = (int) $request['transport_fee'];
          $codeCoupon = $request['codeCoupon'];

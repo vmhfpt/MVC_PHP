@@ -260,6 +260,12 @@
             transform: scale(0.0);
         }
     }
+    .btn-cancel-order {
+        background: red;
+        color : white;
+        padding : 10px;
+        border : none;
+    }
 </style>
 <section class="app-user container-fluid ">
          <div class="container">
@@ -462,57 +468,13 @@
         GLOBAL = $(this).attr('data-id');
         $.ajax({
                 method: "POST",
-                url: "index.php?btn_show_order",
+                url: "/api/user/get-orderdetail",
                 data: {
-                    type: 'show',
                     id: $(this).attr('data-id')
                 }
             })
             .done(function(msg) {
-               
-                data = JSON.parse(msg);
-                msg = data.order_detail;
-                var bill = data.order_bill;
-                var total_caculation = 0;
-                var template = '';
-                for (var i = 0; i < msg.length; i++) {
-
-                    template = template + ` <tr id="data-delete-${msg[i].id}">
-              <td>#${i + 1}</td>
-              <td>${msg[i].name_product}</td>
-              <td><img src="<?= $IMAGE_DIR_PRODUCT ?>/${msg[i].hinh}" alt="" /></td>
-              <td>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(msg[i].total)}</td>
-              <td>${msg[i].quantity}</td>
-              <td> ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(msg[i].quantity * msg[i].total)}</td>
-              <td class="app-user-content__table-btn-delete"><i class="fa fa-trash click-btn-delete" data-price="${msg[i].quantity * msg[i].total}" data-item="${msg[i].id}" data-name="${msg[i].name_product}" aria-hidden="true"></i></td>
-            </tr>`;
-            total_caculation = total_caculation + ( msg[i].quantity * msg[i].total);
-                }
-
-                template = `<table>
-          <tr>
-            <th>STT</th>
-            <th>Tên</th>
-            <th>Ảnh</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Tổng tiền</th>
-            <th></th>
-          </tr>` + template + `</table>`;
-                // console.log(template);
-                detail = `
-                <ul class="detail-bill"> 
-                  <li> <b> Họ Tên :</b>  <i> ${bill.name}</i> </li>
-                  <li> <b> Số điện thoại:</b>  <i> ${bill.phone_number}</i> </li>
-                  <li> <b> Địa chỉ nhận hàng :</b>  <i> ${bill.address_detail}</i> </li>
-                  <li> <b> Ghi chú :</b>  <i> ${bill.note}</i> </li>
-                  <li> <b> Ngày đặt :</b>  <i> ${bill.created_at}</i> </li>
-                  <li> <b> Tổng tiền :</b>  <i> ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(bill.total)}</i> </li>
-                  <li> <b> Tạm tính lại :</b>  <i class="bill-red" data-total="${total_caculation}"> ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total_caculation)}</i> </li>
-                </ul>
-                
-                `;
-                $('.show-app-user-content__table').html(template + detail);
+                $('.show-app-user-content__table').html(msg);
                 $('.app-user-popup__cart').css('display', 'flex');
             });
     });
@@ -536,9 +498,9 @@
        if($(this).attr("data-click") == 'true'){
         $.ajax({
                 method: "POST",
-                url: "index.php?btn_delete_order_detail",
+                url: "/api/user/delete-item/order",
                 data: {
-                    type: 'delete',
+                    type: 'POST',
                     id: id,
                     order_id : GLOBAL,
                     price : total_price
@@ -546,11 +508,13 @@
             })
             .done(function(msg) {
                 msg = JSON.parse(msg);
-                if(msg.state == 'success'){
+                if(msg.status == 'success'){
                     $('#data-delete-' + id).remove();
                     $('.app-popup-delete').css('animation', '0.5s ease-in-out 0s 1 normal forwards running popup-out');
                     $(".bill-red").text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number($(".bill-red").attr('data-total')) - Number(total_price)));
                     $('.bill-red').attr("data-total", (Number($(".bill-red").attr('data-total')) - Number(total_price)));
+                }else {
+                    alert('Cần ít nhất một sản phẩm trong đơn hàng');
                 }
                 
             });

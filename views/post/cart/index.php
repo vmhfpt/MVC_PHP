@@ -1,5 +1,283 @@
 <?php $this->loadView('post/Layout/header') ?>
 <?php $this->loadView('post/Layout/nav') ?>
+
+<style>
+    .detail-bill {
+        margin : 20px 30px;
+    }
+    .bill-red {
+        color :red;
+    }
+    .app-user-popup__cart {
+        display: none;
+        animation: identifier-cart 0.4s ease-in-out;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(43, 43, 43, 0.536);
+        z-index: 999;
+        width: 100vw;
+        height: 100vh;
+    }
+
+
+    .app-user-content__table table {
+        background: red;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        font-size: 16px;
+    }
+
+    td,
+    th {
+
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .app-user-content__table-btn-edit {
+        text-align: center;
+        color: orange;
+        cursor: pointer;
+    }
+
+    .app-user-content__table-btn-delete {
+        text-align: center;
+        color: red;
+        cursor: pointer;
+    }
+
+
+    @keyframes identifier-cart {
+        0% {
+            opacity: 0.0;
+            top: 40px;
+        }
+
+        100% {
+            opacity: 1.0;
+            top: 0px;
+        }
+    }
+
+    .app-user-popup__cart-container {
+        background: white;
+        width: 790px;
+        height: 75vh;
+    }
+
+    .app-user-popup__cart-tab {
+        border-bottom: 1px solid #eee;
+        font-weight: 500;
+        font-size: 19px;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+
+    .app-user-content__table img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .app-user-popup__cart-tab-close {
+        cursor: pointer;
+    }
+
+    /****************************************************8 */
+    .popup-success {
+        font-size: 17px;
+        padding: 10px 0px;
+        color: white;
+        background: #5cb85c;
+        width: 100%;
+        text-align: center;
+    }
+
+    @keyframes identifier-in {
+        0% {
+            opacity: 0.0;
+            top: 30px;
+        }
+
+        100% {
+            opacity: 1.0;
+            top: 0px;
+        }
+    }
+
+    @keyframes identifier-out {
+        0% {
+            opacity: 1.0;
+            top: 0px;
+
+        }
+
+        100% {
+            opacity: 0.0;
+            top: -100vh;
+        }
+    }
+
+    .app-popup {
+        display: none;
+        animation: identifier-in 0.5s ease-in-out;
+        animation-fill-mode: forwards;
+        z-index: 9999 !important;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh !important;
+        background: rgba(9, 9, 9, 0.733);
+
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .app-popup-delete {
+        display: none;
+        z-index: 9999 !important;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh !important;
+        background: rgba(9, 9, 9, 0.733);
+        padding: 140px 0px;
+        align-items: flex-start;
+        justify-content: center;
+
+
+    }
+
+    .container-popup-delete {
+        width: 350px;
+        background: red;
+        padding: 20px;
+    }
+
+    .container-popup-delete__tab {
+        color: white;
+        font-weight: 600;
+        display: flex;
+        gap: 15px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .container-popup-delete__tab span:first-child {
+        font-size: 20px;
+    }
+
+    .container-popup-delete__btn {
+        display: flex;
+        padding: 20px 0px;
+
+        justify-content: space-evenly;
+    }
+
+    .container-popup-delete__btn button:first-child {
+        background: black;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .container-popup-delete__btn button:last-child {
+        background: #5cb85c;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .container-popup-delete__tab img {
+        object-fit: cover;
+    }
+
+    @keyframes alert {
+        0% {
+
+            transform: rotate(15deg)
+        }
+
+        50% {
+            transform: rotate(-15deg)
+        }
+
+        100% {
+            transform: rotate(0deg)
+        }
+    }
+
+    @keyframes popup-in {
+        0% {
+            opacity: 0.0;
+            transform: scale(0.0);
+        }
+
+        50% {
+            opacity: 0.5;
+            transform: scale(1.3);
+        }
+
+        100% {
+            opacity: 1.0;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes popup-out {
+        0% {
+            opacity: 1.0;
+            transform: scale(1);
+
+        }
+
+        50% {
+            opacity: 0.5;
+            transform: scale(1.3);
+        }
+
+        100% {
+            opacity: 0.0;
+            transform: scale(0.0);
+        }
+    }
+</style>
+
+<section class="container-fluid app-popup-delete">
+    <div class="container container-popup-delete remove-animation">
+        <div class="container-popup-delete__tab">
+            
+            <span class="container-popup-delete__tab-name">
+
+            </span>
+
+        </div>
+        <div class="container-popup-delete__btn">
+
+        </div>
+    </div>
+
+</section>
 <div class="show-popup-state"></div>
 <div class="app-cart container-fluid">
         <div class="container app-cart-container__center">
@@ -382,12 +660,8 @@ var codeCoupon = false;
             return template;
         }
     $('.app-cart__content-form-button-submit>button').click(function() {
-        // console.log(">>> code : ", codeCoupon);
-        // console.log(">> fee trasport :", $('.transport-fee').attr('data-price'));
-        // console.log(">> total : ", $('.total-price-checkout').text().replaceAll('.', '').slice(0, -1));
-        //return true;
-        if ( errorInputEmail == false && errorInputName == false && errorInputPhone == false) {
-
+        //
+        if (errorInputEmail == false && errorInputName == false && errorInputPhone == false) {
 
             if ($('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null') {
                 //
@@ -825,9 +1099,39 @@ $('#select-city').change(function() {
     //    $('.app-cart__content-total-item-show').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(getTotalCartDetail(arrCart)));
     }
     renderCarts();
-    
+    function checkInventoryForCart(dataColorCurrent, quantity){
+        var boolen = false;
+        $.ajax({
+            url: '/api/check-inventory/cart',
+            method : "POST",
+            async: false,
+            data: {
+                id: dataColorCurrent.id, 
+            },
+            success: function(result) {
+                result = JSON.parse(result);
+               // console.log(result);
+                if(quantity > (Number(result.quantity_current) - Number(result.quantity_temp_order))){
+                    boolen = true;
+                }else {
+                    boolen = false;
+                }
+            }
+        })
+        
+        return boolen;
+    }
     function changeCartQuantity(quantity, dataColorCurrent, dataAttributePriceCurrent){
-        if(quantity <= 0 || quantity >=6 ){
+        var checkInventory = checkInventoryForCart(JSON.parse(dataColorCurrent), Number(quantity));
+        
+        if(quantity <= 0 || quantity >=6 || checkInventory == true){
+            if(checkInventory){
+                $('.container-popup-delete__tab-name').text(`Số lượng vượt quá số lượng sản phẩm tồn kho`);
+                $('.container-popup-delete__btn').html(`
+                    <button data-click="false" class="confirm">Hủy</button>`);
+                $('.app-popup-delete').css('display', 'flex');
+                $('.app-popup-delete').css('animation', '0.5s ease-in-out 0s 1 normal forwards running popup-in');
+            }
             renderCarts();
             return true;
         }
@@ -845,6 +1149,24 @@ $('#select-city').change(function() {
         localStorage.setItem("carts", JSON.stringify(newArr));
         renderCarts();
     }
+    $(document).on("click", ".confirm", function(e){
+        $('.app-popup-delete').css('animation', '0.5s ease-in-out 0s 1 normal forwards running popup-out');
+    });
+
+    $(document).on("click", ".app-popup-delete", function(e) {
+        
+        if ($(e.target).children(".container-popup-delete").length === 0) {
+
+        } else {
+            $('.remove-animation').removeAttr('style');
+            $('.remove-animation').removeClass('container-popup-delete');
+            window.requestAnimationFrame(function() {
+                $('.remove-animation').addClass('container-popup-delete');
+                $('.container-popup-delete').css('animation', '0.5s ease-in-out 0s 1 normal forwards running alert');
+            });
+        }
+    });
+
     $(document).on("click", ".delete-cart", function() {
         var dataItem = JSON.parse(localStorage.getItem("carts"));
         var index = $('.delete-cart').index(this);

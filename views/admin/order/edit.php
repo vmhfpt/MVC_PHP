@@ -58,8 +58,8 @@
                                 <span class="info-box-text">+ <?=currency_format($value['price'] - ($value['price'] * $value['price_sale'])) ?></span>
                                 
                                    <div class="custom-control custom-radio">
-                                        <input <?=$value['id'] == $dataColorProductCurrent['product_color_id'] ? 'checked' : '' ?> class="custom-control-input click-color-product" type="radio" id="customRadio<?=$key?>" name="color_product_id" value="<?=$value['id']?>">
-                                        <label for="customRadio<?=$key?>" class="custom-control-label"><?=$value['value']?></label>
+                                        <input <?=$value['id'] == $dataColorProductCurrent['product_color_id'] ? 'checked' : '' ?> class="custom-control-input click-color-product" type="radio" id="customRadio<?=$key?>" name="color_product_id" value="<?=$value['id']?>" <?=$value['quantity_current'] - $value['quantity_temp_order'] > 0 ? "" : "" ?>>
+                                        <label for="customRadio<?=$key?>" class="custom-control-label"><?=$value['value']?> <span class="text-danger">( <?=$value['quantity_current'] - $value['quantity_temp_order'] > 0 ? "Còn : ".$value['quantity_current'] - $value['quantity_temp_order']. " Sản phẩm" : "Hết hàng" ?> )</span></label>
                                     </div>
                                 
                             </div>

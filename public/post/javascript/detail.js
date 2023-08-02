@@ -109,7 +109,7 @@ owls.owlCarousel({
                      $(document).on("click", ".app-detail-top__center-filter-color-item", function() {
                      
                        
-
+       
 
                          var attribute_product_id = $(this).attr("data-color");
                          var dirProduct = $('.get-dir').attr('data-dir-product');
@@ -129,6 +129,43 @@ owls.owlCarousel({
                         })
                         .done(function(msg) {
                           msg = JSON.parse(msg);
+
+                          var checkInventory = (msg.item);
+                          //alert(3);
+                          // console.log(checkInventory);
+                          if(checkInventory.quantity_in_inventory == null){
+                            $('.app-detail-top__center-payload').empty();
+                            $('.app-detail-top__center-cost-inventory').text('Không kinh doanh');
+                          }else {
+                            if(Number(checkInventory.quantity_current) - Number(checkInventory.quantity_temp_order) > 0){
+                                $('.app-detail-top__center-cost-inventory').text(`Còn ${Number(checkInventory.quantity_current) - Number(checkInventory.quantity_temp_order)} sản phẩm`);
+                                $('.app-detail-top__center-payload').empty();
+                                $('.app-detail-top__center-payload').html(`<div class="row">
+                                <div class="col-sm-12">
+                                    <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-orange add-to-cart">
+                                        <span class="">mua ngay</span>
+                                        <span class="">Giao tận nơi hoặc nhận tại cửa hàng</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-green">
+                                        <span class="">mua trả góp 0%</span>
+                                        <span class="">Duyệt hồ sơ trong 5 phút</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-green">
+                                        <span class="">trả góp qua thẻ</span>
+                                        <span class="">Visa, Mastercard, JCB, Amex</span>
+                                    </div>
+                                </div>
+                                
+                            </div>`);
+                            }else {
+                                $('.app-detail-top__center-payload').empty();
+                                $('.app-detail-top__center-cost-inventory').text('Tạm hết hàng');
+                            }
+                          }
                            var template = '';
                            var template1 = '';
                             $('.get-data-attribute-product').attr('data-array', `${String(JSON.stringify(msg.priceAttributeProduct))}`);

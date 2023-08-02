@@ -5,7 +5,9 @@ require_once("models/transportModel.php");
 require_once("models/productModel.php");
 require_once("models/colorProductModel.php");
 require_once("models/attributePriceModel.php");
+require_once("models/inventoryModel.php");
 class orderController extends controller{
+   private $inventory;
    private $order;
    private $address;
    private $validate;
@@ -14,6 +16,7 @@ class orderController extends controller{
    private $productColor;
    private $attributePrice;
    public function __construct(){
+      $this->inventory = new Inventory();
       $this->productColor = new ColorProduct();
       $this->product = new Product();
       $this->validate =  new request();
@@ -21,6 +24,20 @@ class orderController extends controller{
       $this->address = new Address();
       $this->transportFee = new Transport();
       $this->attributePrice = new AttributePrice();
+   }
+   public function changeInventory($order_id, $active){
+   //   var_dump($order_id);
+   //   var_dump($active);
+       if($active == 4){
+         $listDataOrderDetail = $this->order->getAllOrderDetailByOrderChangeInventory($order_id);
+         foreach($listDataOrderDetail as $key => $value){
+             $this->inventory->decreateQuantityTempOrder($value['quantity'], $value['product_id']);
+             $this->inventory->decreateQuantityInitAndQuantityCurrent($value['quantity'], $value['product_id']);
+             $inventoryID = $this->inventory->getInventoryByColorID($value['product_id']);
+            // var_dump($inventoryID['id']);echo "<br/>";
+             $this->inventory->insertInventoryHistory($inventoryID['id'], $inventoryID['quantity_current'], 1, 0,$value['quantity'], $_SESSION['user']['id'] );
+         }
+       }
    }
    public function changeActive($request, $response){
       if($request['type'] == 'check'){
@@ -37,12 +54,13 @@ class orderController extends controller{
              ]);
         }
       }else if($request['type'] == 'update'){
-         //var_dump($request);
          
+        
          $activeCurrent = $this->order->getOrderById($request[0]['id']);
          
 
          $activeChange = $request['active'];
+         
          if((int)$activeChange == 0 && $activeCurrent['active'] != 6){
             echo json_encode([
                 'status' => 'error',
@@ -51,6 +69,22 @@ class orderController extends controller{
          }
          $content = $request['content'];
          $order_id = $request[0]['id'];
+
+         if($activeChange == 4){
+            $this->changeInventory($request[0]['id'], $activeChange);
+         }
+
+
+
+         
+         if($activeChange == 0){
+            $listDataOrderDetail = $this->order->getAllOrderDetailByOrderChangeInventory($order_id);
+            foreach($listDataOrderDetail as $key => $value){
+                $this->inventory->decreateQuantityTempOrder($value['quantity'], $value['product_id']);
+            }
+         }
+        
+         
          $this->order->changeActiveOrder($activeChange, $order_id );
          $this->order->addContentActiveOrder($activeChange, $content, $_SESSION['user']['id'], $order_id);
          echo json_encode([
@@ -146,9 +180,45 @@ class orderController extends controller{
 
 
    }
+   public function updateDecreateInventoryByOrderDetail($orderDetailId){
+      $orderDetail = $this->order->getOrderDetainById($orderDetailId);
+      //print("<pre>".print_r( $orderDetail,true)."</pre>");die();
+      $this->inventory->decreateQuantityTempOrder($orderDetail['quantity'], $orderDetail['product_id']);
+   }
+   public function updateIncreateInventoryByProductColorID($product_color_id, $quantity){
+      $this->inventory->increateQuantityTempOrder($quantity, $product_color_id);
+   }
    public function update($request, $response){
-     //var_dump($request);
+      if(!isset($request['color_product_id'])){
+         $product_id = $request[0]['product_id'];
+         $product_color_id = $request[0]['product_color_id'];
+         $order_id = $request[0]['order_id'];
+         $order_detail_id = $request[0]['order_detail_id'];
+         $dataListColorProductInit = $this->productColor->getAllColorByProduct($product_id);
+
+
+         $dataListAttributeProductInit = $this->product->getPriceAttributeByProductColorID($product_color_id);
+         
+         $dataListAttributeProductCurrent = $this->order->getAttributePriceInOrderCurrent($order_detail_id);
+    
+        $dataColorProductCurrent = $this->order->getColorProductCurrentInOrderDetail($order_detail_id);
+         return ($this->loadView('admin/order/edit',[
+            'status' => 'Sửa thất bại',
+            'dataColorProductCurrent' => $dataColorProductCurrent,
+            'dataListAttributeProductInit' => $dataListAttributeProductInit,
+            'dataListAttributeProductCurrent' => $dataListAttributeProductCurrent,
+            'dataListColorProductInit' => $dataListColorProductInit
+          ]));
+          die();
+      }
+     
      //print("<pre>".print_r( $request,true)."</pre>");die();
+
+    
+      $this->updateDecreateInventoryByOrderDetail($request[0]['order_detail_id']);
+      $this->updateIncreateInventoryByProductColorID($request['color_product_id'], $request['quantity']);
+
+    // die();
      $attributePrice = 0;
      $priceProductOrigin = $this->product->getPriceProductInitByProductColorID($request['color_product_id']);
     // var_dump($priceProductOrigin["price_init"]);
@@ -242,7 +312,10 @@ class orderController extends controller{
      
    }
    public function delete($request, $response){
-      //var_dump($request);
+      $orderDetail = $this->order->getOrderDetainById($request['order_detail_id']);
+      //print("<pre>".print_r( $orderDetail,true)."</pre>");die();
+      $this->inventory->decreateQuantityTempOrder($orderDetail['quantity'], $orderDetail['product_id']);
+     // var_dump($request); die();
       $this->order->updateTotalOrderWhenDeleteOrderDetail($request['total'], $request['order_id']);
       $this->order->deleteOrderDetail($request['order_detail_id']);
       echo json_encode([
@@ -254,6 +327,14 @@ class orderController extends controller{
      $dataColor = $this->productColor->getAllColorByProduct($request['product_id']);
      echo json_encode($dataColor);
    }
+
+   public function getListColorExceptInventory($request, $response){
+     
+      $dataColor = $this->productColor->getAllColorByProductExceptInventory($request['product_id']);
+      echo json_encode($dataColor);
+    }
+
+
    public function getListAttributePriceProduct($request, $response){
      function getListAttributeChild($arr, $type_id){
         $template = '';
@@ -298,7 +379,8 @@ class orderController extends controller{
      
    }
    public function addItemToOrderDetail($request, $response){
-     
+      $this->updateIncreateInventoryByProductColorID($request["color_product_id"], $request['quantity']);
+    // print("<pre>".print_r( $request,true)."</pre>");die();
      $priceProductOrigin = $this->product->getPriceProductInitByProductColorID($request['color_product_id']);
      //var_dump($priceProductOrigin["price_init"]);
      $attributePrice = 0;

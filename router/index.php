@@ -3,7 +3,7 @@
  $viewLoad = new controller();
 
  
-
+ Router::handle('GET',  'test',       'admin/testController', 'test');
  Router::handle('GET',  'admin/logout',       'admin/loginController', 'logout');
  Router::handle('GET',  'admin/login',       'admin/loginController', 'login');
  Router::handle('POST',  'admin/login',       'admin/loginController', 'authen');
@@ -123,6 +123,7 @@
  /********************************************************************************************* */
  Router::handle('POST',  'admin/order/get-list-attribute-price',       'admin/orderController', 'getListAttributePriceProduct', 'admin');
  Router::handle('POST',  'admin/order/get-color',       'admin/orderController', 'getListColor', 'admin');
+ Router::handle('POST',  'admin/order/get-color/not-inventory',       'admin/orderController', 'getListColorExceptInventory', 'admin');
  Router::handle('POST',  'admin/order/delete',       'admin/orderController', 'delete', 'admin');
  Router::handle('GET',  'admin/order/change/{product_id}/{product_color_id}/{order_id}/{order_detail_id}',       'admin/orderController', 'edit', 'admin');
  Router::handle('POST',  'admin/order/change/{product_id}/{product_color_id}/{order_id}/{order_detail_id}',       'admin/orderController', 'update', 'admin');
@@ -139,7 +140,13 @@
   Router::handle('GET',  'admin/comment/list',       'admin/commentController', 'index', 'admin');
   Router::handle('POST',  'admin/comment/delete',       'admin/commentController', 'destroy', 'admin');
   Router::handle('GET',  'admin/comment-detail/list/{id}',       'admin/commentController', 'detailListComment', 'admin');
-  
+    /********************************************************************************************* */
+  Router::handle('GET',  'admin/inventory/list',       'admin/inventoryController', 'index', 'admin');
+  Router::handle('GET',  'admin/inventory/add',       'admin/inventoryController', 'add', 'admin');
+  Router::handle('POST',  'admin/inventory/add',       'admin/inventoryController', 'create', 'admin');
+  Router::handle('GET',  'admin/inventory/edit/{id}',       'admin/inventoryController', 'edit', 'admin');
+  Router::handle('POST',  'admin/inventory/edit/{id}',       'admin/inventoryController', 'update', 'admin');
+  Router::handle('POST',  'api/inventory/get-history',       'admin/inventoryController', 'getAllHistoryByInventoryID', 'admin');
 /*************************************************************************************
   * ********************************
   * ********************************
@@ -186,10 +193,13 @@
   Router::handle('POST',  'api/address/get-transport-fee', 'post/productController', 'getTransportFee');
   Router::handle('POST',  'api/check-coupon', 'post/productController', 'checkCoupon');
   Router::handle('POST',  'api/purchase', 'post/cartController', 'purchaseCart');
+  Router::handle('POST',  'api/user/get-orderdetail', 'post/orderController', 'getListOrderDetail');
+  Router::handle('POST',  'api/user/delete-item/order', 'post/orderController', 'deleteItem');
  /**************************************************************************************/
  Router::handle('POST',  'api/chatbot/get-order', 'post/orderController', 'getOrderByCode');
  Router::handle('POST',  'api/chatbot/get-product', 'post/productController', 'getProductByChat');
  Router::handle('POST',  'api/get-autocomplete', 'post/productController', 'getAutoComplete');
+ Router::handle('POST',  'api/check-inventory/cart', 'post/orderController', 'checkInventory');
  http_response_code(404);
  return ($viewLoad->loadView('admin/errorPage/404notFound'));
  

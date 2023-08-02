@@ -87,7 +87,7 @@ class productController extends controller{
      }
      
       $attributePriceProduct = $this->product->getAttributeByProductIDChatBot($dataProduct['id']);
-      $dataListColorProduct = $this->colorProduct->getAllColorByProduct($dataProduct['id']);
+      $dataListColorProduct = $this->colorProduct->getAllColorByProductExceptInventory($dataProduct['id']);
       $result = [];
       foreach ($attributePriceProduct as $item) {
             if (isset($result[$item['description']])) {

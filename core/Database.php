@@ -96,6 +96,21 @@ class Database
            unset($conn);
          }
       }
+      public  function pdo_update_get_Id($sql){
+         $sql_args = array_slice(func_get_args(), 1);
+         try{
+            $cc = $this->connection;
+            $stmt = $cc->prepare($sql);
+            $stmt->execute($sql_args);
+            return ($cc->lastInsertId());
+         }
+         catch(PDOException $e) {
+            throw $e;
+         }
+         finally{
+           unset($conn);
+         }
+      }
 
       
 }
