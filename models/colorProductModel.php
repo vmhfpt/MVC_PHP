@@ -12,7 +12,7 @@ class ColorProduct extends Database{
     }
    
     public function getColorProductByAttributeProductID($attribute_product_id){
-        $sql = "SELECT `inventory`.`quantity_in_inventory` , `inventory`.`quantity_current`, `inventory`.`quantity_temp_order`,`product_color`.*, `values`.`value`, `types`.`description`, `products`.`name` AS `product_name`, `products`.`id` AS `product_id` 
+        $sql = "SELECT `inventory`.`quantity_in_inventory` , `inventory`.`quantity_current`, `inventory`.`quantity_temp_order`,`product_color`.*, `values`.`value`, `types`.`description`, `products`.`name` AS `product_name`, `products`.`id` AS `product_id`, `products`.`price` AS `price_inits`
         FROM `product_color` 
         JOIN `products` 
         JOIN `attribute_product` 

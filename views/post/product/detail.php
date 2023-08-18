@@ -29,6 +29,74 @@
             font-weight: 600;
             color : red;
           }
+          .flash-sale-content {
+           margin : 10px 0px;
+            display : flex;
+            flex-direction: column;
+          }
+          .flash-sale__tab-header{
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            padding : 7px 20px;
+            display : flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ff6700;
+          }
+          .flash-sale__tab-header-right {
+            display : flex;
+            align-items: center;
+            gap : 10px;
+            color : white;
+          }
+          .flash-sale__tab-header-left img {
+            display : block;
+          }
+          .flash-sale__tab-header-right-date {
+            display : flex;
+            gap : 7px;
+          }
+          .flash-sale__tab-header-right-date span {
+            background: #338106;
+            font-size: 14px;
+            padding : 0px 3px;
+            margin : auto 0px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: 700;
+          }
+          .flash-sale__text-expire {
+            font-size: 14px;
+          }
+          .flash-sale__tab-content {
+            display : flex;
+            align-items: center;
+            justify-content: center;
+            background: #f2f2f2;
+            padding : 15px 0px;
+          }
+          .flash-sale__tab-content-flex {
+            display : flex;
+            align-items: center;
+            gap : 15px;
+          }
+          .flash-sale__tab-content-flex span:first-child {
+            color : #333;
+            text-decoration: line-through;
+            font-size: 14px;
+          }
+          .flash-sale__tab-content-flex span:nth-child(2) {
+            color :#ff6700;
+            font-weight: 700;
+            font-size: 18px;
+          }
+          .flash-sale__tab-content-flex span:last-child {
+            color : white;
+            background: #ff6700;
+            padding : 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+          }
 </style>
 <section class="app-bread-crumb container-fluid">
         <div class="container">
@@ -130,10 +198,90 @@
                         <span class="">Giá tại:</span>
                         <select name="" id="" class="">
                             <option value="" class="">Hà Nội</option>
-                            <option value="" class="">TP Hồ Chí Minh</option>
-                            <option value="" class="">Đà Nẵng</option>
+                           
                         </select>
                      </div>
+                    <?php if(isset($dataFlashSale) && $dataFlashSale != false){  ?>
+                      <div class="flash-sale-content" data-date="<?=$dataFlashSale['end_date']?>" >
+                      <div class="flash-sale__tab-header">
+                          <div class="flash-sale__tab-header-left"><img src="https://didongthongminh.vn/modules/products/assets/images/flash.svg" alt="" class=""></div>
+                          <div class="flash-sale__tab-header-right">
+                            <div>
+                               <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            </div>
+                             <div>
+                                <span class="flash-sale__text-expire">Kết thúc trong :</span>
+                             </div>
+                             <div class="flash-sale__tab-header-right-date">
+                                <span>-:-</span>
+                                <span>-:-</span>
+                                <span>-:-</span>
+                                <span>-:-</span>
+                             </div>
+                          </div>
+                      </div>
+                      <div class="flash-sale__tab-content">
+                            <div class="flash-sale__tab-content-flex">
+                                <span class=""><?=currency_format($dataFlashSale['price'])?></span>
+                                <span class=""><?=currency_format($dataFlashSale['price'] - ($dataFlashSale['price'] * $dataFlashSale['discount_new']))?></span>
+                                <span class="">-<?= (float)$dataFlashSale['discount_new'] * 100 ?>%</span>
+                            </div>
+                      </div>
+                     </div>
+
+
+
+                     <script>
+                        function getDateCurrent(){
+                          const currentDate = new Date();
+                              const year = currentDate.getFullYear();
+                              const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+                              const date = ('0' + currentDate.getDate()).slice(-2);
+                              const hours = ('0' + currentDate.getHours()).slice(-2);
+                              const minutes = ('0' + currentDate.getMinutes()).slice(-2);
+                              const seconds = ('0' + currentDate.getSeconds()).slice(-2);
+
+                              const formattedDate = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+                             // console.log(formattedDate);
+                             return formattedDate;
+
+                        }
+                        function getDiffDate(){
+                          const dataDateCurrently = getDateCurrent();
+                          const start_date = new Date(dataDateCurrently);
+                            const end_date = new Date($('.flash-sale-content').attr('data-date'));
+
+                            const diffTime = Math.abs(end_date - start_date);
+                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                            const diffSeconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+                           // console.log(`${diffDays} days, ${diffHours} hours, ${diffMinutes} minutes, and ${diffSeconds} seconds.`);
+                           if(diffDays == 0 && diffHours == 0 && diffMinutes == 0 && diffSeconds == 0){
+                             return false;
+                           }
+                           let template = `<span>${diffDays}</span>
+                                <span>${diffHours}</span>
+                                <span>${diffMinutes}</span>
+                                <span>${diffSeconds}</span>`;
+                                $('.flash-sale__tab-header-right-date').html(template);
+                                return true;
+                        }
+
+                        var countDown = setInterval(function() {
+                             let check = getDiffDate();
+                            
+                              if (!check) {
+                                $('.flash-sale-content').empty();
+                                clearInterval(countDown);
+                                location.reload();
+                              }
+                            }, 1000);
+                        
+                     </script>
+                    <?php }?>
+                     
                      
                      <div class="">
                         <b class="app-detail-top__center-cost-sale" id="show-price-product"><?= currency_format(($item['price'] - ($item['price'] * (float)$item['price_sale'])) + ( $firstColor['price'] - ($firstColor['price'] * $firstColor['price_sale'] ))) ?></b>
@@ -253,10 +401,12 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
+                            
                             <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-green">
                                 <span class="">mua trả góp 0%</span>
                                 <span class="">Duyệt hồ sơ trong 5 phút</span>
                             </div>
+                            
                         </div>
                         <div class="col-lg-6 col-sm-12">
                             <div class="app-detail-top__center-payload-btn app-detail-top__center-payload-btn-green">
@@ -359,7 +509,37 @@
                   var attributeArrCart = [];
                   var dataListCouponProduct = false;
                   var giftProductTotal = false;
-                
+            
+                $(document).on("click", ".app-detail-top__center-payload-btn-green", function() {
+                  var priceCurrent = $('#show-price-product').text();
+                  priceCurrent = (priceCurrent.replaceAll('.', '').slice(0, -1));
+                  var colorCurrent = {
+                      name : $('.item_same-active').attr('data-name'),
+                      id : $('.item_same-active').attr('data-color'),
+                      price : Number($('.item_same-active').attr('data-price'))
+                   }
+                   attributeArrCart = [];
+                   $('.item_same-active-attribute').map((index,value) => {
+                       let objectArr = {
+                        name : $(value).attr('data-name'),
+                        value :  $(value).attr('data-value'),
+                          price_attribute_product :  $(value).attr("data-attribute-product"),
+                       }
+                       attributeArrCart.push(objectArr);
+                    });
+                    if(attributeArrCart.length == (JSON.parse($('.get-data-attribute-product').attr("data-total"))).length){
+                  
+                   
+                    let resultAttribute = 'attr=' + attributeArrCart.map(item => item.price_attribute_product).join(',');
+                    window.location.replace("/installment"+`?product_id=${colorCurrent.id}&price=${priceCurrent}&${resultAttribute}`);
+
+
+                   }else {
+                     $('#alert-add-cart').remove();
+                     $('#show-attribute-price-product').before(`<span id="alert-add-cart" style="color : red" >* Vui lòng lựa chọn phiên bản phù hợp </span>`);
+                   }
+                   
+                });
                 $(document).on("click", ".add-to-cart", function() {
                   attributeArrCart = [];
                     var thumb = $('.item_same-active').attr('data-thumb');
@@ -1056,9 +1236,7 @@
                  </div>
                 
 
-                 <div class="app-detail-bottom__item-comment-content-btn">
-                   <button class="">Xem thêm</button>
-                 </div>
+                
 
 
 
@@ -1178,12 +1356,12 @@
 
 
 
-  var errorInputContent = true;
+  var errorInputContentComment = true;
 
 
-  var errorInputName = $('.cmt-input-name').val() == '' ? true : false;
-  var errorInputEmail = $('.cmt-input-email').val() == '' ? true : false;
-  var errorInputPhone = $('.cmt-input-phone').val() == '' ? true : false;
+  var errorInputNameComment = $('.cmt-input-name').val() == '' ? true : false;
+  var errorInputEmailComment = $('.cmt-input-email').val() == '' ? true : false;
+  var errorInputPhoneComment = $('.cmt-input-phone').val() == '' ? true : false;
 
 
 
@@ -1192,9 +1370,9 @@
 	text = $(this).val();
    if(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(text)){
   	$('.error-phone-number').text('');
-  	errorInputPhone = false;
+  	errorInputPhoneComment = false;
   }else {
-  	errorInputPhone = true;
+  	errorInputPhoneComment = true;
   	$('.error-phone-number').text('* Số điện thoại không hợp lệ');
   	
   }
@@ -1205,10 +1383,10 @@
 
    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)){
   	$('.error-email').text('');
-  	errorInputEmail = false;
+  	errorInputEmailComment = false;
   }else {
   	$('.error-email').text('* Email không hợp lệ');
-  	errorInputEmail = true;
+  	errorInputEmailComment = true;
   	
   }
 });
@@ -1218,10 +1396,10 @@
 
 
   if(/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềếểỄỆỈỊỌỎỐỒỔỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]{4,})+$/.test(text)){
-    errorInputName = false;
+    errorInputNameComment = false;
   	$('.error-name').text('');
   }else {
-    errorInputName = true;
+    errorInputNameComment = true;
   	$('.error-name').text('* Tên không hợp lệ');
   	
   }
@@ -1232,10 +1410,10 @@
 
 
     if (/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềếểỄỆỈỊỌỎỐỒỔỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]{4,})+$/.test(text)) {
-      errorInputContent = false;
+      errorInputContentComment = false;
       $('.error-content').text('');
     } else {
-      errorInputContent = true;
+      errorInputContentComment = true;
       $('.error-content').text('* Nội dung quá ngắn');
 
     }
@@ -1251,7 +1429,7 @@
     
     */
   
-    if (errorInputContent == false && errorInputName == false && errorInputEmail == false && errorInputPhone == false) {
+    if (errorInputContentComment == false && errorInputNameComment == false && errorInputEmailComment == false && errorInputPhoneComment == false) {
     
      console.log($('.cmt-input-content').val(), $('.cmt-input-name').val(), $('.cmt-input-phone').val(),$('.cmt-input-email').val());
      

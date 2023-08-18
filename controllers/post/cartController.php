@@ -45,6 +45,11 @@ class cartController extends controller{
         return false;
     }
     public function sendEmail($carts, $urlThumb, $user, $dataOrder, $transportFee, $codeCouPon){
+
+
+
+
+        
         if(!$codeCouPon){
             $codeCouPon = "Không áp dụng";
         }
@@ -93,18 +98,39 @@ class cartController extends controller{
            
             </tr>';
         }
+
+
+
+/************************************** */
+// echo json_encode(
+//     ['status' => 'success',
+//       'name' => $user['name'],
+//       'payPhone' => $user['phone'],
+//       'email' => $user['email'],
+//       'payNote' => $user['note'],
+//       'address' => $dataOrder['address_detail'],
+//       'date' => $dataOrder['createdAt'],
+//       'transportfee' => $transportFee,
+//       'coupon' => $codeCouPon,
+//       'codeorder' => $dataOrder['CODE'],
+//       'total' => $dataOrder['total']
+
+//     ]
+
+// );
+// die();
         $mail = new PHPMailer(true);
 
         try {
             $mail->isSMTP(); // using SMTP protocol                                     
             $mail->Host = 'smtp.gmail.com'; // SMTP host as gmail 
             $mail->SMTPAuth = true;  // enable smtp authentication                             
-            $mail->Username = 'tuyetnhung200201@gmail.com';  // sender gmail host              
-            $mail->Password = 'pevupqufusoaiatg'; // sender gmail host password                          
+            $mail->Username = 'vuminhhungltt904@gmail.com';  // sender gmail host  tuyetnhung200201@gmail.com            
+            $mail->Password = 'riskxnwsapyjcqfr'; // sender gmail host password    pevupqufusoaiatg                       
             $mail->SMTPSecure = 'tls';  // for encrypted connection                           
             $mail->Port = 587;   // port for SMTP     
     
-            $mail->setFrom('tuyetnhung200201@gmail.com', "Admin"); // sender's email and name
+            $mail->setFrom('vuminhhungltt904@gmail.com', "Admin"); // sender's email and name
             $mail->addAddress("vuminhhungltt904@gmail.com", "Don hang");  // receiver's email and name
             $mail->isHTML(true);
             $mail->Subject = 'Chi tiet don hang';
@@ -192,15 +218,23 @@ class cartController extends controller{
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     }
-    public function addOrder($user,  $transportFee, $codeCoupon,$total){
+    public function addOrder($user,  $transportFee, $codeCoupon,$total, $typeTransaction){
+         if($codeCoupon){
+            $dataCoupon = $this->coupon->getCouponUser($codeCoupon, $_SESSION['user']['id']);
+            if($dataCoupon){
+                $this->coupon->deleteCouponUser($dataCoupon['id']);
+            }
+         }
+
          $user_id = isset($_SESSION['user']) ? $_SESSION['user']['id'] : null;
          $dataAddress = $this->address->addressSelectall($user['address_code']['city'], $user['address_code']['district'], $user['address_code']['aware']);
          $fullAddress = $user["address"]. "," . $dataAddress["aware"] . "," . $dataAddress["district"] . "," . $dataAddress["city"];
          $codeOrderRandom = randomCoupon();
-         return $this->order->insertAndGetLastId($codeOrderRandom, $user_id, $transportFee, $codeCoupon, $user['note'], $user['email'], $user['name'], $user['phone'], $fullAddress, $total, 6);
+         return $this->order->insertAndGetLastId($codeOrderRandom, $user_id, $transportFee, $codeCoupon, $user['note'], $user['email'], $user['name'], $user['phone'], $fullAddress, $total, 6, $typeTransaction);
          
     }
     public function insertOrderDetail($orderId, $carts){
+        $dataUser = isset($_SESSION['user']) ? $_SESSION['user'] : false;
         try {
             foreach($carts as $key => $value){
         
@@ -217,8 +251,13 @@ class cartController extends controller{
                         }
                     }
                     if(isset($value['dataListCouponProduct'])){
-                        foreach($value['dataListCouponProduct'] as $k2 => $coupon){
-                            $this->order->insertOrderCoupon($orderDetailID, $coupon['id']);
+                       
+                        if(isset($dataUser) && isset($_SESSION['user'])){
+                            foreach($value['dataListCouponProduct'] as $k2 => $coupon){
+                                $this->order->insertOrderCoupon($orderDetailID, $coupon['id']);
+
+                                $this->coupon->insertCouponUser($dataUser['id'], $coupon['id']);
+                            }
                         }
                     }
                     
@@ -248,13 +287,14 @@ class cartController extends controller{
          $this->changeQuantityTempOrderInInventory($request['carts']);
        
       // var_dump(  $response['HTTP_HOST']); die();
+         $typeTransaction = $request['type_transaction'];
          $transportFee = (int) $request['transport_fee'];
          $codeCoupon = $request['codeCoupon'];
          $codeCoupon == 'false' ? $codeCoupon = false : $codeCoupon = $codeCoupon ;
         if (true) {
             // $this->insertOrderDetail(true , $request['carts']);
             // die();
-            $orderID = $this->addOrder($request['detail_user'], $transportFee , $codeCoupon, $request['total']);
+            $orderID = $this->addOrder($request['detail_user'], $transportFee , $codeCoupon, $request['total'], $typeTransaction);
             $insertOrderDetail = $this->insertOrderDetail($orderID , $request['carts']);
             if($insertOrderDetail){
                 $dataOrder = $this->order->getOrderById($orderID);

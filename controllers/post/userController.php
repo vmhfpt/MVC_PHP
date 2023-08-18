@@ -129,12 +129,12 @@ class userController extends controller{
           $mail->isSMTP(); // using SMTP protocol                                     
           $mail->Host = 'smtp.gmail.com'; // SMTP host as gmail 
           $mail->SMTPAuth = true;  // enable smtp authentication                             
-          $mail->Username = 'tuyetnhung200201@gmail.com';  // sender gmail host              
-          $mail->Password = 'pevupqufusoaiatg'; // sender gmail host password                          
+          $mail->Username = 'vuminhhungltt904@gmail.com';  // sender gmail host              
+          $mail->Password = 'riskxnwsapyjcqfr'; // sender gmail host password                          
           $mail->SMTPSecure = 'tls';  // for encrypted connection                           
           $mail->Port = 587;   // port for SMTP     
 
-          $mail->setFrom('tuyetnhung200201@gmail.com', "Admin"); // sender's email and name
+          $mail->setFrom('vuminhhungltt904@gmail.com', "Admin"); // sender's email and name
           $mail->addAddress($email, "Xác thực OTP!");  // receiver's email and name
 
           $mail->Subject = 'Forget Password';
@@ -203,7 +203,7 @@ class userController extends controller{
           //'loginURL' => $loginURL
        ]));
       }else {
-         $userId = $this->user->register($request['name'], $request['email'], $request['password']);
+         $userId = $this->user->register($request['name'], $request['email'], md5($request['password']));
          $dataUser = $this->user->getById($userId);
          $_SESSION['user'] = $dataUser;
          $_SESSION['user']['privilege'] = [];

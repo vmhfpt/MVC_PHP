@@ -4,7 +4,10 @@
  
 class Product extends Database{
     
-   
+    public function createInstallMent($code, $nameProduct, $initPrice, $product_id, $interestRate, $prepay, $totalPrice, $monthNumber, $payEachMonth, $name, $phoneNumber, $email, $dateBirth, $identify, $addressUser, $addressShop, $active){
+        $sql = "INSERT INTO `installment` (`code`, `name_product`, `init_price`, `product_id`, `interest_rate`, `prepay`, `total_price`, `month_number`, `pay_each_month`, `name`, `phone_number`, `email`, `date_birth`, `identify_id`, `address_user`, `address_shop`, `active`, `createdAt`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp())";
+        return $this->pdo_execute($sql, $code, $nameProduct, $initPrice, $product_id, $interestRate, $prepay, $totalPrice, $monthNumber, $payEachMonth, $name, $phoneNumber, $email, $dateBirth, $identify, $addressUser, $addressShop, $active);
+    }
     public function getAll(){
         $sql = "SELECT `categories`.`name` AS `category`,`products`.`thumb`,`products`.`name`, `products`.`id`, `products`.`slug`, `products`.`price`, `products`.`view_total` FROM `products` JOIN `categories` WHERE `categories`.`id` = `products`.`category_id` ORDER BY `products`.`id` DESC";
         return $this->pdo_query($sql);
@@ -358,6 +361,18 @@ class Product extends Database{
         ASC LIMIT 0,5";
         return $this->pdo_query($sql);
       }
+      public function getListInstallMent(){
+        $sql = "SELECT `installment`.* ,`product_color`.`thumb`, `values`.`value`
+        FROM `installment` 
+        INNER JOIN `product_color`
+        ON `installment`.`product_id` = `product_color`.`attribute_product_id`
+        INNER JOIN `attribute_product`
+        ON `product_color`.`attribute_product_id` = `attribute_product`.`id`
+        INNER JOIN `values`
+        ON `attribute_product`.`value_id` = `values`.`id`";
+        return $this->pdo_query($sql);
+      }
+      
      
       
 }

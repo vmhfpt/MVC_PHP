@@ -23,6 +23,15 @@ class Coupon extends Database{
         AND `coupon_product`.`product_id` = ?";
         return $this->pdo_query($sql, $product_id);
     }
+    public function getDetailListCouponByProductAdmin($product_id){
+        $sql = "SELECT `coupon_product`.`id`, `products`.`name` AS `product_name`, `coupons`.`name` AS `coupon_name`, `coupons`.`code` FROM `coupon_product` 
+        JOIN `coupons`
+        JOIN `products`
+        ON `coupon_product`.`coupon_id` = `coupons`.`id`
+        AND `coupon_product`.`product_id` = `products`.`id`
+        AND `coupon_product`.`product_id` = ?";
+        return $this->pdo_query($sql, $product_id);
+    }
     public function insertCouponProduct($coupon_id,$product_id){
         $sql = "INSERT INTO `coupon_product` ( `coupon_id`, `product_id`) VALUES ( ?, ?)";
         return $this->pdo_execute($sql,$coupon_id,$product_id);
@@ -80,5 +89,33 @@ class Coupon extends Database{
      return $this->pdo_query($sql, $order_id);
    }
 
+   public function insertCouponUser($user_id, $coupon_id){
+     $sql = "INSERT INTO `coupon_user` ( `user_id`, `coupon_product_id`) VALUES ( ?, ?)";
+     return $this->pdo_execute($sql, $user_id, $coupon_id);
+   }
+   public function checkCouponUser($coupon_id, $user_id){
+       $sql = "SELECT * FROM `coupon_user`
+       INNER JOIN `coupon_product`
+       ON `coupon_user`.`coupon_product_id` = `coupon_product`.`id`
+       INNER JOIN `coupons`
+       ON `coupon_product`.`coupon_id` = `coupons`.`id`
+       WHERE `coupons`.`id` = ? 
+       AND `coupon_user`.`user_id` = ?";
+       return  $this->pdo_query_one($sql, $coupon_id, $user_id);
+   }
+   public function getCouponUser($coupon_code, $user_id){
+    $sql = "SELECT `coupon_user`.`id` FROM `coupon_user`
+    INNER JOIN `coupon_product`
+    ON `coupon_user`.`coupon_product_id` = `coupon_product`.`id`
+    INNER JOIN `coupons`
+    ON `coupon_product`.`coupon_id` = `coupons`.`id`
+    WHERE `coupons`.`code` = ? 
+    AND `coupon_user`.`user_id` = ?";
+    return  $this->pdo_query_one($sql, $coupon_code, $user_id);
+  }
+  public function deleteCouponUser($id){
+     $sql = "DELETE FROM `coupon_user` WHERE `id` = ?";
+     $this->pdo_execute($sql, $id);
+  }
 }
 ?>

@@ -2,8 +2,19 @@
 
  $viewLoad = new controller();
 
- 
+ // my-server/capture-paypal-order
  Router::handle('GET',  'test',       'admin/testController', 'test');
+ Router::handle('POST',  'my-server/capture-paypal-order',       'admin/testController', 'capturePaypal');
+ Router::handle('POST',  'my-server/create-paypal-order',       'admin/testController', 'createPaypal');
+
+
+
+
+ Router::handle('GET',  'installment','post/handleController', 'installment' );
+ Router::handle('POST',  'installment-handle','post/handleController', 'handleInstallment' );
+ Router::handle('POST',  'installment-add','post/handleController', 'createInstallment' );
+
+
  Router::handle('GET',  'admin/logout',       'admin/loginController', 'logout');
  Router::handle('GET',  'admin/login',       'admin/loginController', 'login');
  Router::handle('POST',  'admin/login',       'admin/loginController', 'authen');
@@ -12,6 +23,13 @@
  Router::handle('POST',  'admin/platform/edit/{slug}','admin/platformController', 'update', 'admin');
  Router::handle('GET',  'admin/platform/edit/{slug}','admin/platformController', 'edit', 'admin');
  Router::handle('GET',  'admin/platform/list',       'admin/platformController', 'index', 'admin');
+ /*************************************************************************************** */
+ Router::handle('POST',  'admin/flashsale/delete','admin/flashSaleController', 'destroy', 'admin');
+ Router::handle('GET',  'admin/flashsale/add','admin/flashSaleController', 'add', 'admin');
+ Router::handle('POST',  'admin/flashsale/add','admin/flashSaleController', 'create', 'admin');
+ Router::handle('GET',  'admin/flashsale/list','admin/flashSaleController', 'index', 'admin');
+ Router::handle('GET',  'admin/flashsale/edit/{id}','admin/flashSaleController', 'edit', 'admin');
+ Router::handle('POST',  'admin/flashsale/edit/{id}','admin/flashSaleController', 'update', 'admin');
  /*************************************************************************************** */
  Router::handle('GET',  'admin/category-post/add',        'admin/categoryPostController', 'add', 'admin');
  Router::handle('POST',  'admin/category-post/add',        'admin/categoryPostController', 'create', 'admin');
@@ -41,6 +59,10 @@
  Router::handle('GET',  'admin/product/edit/{slug}','admin/productController', 'edit', 'admin');
  Router::handle('POST',  'admin/product/edit/{slug}','admin/productController', 'update', 'admin');
  Router::handle('POST',  'admin/product/delete','admin/productController', 'destroy', 'admin');
+
+ Router::handle('GET',  'admin/installment/list','admin/productController', 'listInstallMent', 'admin');
+
+
 
  Router::handle('POST',  'admin/product-coupon/delete','admin/productController', 'destroyCouponProduct', 'admin');
  Router::handle('GET',  'admin/product-coupon/list','admin/productController', 'getListCouponByProduct', 'admin');
@@ -195,6 +217,7 @@
   Router::handle('POST',  'api/purchase', 'post/cartController', 'purchaseCart');
   Router::handle('POST',  'api/user/get-orderdetail', 'post/orderController', 'getListOrderDetail');
   Router::handle('POST',  'api/user/delete-item/order', 'post/orderController', 'deleteItem');
+  Router::handle('POST',  'api/user/cancel-order-item/order', 'post/orderController', 'cancelOrder');
  /**************************************************************************************/
  Router::handle('POST',  'api/chatbot/get-order', 'post/orderController', 'getOrderByCode');
  Router::handle('POST',  'api/chatbot/get-product', 'post/productController', 'getProductByChat');

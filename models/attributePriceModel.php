@@ -3,6 +3,17 @@
  require_once("core/Database.php");
  
 class AttributePrice extends Database{
+    public function getAttributePriceWhereInID($attr){
+        $sql = "SELECT `values`.`value`, `types`.`name` FROM `attribute_price`
+        INNER JOIN `attribute_product`
+        ON `attribute_product`.`id` = `attribute_price`.`attribute_product_id`
+        INNER JOIN `types`
+        INNER JOIN `values`
+        ON `attribute_product`.`type_id` = `types`.`id`
+        AND `attribute_product`.`value_id` = `values`.`id`
+        WHERE `attribute_price`.`id` IN (".$attr.")";
+         return $this->pdo_query($sql);
+    }
     public function getListByProductColorId($product_color_id){
         $sql = "SELECT `product_color`.`thumb`,`attribute_price`.`price`,`attribute_price`.`price_sale`,`attribute_price`.`active`,`attribute_price`.`quantity`,`attribute_price`.`id`, t1.`description`, v1.`value`,  v2.`value` AS `color`, `products`.`name` AS `name_product`
         FROM `attribute_price` 

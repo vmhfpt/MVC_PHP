@@ -458,6 +458,11 @@
                                
                             </ul>
                         </li>
+
+
+                       
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -478,6 +483,31 @@
                                     <a href="/admin/inventory/list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    FlashSales
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/flashsale/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm flash sales</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/flashsale/list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách flash sales</p>
                                     </a>
                                 </li>
                                
@@ -511,6 +541,15 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/admin/installment/list" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                   Hồ sơ trả góp
+                                    
+                                </p>
+                            </a>
+                        </li>
 
                         <li class="nav-header">Bình luận</li>
                         <li class="nav-item">
@@ -522,15 +561,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/thong-ke" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                   Thống kê
-                                    
-                                </p>
-                            </a>
-                        </li>
+                        
                         
                     </ul>
                 </nav>

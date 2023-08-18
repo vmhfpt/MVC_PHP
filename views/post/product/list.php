@@ -593,13 +593,15 @@ function handleFilter() {
 
 
 
-
+//console.log(filterArray);
 
   let result = filterArray.reduce((acc, curr) => {
     let key = Object.keys(curr)[0];
     let value = curr[key].join(',');
     return acc + `&${key}=${value}`; 
 }, '');
+
+
   if(sort != ""){
     result = result + `&sort=${sort}`;
   }

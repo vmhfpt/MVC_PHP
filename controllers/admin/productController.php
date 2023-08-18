@@ -19,7 +19,8 @@ class productController extends controller{
    public function couponDetail($request, $response){
       $id = ($request[0]['id']);
       $item = $this->product->getById($id);
-      $dataItem = $this->coupon->getDetailListCouponByProduct($id);
+      $dataItem = $this->coupon->getDetailListCouponByProductAdmin($id);
+      //var_dump($dataItem);die();
       $listCoupon = $this->coupon->getAll();
       return ($this->loadView('admin/couponProduct/detail',
       [
@@ -247,6 +248,11 @@ class productController extends controller{
      public function getListAPI(){
         $dataItem  = $this->product->getALl();
         echo json_encode($dataItem);
+     }
+     public function listInstallMent($request, $response){
+      $dataItem = $this->product->getListInstallMent();
+     // print("<pre>".print_r($dataItem,true)."</pre>");die();
+      return ($this->loadView('admin/product/listInstallMent', ['dataItem' => $dataItem]));
      }
 }
 ?>

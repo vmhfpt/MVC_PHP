@@ -1,5 +1,7 @@
 <?php
 
+
+
 if(!session_id()){
     session_start();
     
@@ -61,3 +63,5 @@ foreach($autoloads as $file){
 require_once('router/index.php');
 
 ?>
+
+

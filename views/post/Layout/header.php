@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="<?= SITE_URL_POST ?>/carousel/dist/assets/owl.theme.default.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?= SITE_URL_POST ?>/carousel/dist/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
 </head>
 
@@ -88,13 +89,13 @@
                     </div>
 
                     <div class="app-header__top-item-title-zone">
-                        Đà Nẵng<i class="fa fa-caret-down" aria-hidden="true"></i>
+                        HÀ NỘI<i class="fa fa-caret-down" aria-hidden="true"></i>
                     </div>
                 </div>
             
                 <form autocomplete="off" action="/plat-form/tim-kiem" method="GET" class="app-header__top-item">
                     <div class="app-header__top-item-input">
-                        <input id="key-search" value="<?=isset($_GET['key']) ? $_GET['key'] : ''?>" name="key" placeholder="Bạn tìm gì ..." autocomplete="off" />
+                        <input class="ontyping" id="key-search" value="<?=isset($_GET['key']) ? $_GET['key'] : ''?>" name="key"  autocomplete="off" />
                     </div>
                     <div class="app-header__top-item-icon">
                         <button type="submit" class=""> <i class="fa fa-search" aria-hidden="true"></i></button>
@@ -133,7 +134,7 @@
                         <img src="https://didongthongminh.vn/templates/default/images/store-w.svg" alt="" />
                     </div>
                     <div class="app-header__top-item-detail-ship">
-                        <span>Cửa hàng gần bạn </span>
+                        <span   >Cửa hàng gần bạn </span>
                     </div>
                 </div>
                 <div class="app-header__top-item">
@@ -148,8 +149,20 @@
             </div>
         </div>
     </header>
+    <script>
+  var typeing = new Typed(".ontyping", {
+      strings: ["Bạn muốn tìm gì ?", "Iphone 14", "Samsung galaxy S20", "Laptop gaming"],
+      typeSpeed: 70,
+        backSpeed: 20,
+        attr: 'placeholder',
+        bindInputFocusEvents: true,
+        loop: true
+    });
+</script>
     <script >
+
    $('#key-search').on('keyup paste', function() {
+   
        text = $(this).val();
        if(text == ''){
         $(".app-header__top-item-auto-complete").fadeOut(50);

@@ -111,6 +111,21 @@ class Database
            unset($conn);
          }
       }
+      public function autoRemoveFlashSale(){
+         $sql = "SELECT * FROM `flash_sales` WHERE current_timestamp() >= `flash_sales`.`end_date`";
+         $dataItem = $this->pdo_query($sql);
+         
+         foreach($dataItem as $key => $value){
+            
+            $sql = "UPDATE `products` SET `price_sale` = ? WHERE `products`.`id` = ?";
+            $this->pdo_execute($sql, $value['discount_old'], $value['product_id']);
+            $sqlDel = "DELETE FROM `flash_sales` WHERE `product_id` = ?";
+            $this->pdo_execute($sqlDel, $value['product_id'] );
+         }
+      }
 
       
 }
+
+ $autoLoadRemove = new Database();
+ $autoLoadRemove->autoRemoveFlashSale();

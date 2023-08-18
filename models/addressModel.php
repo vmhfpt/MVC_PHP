@@ -28,5 +28,6 @@ class Address extends Database{
         $sql= "SELECT `devvn_tinhthanhpho`.`name` as `city`, `devvn_quanhuyen`.`name` as `district`, `devvn_xaphuongthitran`.`name` as `aware` FROM `devvn_tinhthanhpho`, `devvn_quanhuyen`, `devvn_xaphuongthitran` WHERE `devvn_tinhthanhpho`.`matp` =  ? AND `devvn_quanhuyen`.`maqh` = ? AND `devvn_xaphuongthitran`.`xaid` = ?";
         return ($this->pdo_query_one($sql, $city_id, $district_id, $ward_id));
     }
+    
    
 }

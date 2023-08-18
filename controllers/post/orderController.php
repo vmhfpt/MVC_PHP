@@ -122,7 +122,7 @@ class orderController extends controller{
         $cancelOrder = "";
         $item = $this->order->getOrderById($request['id']);
         if ($item['active'] == 6) {
-            $cancelOrder  = "<li> <button class='btn-cancel-order' >Hủy đơn hàng  </button></li>";
+            $cancelOrder  = "<li> <button data-id=".$request['id']." class='btn-cancel-order' >Hủy đơn hàng  </button></li>";
             $activeOrder =  "Chưa tiếp nhận";
         }
         if ($item['active'] == 5) {
@@ -206,6 +206,19 @@ class orderController extends controller{
                 'message' => '* Cần ít nhất một sản phẩm trong đơn hàng'
             ]);
         }
+    }
+    public function cancelOrder($request, $response){
+        //var_dump($request);
+        $listDataOrderDetail = $this->order->getAllOrderDetailByOrderChangeInventory($request['id']);
+            foreach($listDataOrderDetail as $key => $value){
+                $this->inventory->decreateQuantityTempOrder($value['quantity'], $value['product_id']);
+            }
+            $this->order->changeActiveOrder(0, $request['id'] );
+            //$this->order->addContentActiveOrder($activeChange, $content, $_SESSION['user']['id'], $order_id);
+            echo json_encode([
+               'status' => 'success',
+             ]);
+        
     }
 }
 

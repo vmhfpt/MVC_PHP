@@ -460,7 +460,9 @@
                             </div>
 
                             <div class="app-cart__content-form-button-coupon-content">
-                                <div class="app-cart__content-form-button-coupon">
+                               
+                                <?php if(isset($_SESSION['user'])){?>
+                                    <div class="app-cart__content-form-button-coupon">
                                     <img src="https://didongthongminh.vn/modules/products/assets/images/icon_giam.svg" alt="" class="">
                                     <span class="title-coupon">Dùng mã giảm giá</span>
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -483,16 +485,24 @@
                                         <div class="show-coupon-error"></div>
                                     </div>
                                 </div>
+                                <?php }else{ ?>
+                                    <a href="/login" style="color : blue" class="">Vui lòng đăng nhập để sử dụng mã giảm giá</a>
+                                <?php }?>
+                                
                             </div>
+                            
 
                             <div class="app-cart__content-form-total-cost">
                                 <span class="">Tổng tiền: </span>
                                 <span class="total-price-checkout"></span>
                             </div>
-
+                            <script src="https://www.paypal.com/sdk/js?client-id=AVX3pQkbnvgt4mPcaGq5R84dSZNANoF_42RzHUxALRiEotXy0fWRYl96F_4sLjJJUjpPLi_BImOF67Ca&currency=USD"></script>
+                            <div class="">
+                            <div id="paypal-button-container"></div>
+                            </div>
                             <div class="app-cart__content-form-button-submit">
 
-                                <button type="button" class="">Đặt hàng</button>
+                                <button type="button" class="handle-purchase-ajax">Đặt hàng</button>
                             </div>
                         </form>
                     </div>
@@ -580,26 +590,23 @@
 
 
 var codeCoupon = false;
-    var errorInputEmail = $('.pay-input-email').val() == '' ? true : false;
-    var errorInputName = $('.pay-input-name').val() == '' ? true : false;
-    var errorInputPhone = true;
-    if ($('.pay-input-name').length == 0) {
-        errorInputName = false;
-    }
-    if ($('.pay-input-email').length == 0) {
-        errorInputEmail = false;
-    }
+    var errorInputEmailForCart = $('.pay-input-email').val() == '' ? true : false;
+    var errorInputNameForCart = $('.pay-input-name').val() == '' ? true : false;
+    var errorInputPhoneForCart = true;
+   // console.log(errorInputEmailForCart, errorInputNameForCart , errorInputPhoneForCart );
+    
 
+    
 
 
     $('.pay-input-name').on('input keyup paste', function() {
         text = $(this).val();
         if (text.length <= 5 || text.length > 20) {
-            errorInputName = true;
+            errorInputNameForCart = true;
             $('.error-name').text('* Tên không hợp lệ');
 
         } else {
-            errorInputName = false;
+            errorInputNameForCart = false;
             $('.error-name').text('');
         }
     });
@@ -608,10 +615,10 @@ var codeCoupon = false;
 
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
             $('.error-email').text('');
-            errorInputEmail = false;
+            errorInputEmailForCart = false;
         } else {
             $('.error-email').text('* Email không hợp lệ');
-            errorInputEmail = true;
+            errorInputEmailForCart = true;
 
         }
     });
@@ -624,9 +631,9 @@ var codeCoupon = false;
         text = $(this).val();
         if (/(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(text)) {
             $('.error-phone-number').text('');
-            errorInputPhone = false;
+            errorInputPhoneForCart = false;
         } else {
-            errorInputPhone = true;
+            errorInputPhoneForCart = true;
             $('.error-phone-number').text('* Số điện thoại không hợp lệ');
 
         }
@@ -659,19 +666,27 @@ var codeCoupon = false;
             }
             return template;
         }
-    $('.app-cart__content-form-button-submit>button').click(function() {
-        //
-        if (errorInputEmail == false && errorInputName == false && errorInputPhone == false) {
+        function convertCurrency(vnd){
+             // amount in Vietnamese Dong
+            const exchangeRate = 0.000042; // exchange rate from VND to USD
+            const usd = vnd * exchangeRate; // converted amount in United States Dollar
 
-            if ($('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null') {
-                //
-                $([document.documentElement, document.body]).animate({
-                    scrollTop: $(".scroll-to-address").offset().top
-                }, 600);
-            } else {
-                
-               $(this).html(`<i style="font-size : 23px !important" class=" fa fa-spinner fa-spin"></i>`);
-               $(this).css('pointer-events', 'none');
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+
+            return (String(formatter.format(usd))); 
+        }
+
+    //alert(convertCurrency(26000));
+    
+  
+
+    function purchaseOrderByAjax(templatePayment, typeTransaction){
+       // console.log(templatePayment);
+        $('.handle-purchase-ajax').html(`<i style="font-size : 23px !important" class=" fa fa-spinner fa-spin"></i>`);
+               $('.handle-purchase-ajax').css('pointer-events', 'none');
                 const payName = $('.pay-input-name').val();
                 const payEmail = $('.pay-input-email').val();
                 const payPhone = $('.pay-input-phone').val();
@@ -697,7 +712,8 @@ var codeCoupon = false;
                             },
                             total :  $('.total-price-checkout').text().replaceAll('.', '').slice(0, -1),
                             transport_fee : $('.transport-fee').attr('data-price'),
-                            codeCoupon : codeCoupon
+                            codeCoupon : codeCoupon,
+                            type_transaction : typeTransaction
 
 
                         }
@@ -711,7 +727,7 @@ var codeCoupon = false;
                             $('.app-cart-top__title').after(` <div class="empty-cart-container">
                    <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="" class="">
                    <span class="">Không còn gì trong giỏ hàng !</span>
-                   <a href="index.php" class=""><button class="">Quay về  trang chủ</button></a>
+                   <a href="/" class=""><button class="">Quay về  trang chủ</button></a>
                  </div>`);
                             //alert('oder buy products success !!');
 
@@ -798,7 +814,7 @@ var codeCoupon = false;
                     </div>
 
                     <div class="app-cart__content-form app-cart__content-form-detail-oder">
-                        <ul class="">
+                        <ul class="show-option-detail-user">
                            <li class=""><b class="">Họ và tên</b> : ${msg.name}</li>
                            <li class=""><b class="">SĐT</b> : ${payPhone}</li>
                            <li class=""><b class="">Email</b> : ${msg.email}</li>
@@ -807,7 +823,7 @@ var codeCoupon = false;
                            <li class=""><b class="">Mã đơn hàng</b> : ${msg.codeorder}</li>
                            <li class=""><b class="">Ngày đặt</b> : ${msg.date}</li>
                            <li class=""><b class="">Trạng thái</b> : Chưa tiếp nhận</li>
-
+                            ${templatePayment}
                         </ul>
                     </div>
 
@@ -816,7 +832,7 @@ var codeCoupon = false;
                 </div>
          </div>
      </section> `;
-
+                      // $('.show-option-detail-user').append(templatePayment);
 
                             $('.show-popup-state').empty();
                             $('.show-popup-state').append(template);
@@ -825,10 +841,91 @@ var codeCoupon = false;
 
                         }
                     })
+    }
+
+      //**********************Paypal******************************* */
+      paypal.Buttons({
+        onClick(){
+          
+            if (errorInputEmailForCart == false && errorInputNameForCart == false && errorInputPhoneForCart == false) {
+         
+                if ($('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null') {
+                    //
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $(".scroll-to-address").offset().top
+                    }, 600);
+                    return false;
+                }
+        }else {
+            if ($('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null') {
+                    //
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $(".scroll-to-address").offset().top
+                    }, 600);
+                }
+                return false;
+        }
+            
+        },
+        // Order is created on the server and the order id is returned
+        createOrder(data, actions) {
+            let cost = Number($('.total-price-checkout').text().replaceAll('.', '').slice(0, -1));
+            let convert = convertCurrency(cost);
+            convert = convert.slice(1);
+            convert = convert.replace(/,/g, '');
+            
+          return actions.order.create({
+             purchase_units : [{
+                amount : {
+                    value : convert
+                }
+             }]
+          })
+        },
+        // Finalize the transaction on the server after payer approval
+        onApprove(data, actions) {
+           return actions.order.capture().then(function(orderData){
+             
+             
+              const transaction = orderData.purchase_units[0].payments.captures[0];
+              const userPayment = orderData.payer;
+              let templatePayment = `<li class=""><b class="">Hình thức thanh toán</b> :Cổng paypal</li>
+              <li class=""><b class="">Quốc gia</b> : ${userPayment.address.country_code}</li>
+              <li class=""><b class="">Họ tên người chuyển</b> : ${userPayment.name.given_name} ${userPayment.name.surname}</li>
+              <li class=""><b class="">Mã giao dịch </b> : ${transaction.id}</li>
+              <li class=""><b class="">Ngày chuyển </b> :${transaction.create_time}</li>
+              <li class=""><b class="">Tổng tiền </b> : Tổng tiền : ${transaction.amount.value}, tiền tệ : ${transaction.amount.currency_code}</li>
+              `;
+              purchaseOrderByAjax(templatePayment, 2);
+          
+
+           });
+        }
+      }).render('#paypal-button-container');
+//sb-g8grq27054856@personal.example.com
+//   /=doUA%3
+    //***************************************************** */
+    $('.app-cart__content-form-button-submit>button').click(function() {
+       // console.log(errorInputEmailForCart, errorInputNameForCart , errorInputPhoneForCart ); return true;
+
+
+
+        if (errorInputEmailForCart == false && errorInputNameForCart == false && errorInputPhoneForCart == false) {
+         
+            if ($('.detail_address_input').val() == '' || $('#select-city').val() == 'null' || $('#district-show').val() == 'null' || $('#show-warge').val() == 'null') {
+                //
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $(".scroll-to-address").offset().top
+                }, 600);
+            } else {
+                let templatePayment = `<li class=""><b class="">Hình thức thanh toán</b> :Tiền mặt</li>`;
+                purchaseOrderByAjax(templatePayment, 1);
+    
                 
 
             }
         }else {
+            
             $([document.documentElement, document.body]).animate({
                     scrollTop: $(".scroll-to-here").offset().top
                 }, 600);

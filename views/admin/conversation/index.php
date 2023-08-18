@@ -67,16 +67,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">Mới</h3>
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" placeholder="Search Mail">
-                            <div class="input-group-append">
-                                <div class="btn btn-primary">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 </div>
 
@@ -101,7 +92,7 @@
                             <i class="fas fa-sync-alt"></i>
                         </button>
                         <div class="float-right">
-                            1-50/200
+                       
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm">
                                     <i class="fas fa-chevron-left"></i>
@@ -126,42 +117,7 @@
 
                 </div>
 
-                <div class="card-footer p-0">
-                    <div class="mailbox-controls">
-
-                        <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                            <i class="far fa-square"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-reply"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-share"></i>
-                            </button>
-                        </div>
-
-                        <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                        <div class="float-right">
-                            1-50/200
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+            
             </div>
 
         </div>
@@ -171,16 +127,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">Gần đây</h3>
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" placeholder="Search Mail">
-                            <div class="input-group-append">
-                                <div class="btn btn-primary">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 </div>
 
@@ -205,7 +152,7 @@
                             <i class="fas fa-sync-alt"></i>
                         </button>
                         <div class="float-right">
-                            1-50/200
+                            
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm">
                                     <i class="fas fa-chevron-left"></i>
@@ -230,42 +177,7 @@
 
                 </div>
 
-                <div class="card-footer p-0">
-                    <div class="mailbox-controls">
-
-                        <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                            <i class="far fa-square"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-reply"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-share"></i>
-                            </button>
-                        </div>
-
-                        <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                        <div class="float-right">
-                            1-50/200
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+                
             </div>
 
         </div>
@@ -400,7 +312,7 @@
                                                                     <span class="direct-chat-timestamp float-left">${value.createdAt}</span>
                                                                     </div>
 
-                                                                    <img class="direct-chat-img" src="http://chatsocket.tk/uploaded/user/334346download%20(2).jpeg" alt="message user image">
+                                                                    <img class="direct-chat-img" src="https://haycafe.vn/wp-content/uploads/2021/12/Anh-thien-nhien-dep-va-tran-ngap-suc-song.jpg" alt="message user image">
 
                                                                     <div class="direct-chat-text">
                                                                      ${value.content}
@@ -514,7 +426,7 @@
                                                                     <span class="direct-chat-timestamp float-left">${dataMessage.createdAt}</span>
                                                                     </div>
 
-                                                                    <img class="direct-chat-img" src="http://chatsocket.tk/uploaded/user/334346download%20(2).jpeg" alt="message user image">
+                                                                    <img class="direct-chat-img" src="https://haycafe.vn/wp-content/uploads/2021/12/Anh-thien-nhien-dep-va-tran-ngap-suc-song.jpg" alt="message user image">
 
                                                                     <div class="direct-chat-text">
                                                                     ${dataMessage.content}

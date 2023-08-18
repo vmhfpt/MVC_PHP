@@ -491,6 +491,26 @@
             });
         }
     });
+    
+    $(document).on("click", ".btn-cancel-order", function(e) {
+        var id = ($(this).attr('data-id'));
+        $.ajax({
+                method: "POST",
+                url: "/api/user/cancel-order-item/order",
+                data: {
+                    id: id
+                }
+            })
+            .done(function(msg) {
+                msg = JSON.parse(msg);
+                if(msg.status == 'success'){
+                    alert("Hủy thành công đơn hàng");
+                    window.location.replace("/order");
+                }
+               // $('.show-app-user-content__table').html(msg);
+               // $('.app-user-popup__cart').css('display', 'flex');
+            });
+    });
 
     $(document).on("click", ".confirm", function(e){
      var total_price = ($(this).attr("data-price"));

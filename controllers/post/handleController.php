@@ -16,9 +16,11 @@ require_once("models/brandModel.php");
 require_once("models/attributesModel.php");
 require_once("models/privilegeModel.php");
 require_once("models/categoryPostModel.php");
-
-
+require_once("models/flashSaleModel.php");
+require_once("models/attributePriceModel.php");
 class handleController extends controller{
+  private $attributePriceProduct;
+  private $flashSale;
   private $categoryPost;
    private $privilege;
     private $user;
@@ -34,6 +36,8 @@ class handleController extends controller{
     private $giftProduct;
     private $comment;
     public function __construct(){
+      $this->attributePriceProduct = new AttributePrice();
+       $this->flashSale = new FlashSale();
        $this->categoryPost = new CategoryPost();
        $this->privilege = new Privilege();
        $this->user = new User();
@@ -76,6 +80,13 @@ class handleController extends controller{
        $item = $this->product->getBySlug($request[0]['product_slug']);
       if(!$item) return ($this->loadView('admin/errorPage/404notFound'));
       $product_id = $item['id'];
+      $dataFlashSale = $this->flashSale->getFlashSaleByProduct($product_id);
+
+
+      
+
+
+      //print("<pre>".print_r($dataFlashSale,true)."</pre>");die();
       $attributeProduct = $this->product->getAttributeByProduct($product_id);
       $firstColor = $this->product->getFirstColorByProductID($product_id);
       //var_dump($firstColor );die();
@@ -126,6 +137,7 @@ class handleController extends controller{
    if($totalRank  == 0) $totalRank = 0.1;
    if($total == 0) $total = 0;
      return ($this->loadView('post/product/detail', [
+         'dataFlashSale' => $dataFlashSale,
          'listColorProductCheckInventory' => $listColorProductCheckInventory,
          'attributeProduct' => $attributeProduct,
          'firstColor' => $firstColor,
@@ -797,6 +809,186 @@ class handleController extends controller{
       }
       return ('Chưa xác định');
    }
+   public function installment($request, $response){
+    $result = "";
+    
+    $item = $this->colorProduct->getColorProductByAttributeProductID($request['product_id']);
+  
+    
+    if($request['attr'] != ''){
+      $attribute = $this->attributePriceProduct->getAttributePriceWhereInID($request['attr']);
+      
+      foreach ($attribute as $key) {
+          $result .= $key["value"] . "/";
+      }
+      $result = rtrim($result, "/");
+     
+    }
+    //var_dump($request); die();
+    $item['product_name'] = $item['product_name']. ' '.$result;
+   // var_dump($item);die();
+   // var_dump((int) $request['price']);die();
+     return ($this->loadView('post/installment/index', [
+       'item' => $item,
+       'price' => (int)$request['price'],
+
+     ]));
+   }
    
+   public function handleInstallment($request, $response){
+      function checkActive($value, $percent){
+        $request['insurance'] = isset($request['insurance']) ? $request['insurance'] : false;
+          if($value == $percent){
+             return 'selected';
+          }
+      }
+      function check($value){
+          if($value == "true"){
+            return 'checked';
+          }
+      }
+     
+      $price = $request['total'] - ($request['total'] * ((int) $request['percent'] / 100));
+      $insuranceHomeCredit = 0;
+      $insuranceFecredit = 0;
+      if(isset($request['insurance']) && $request['insurance'] == 'true'){
+        $insuranceHomeCredit = round(Floor($price * 0.00050603348), -3);
+        $insuranceFecredit = round(Floor($price * 0.00031140522), -3);
+      }
+      $priceForEachMonthHomeCredit = round((($price / (int)$request['month'] ) + ($price * 0.028)), -3) + 11000 + $insuranceHomeCredit;
+      $priceForEachMonthFeCredit = round((($price / (int)$request['month'] ) + ($price * 0.0355)), -3) + 12000 + $insuranceFecredit;
+      $totalPriceToPayHomeCredit =  ($priceForEachMonthHomeCredit * $request['month']) + ($request['total'] * ((int) $request['percent'] / 100 ));
+      $totalPriceToPayFeCredit = ($priceForEachMonthFeCredit * $request['month']) + ($request['total'] * ((int) $request['percent'] / 100 ));
+     // var_dump($price); die();
+      //var_dump($request); die();
+      //array(4) { ["percent"]=> string(2) "30" ["insurance"]=> string(4) "true" ["total"]=> string(8) "24585000" ["month"]=> string(1) "3" }
+      $template = ' <table>
+      <tr class="app-installment__seventh-block-title-table" >
+          <th>Công ty</th>
+          <th><img src="https://didongthongminh.vn/images/credit/original/homecredit_1644633754.svg" alt="" class=""></th>
+          <th><img src="https://didongthongminh.vn/images/credit/original/fe_1644892719.svg" alt="" class=""></th>
+      </tr>
+      <tr>
+          <td>Giá sản phẩm</td>
+          <td>'.currency_format($request['total']).'</td>
+          <td>'.currency_format($request['total']).'</td>
+      </tr>
+      <tr>
+          <td>Giá mua trả góp</td>
+          <td>'.currency_format($request['total']).'</td>
+          <td>'.currency_format($request['total']).'</td>
+      </tr>
+      <tr>
+          <td class="app-installment__seventh-block-select">
+              <span>Trả trước</span> 
+              <select name="" id="percent" class="">
+                  <option  '.checkActive(0, $request['percent']).' value="0" class="">0%</option>
+                  <option '.checkActive(10, $request['percent']).' value="10" class="">10%</option>
+                  <option '.checkActive(20, $request['percent']).' value="20" class="">20%</option>
+                  <option '.checkActive(30, $request['percent']).' value="30" class="" >30%</option>
+                  <option '.checkActive(40, $request['percent']).' value="40" class="">40%</option>
+                  <option '.checkActive(50, $request['percent']).' value="50" class="">50%</option>
+                  <option '.checkActive(60, $request['percent']).' value="60" class="">60%</option>
+                  <option '.checkActive(70, $request['percent']).' value="70" class="">70%</option>
+                  <option '.checkActive(80, $request['percent']).' value="80" class="">80%</option>
+              </select> 
+         </td>
+          <td id="app-installment__seventh-block-title-table-getprice" >'.currency_format($request['total'] * ((int) $request['percent'] / 100 ) ).' ('.$request['percent'].')%</td>
+          <td>'.currency_format($request['total'] * ((int) $request['percent'] / 100 ) ).' ('.$request['percent'].')%</td>
+      </tr>
+      <tr>
+          <td>Lãi suất thực / phẳng</td>
+          <td>2.8%</td>
+          <td>3.55%</td>
+      </tr>
+      <tr>
+          <td>Giấy tờ cần có</td>
+          <td>CMND + Bằng lái xe / hộ khẩu</td>
+          <td>CMND + Bằng lái xe / hộ khẩu</td>
+      </tr>
+      <tr>
+          <td>Góp mỗi tháng</td>
+          <td id="havepayforhomecredit">'.currency_format($priceForEachMonthHomeCredit).'</td>
+          <td id="havepayforfecredit">'.currency_format($priceForEachMonthFeCredit).'</td>
+      </tr>
+      <tr class="app-installment-tr-warning">
+          <td>Gốc + lãi</td>
+          <td>'.currency_format(round((($price / (int)$request['month'] ) + ($price * 0.028)), -3)).'</td>
+          <td>'.currency_format(round((($price / (int)$request['month'] ) + ($price * 0.0355)), -3)).'</td>
+      </tr>
+      <tr class="app-installment-tr-warning">
+          <td>Phí thu hộ</td>
+          <td>11.000đ/tháng</td>
+          <td>12.000đ/tháng</td>
+      </tr>
+      <tr class="app-installment-tr-warning">
+          <td class="app-installment__seventh-block-select-checkbox" ><span>Bảo hiểm</span> <input id="insurance-check" type="checkbox" class="" '.check($request['insurance']).'></td>
+          <td>'.currency_format(round(Floor($price * 0.00050603348), -3)).'/tháng</td>
+          <td>'.currency_format(round(Floor($price * 0.00031140522), -3)).'/tháng</td>
+      </tr>
+      <tr>
+          <td>Tổng tiền phải trả</td>
+          <td class="text-emphasize-installment">'.currency_format($totalPriceToPayHomeCredit).'</td>
+          <td class="text-emphasize-installment">'.currency_format($totalPriceToPayFeCredit).'</td>
+      </tr>
+      <tr>
+          <td>Chênh lệch với mua trả thẳng</td>
+          <td>'.currency_format($totalPriceToPayHomeCredit - $request['total']).'</td>
+          <td>'.currency_format($totalPriceToPayFeCredit - $request['total']).'</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>
+              <div class="app-installment__seventh-block-button" data-value="2.8">
+                  <span class="">ĐẶT MUA</span>
+                  <span class="">Xét duyệt online</span>
+              </div>
+          </td>
+          <td>
+              <div class="app-installment__seventh-block-button" data-value="3.55">
+              <span class="">ĐẶT MUA</span>
+                  <span class="">Xét duyệt tại cửa hàng</span>
+              </div>
+          </td>
+      </tr>
+     
+      </table>';
+      echo $template;
+   }
+   public function createInstallment($request, $response){
+     $code = randomCoupon();
+     $this->product->createInstallMent($code,$request['nameProduct'],$request['priceInit'], $request['productId'],(float) $request['interestRates'],$request['prepay'],$request['priceTotal'], $request['month'], $request['payEachMonth'], $request['nameUser'], $request['phoneNumber'], $request['email'], $request['dateBirth'], $request['identifyID'], $request['addressUser'], $request['addressShop'], 0);
+     echo json_encode([
+       'status' => 'success',
+       'code' => $code,
+       'nameUser' => $request['nameUser'],
+       'phoneNumber' => $request['phoneNumber'],
+       'email' => $request['email'],
+       'identifyId' => $request['identifyID'],
+       'addressUser' => $request['addressUser'],
+       'addressShop' => $request['addressShop'],
+       'dateBirth' => $request['dateBirth'],
+       'dateCurrently' => date("Y-m-d H:i:s")
+     ]);
+      /*Array
+        (
+            [nameUser] => Vũ MInh Hùng
+            [phoneNumber] => 0359932904
+            [email] => vuminhhungltt904@gmail.com
+            [identifyID] => 2418135745
+            [addressUser] => Thông xuân đạt xã phú xuân
+            [addressShop] => 12 Hai Bà Trưng, Đống Đa, Hà Nội
+            [dateBirth] => 2001-07-18
+            [productId] => 137
+            [nameProduct] => Samsung Galaxy S23 128 GB/8Gb
+            [priceInit] => 14110000
+            [interestRates] => 3.55
+            [prepay] => 4.233.000đ (30)%
+            [priceTotal] => 15.207.000đ
+            [month] => 3
+            [payEachMonth] => 3.658.000đ
+        ) */
+      //print("<pre>".print_r($request,true)."</pre>");die();
+   }
    
 }

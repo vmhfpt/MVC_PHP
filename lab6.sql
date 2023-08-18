@@ -294,3 +294,5 @@ AND `attribute_product`.`id` = 324
 LEFT 
 JOIN `inventory` 
 ON `inventory`.`color_id` = `product_color`.`id`;
+
+/* I have date particular such as start_date = "2023-08-13 05:39:16" and end_date = "2023-08-15 10:39:16" How to convert to type day-hour-minute-second  */

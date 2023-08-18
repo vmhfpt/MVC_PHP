@@ -6,9 +6,17 @@ class testController extends controller{
         $this->brand = new Brand();
     }
     public function test(){
-       $id = $this->brand->testUpdate("Sony", 2);
-       var_dump($id);
-    //  return ($this->loadView('post/chat'));
+       
+     return ($this->loadView('post/demoPaymen'));
+    }
+    public function createPaypal($request, $response){
+        echo json_encode([
+            'status' => 'success',
+            'id' => 6
+        ]);
+    }
+    public function capturePaypal($request, $response){
+        echo json_encode($request);
     }
     
 }

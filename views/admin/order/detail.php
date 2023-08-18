@@ -151,6 +151,10 @@
                                     <b>Tổng tiền</b> <a
                                         class="float-right total"><?=currency_format($dataItem['total'])?></a>
                                 </li>
+                                <li class="list-group-item">
+                                    <b>Loại giao dịch</b> <a
+                                        class="float-right total"><?=$dataItem['type_transaction'] == 2 ? "Đã thanh toán qua PayPal" : "Tiền mặt" ?></a>
+                                </li>
                             </ul>
 
                             <a href="/admin/order/<?=$dataItem['id']?>" class="btn btn-primary btn-block"><b>Xem chi tiết đơn hàng</b></a>

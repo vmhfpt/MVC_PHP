@@ -51,9 +51,9 @@ class Order extends Database{
     }
 
 
-    public function insertAndGetLastId($code, $user_id, $transportFee, $couponCode_id, $note, $email, $name, $phoneNumber, $address, $total, $active){
-        $sql = "INSERT INTO `order` ( `CODE`, `user_id`, `transport_fee`, `coupon_code`, `note`, `email`, `name`, `phone_number`, `address_detail`, `total`, `active`, `createdAt`, `updatedAt`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp() , '0000-00-00 00:00:00.000000');";
-        return $this->pdo_query_get_lastId($sql,$code, $user_id, $transportFee, $couponCode_id, $note, $email, $name, $phoneNumber, $address, (int) $total, $active);
+    public function insertAndGetLastId($code, $user_id, $transportFee, $couponCode_id, $note, $email, $name, $phoneNumber, $address, $total, $active, $type_transaction){
+        $sql = "INSERT INTO `order` ( `CODE`, `user_id`, `transport_fee`, `coupon_code`, `note`, `email`, `name`, `phone_number`, `address_detail`, `total`, `active`, `type_transaction`,`createdAt`, `updatedAt`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, current_timestamp() , '0000-00-00 00:00:00.000000');";
+        return $this->pdo_query_get_lastId($sql,$code, $user_id, $transportFee, $couponCode_id, $note, $email, $name, $phoneNumber, $address, (int) $total, $active, $type_transaction);
     }
     public function insertOrderDetailAndGetLastID($order_id, $product_id, $total, $quantity){
         $sql = "INSERT INTO `order_detail` (`order_id`, `product_id`, `total`, `quantity`, `createdAt`, `updatedAt`) VALUES ( ?, ?, ?, ?, current_timestamp(), '0000-00-00 00:00:00.000000');";

@@ -3,6 +3,7 @@ require_once("models/introduceModel.php");
 require_once("models/categoryModel.php");
 require_once("models/productModel.php");
 require_once("models/postModel.php");
+require_once("models/couponModel.php");
 require_once("models/colorProductModel.php");
 require_once("models/addressModel.php");
 class productController extends controller{
@@ -12,6 +13,7 @@ class productController extends controller{
     public $product;
     private $post;
     public $colorProduct;
+    private $coupon;
     public function __construct(){
         $this->colorProduct = new ColorProduct();
         $this->introduce =  new Introduce();
@@ -19,6 +21,7 @@ class productController extends controller{
         $this->product = new Product();
         $this->post = new Post();
         $this->address = new Address();
+        $this->coupon = new Coupon();
      }
 
      public function getColorProductByAttributeProductIDAjax($request, $response){
@@ -60,13 +63,26 @@ class productController extends controller{
      }
      public function checkCoupon($request, $response){
         $dataItem = $this->address->checkCoupon($request['code'], $request['date']);
+        
         if($dataItem){
-         echo json_encode(
-            [
-               'status' => 'success',
-               'data' => $dataItem
-            ] 
-         );
+          //var_dump();
+          if($this->coupon->checkCouponUser($dataItem['id'], $_SESSION['user']['id'])){
+            echo json_encode(
+               [
+                  'status' => 'success',
+                  'data' => $dataItem
+               ] 
+            );
+          }else {
+            echo json_encode(
+               ['status' => 'error',
+                'message' => '* Mã giảm giá không tồn tại'
+               ]
+   
+            );
+          }
+          
+         
         }else {
          echo json_encode(
             ['status' => 'error',
